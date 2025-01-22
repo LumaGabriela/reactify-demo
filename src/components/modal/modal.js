@@ -9,16 +9,16 @@ function ModalMenu() {
     >
       <Modal.Dialog>
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Criar Projeto</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <p>Modal body text goes here.</p>
+          <p>Caracteristicas do projeto</p>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary">Close</Button>
-          <Button variant="primary">Save changes</Button>
+          
+          <Button variant="primary">Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>
