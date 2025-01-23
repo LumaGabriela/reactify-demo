@@ -1,7 +1,18 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function ModalMenu() {
+
+
+
+const ProjectModal = ({projectData, setProjectData}) => {
+    const setProjectName = (e) => {
+        let name = e.target.value
+        setProjectData({
+            ...projectData,
+            name:name
+        })
+        console.log(projectData)
+    }
   return (
     <div
       className="modal show"
@@ -13,7 +24,8 @@ function ModalMenu() {
         </Modal.Header>
 
         <Modal.Body>
-          <p>Caracteristicas do projeto</p>
+          <p>Nome do projeto: </p>
+          <Button className='bg-purple' id='project-name' as="input" type="input" placeholder="Nome do projeto" onKeyUp={ (e) => e.key ? setProjectName(e) : null }/>
         </Modal.Body>
 
         <Modal.Footer>
@@ -25,4 +37,4 @@ function ModalMenu() {
   );
 }
 
-export default ModalMenu;
+export default ProjectModal;

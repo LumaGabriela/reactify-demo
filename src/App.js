@@ -1,14 +1,31 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import React, { useState } from 'react'
+////
 import 'bootstrap/dist/css/bootstrap.min.css'
-import * as React from 'react'
-import NavBar from './components/navbar/navbar'
 import './App.css'
-import ModalMenu from './components/modal/modal';
 
-function App() {
+
+import NavBar from './components/navbar/navbar'
+import ProjectModal from './components/modal/modal';
+
+////
+
+
+
+const App = () => {
+  const [projectData, setProjectData] = useState({
+    name: '',
+    goalSketches: [],
+    journeys: []
+  })
+  
   return (
     <div className="App">
       <NavBar/>
-      <ModalMenu/>
+      <ProjectModal 
+      projectData={projectData}
+      setProjectData={setProjectData}
+      />
 
     </div>
   );

@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 
-function Botao() {
+const Botao = () => {
   return (
     <>
       <Button variant="outline-primary">Primary</Button>
