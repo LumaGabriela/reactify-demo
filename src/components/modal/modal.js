@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -5,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 
 
 const ProjectModal = ({projectData, setProjectData}) => {
+    const [pName, setPName] = useState('')
     const setProjectName = (e) => {
         let name = e.target.value
         setProjectData({
@@ -25,12 +27,12 @@ const ProjectModal = ({projectData, setProjectData}) => {
 
         <Modal.Body>
           <p>Nome do projeto: </p>
-          <Button className='bg-purple' id='project-name' as="input" type="input" placeholder="Nome do projeto" onKeyUp={ (e) => e.key ? setProjectName(e) : null }/>
+          <Button className='bg-purple' id='project-name' as="input" type="input" placeholder="Nome do projeto" />
         </Modal.Body>
 
         <Modal.Footer>
           
-          <Button variant="primary">Salvar</Button>
+          <Button variant="primary" >Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>
