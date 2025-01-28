@@ -5,25 +5,28 @@ import Modal from 'react-bootstrap/Modal';
 
 
 
-const ProjectModal = ({projectData, setProjectData, isVisible, setIsVisible}) => {
+const ProjectModal = ({projectData, setProjectData, isProjectVisible, handleRemove}) => {
     const [pName, setPName] = useState('')
 
     //salva o nome do projeto no objeto principal
     const setProjectName = () => {
-        setProjectData({
-            ...projectData,
-            name:pName
-        })  
+      let project = {
+          name: pName,
+          goalSketches: ['Goal 1', 'Goal 2', 'Goal 3'],
+          journey: [],
+          productView: 'Visão do produto',
+          id: 123
+      
+        }
+      setProjectData([...projectData, project])  
     }
 
-    const handleRemove = () => {
-      setIsVisible(false); // Torna o bloco invisível
-    };
+
 
   // printa os dados do objeto toda vez que ele é alterado
   useEffect(() => {
     console.log(projectData)
-  }, [projectData])
+  }, [projectData, isProjectVisible])
 
 
   return (
@@ -31,7 +34,7 @@ const ProjectModal = ({projectData, setProjectData, isVisible, setIsVisible}) =>
       className={"modal show " + projectData.id}
       style={{ display: 'block', position: 'initial' }}
     >
-      {isVisible && 
+      {isProjectVisible && 
       (<Modal.Dialog>
         <Modal.Header closeButton onClick={ () => handleRemove()}>
           <Modal.Title>Criar Projeto</Modal.Title>
@@ -39,12 +42,16 @@ const ProjectModal = ({projectData, setProjectData, isVisible, setIsVisible}) =>
 
         <Modal.Body>
           <p>Nome do projeto: </p>
-          <Button className='bg-purple' id='project-name' as="input" value={pName} onChange={(e) => setPName(e.target.value)} type="input" placeholder="Nome do projeto" style={{cursor: 'text'}} />
+          <Button className='bg-purple' id='project-name' as="input" onChange={(e) => setPName(e.target.value)} type="input" placeholder="Nome do projeto" style={{cursor: 'text'}} />
         </Modal.Body>
 
         <Modal.Footer>
           
-          <Button variant="primary" onClick={ () => setProjectName()}>Salvar</Button>
+          <Button variant="primary" onClick={ () => {
+            handleRemove()
+            setProjectName()
+            }
+          }>Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>)}
     </div>

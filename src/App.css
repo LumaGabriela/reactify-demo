@@ -1,3 +1,6 @@
+.App {
+  box-sizing: border-box;
+}
 .bg-purple{
   background: #712cf9 ;
 }
@@ -6,6 +9,17 @@
   background: #5f84ff;
 }
 
-.addBtn {
-  margin: 50rem 0;
+.row {
+  margin: 0 0 1rem 0;
+  align-items: center;
 }
+
+.col{
+  border: 1px solid #555;
+  height: 3.7rem;
+  text-align: center;
+  align-items: center ;
+  justify-content: center;
+  display: flex;
+}
+

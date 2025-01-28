@@ -2,40 +2,45 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import React, { useState } from 'react'
 ////
 import 'bootstrap/dist/css/bootstrap.min.css'
+
 import './App.css'
 
 
 import NavBar from './components/navbar/navbar'
 import ProjectModal from './components/modal/modal'
-import projectIcon from './components/projects/projectIcon'
 import { AddButton } from './components/button/button'
+import ProjectIcon from './components/projects/projectIcon'
 ////
 
 
 
 const App = () => {
-  const [projectData, setProjectData] = useState({
-    name: '',
-    goalSketches: ['Goal 1', 'Goal 2', 'Goal 3'],
-    journeys: [],
-    productView: 'Visão do produto',
-    id: 123
+  const [projectData, setProjectData] = useState([])
 
-  })
 
-  const [isProjectVisible, setIsProjectVisible] = useState(true)
-  
+  const [isProjectVisible, setIsProjectVisible] = useState(false)
+  const handleRemove = () => { console.log (isProjectVisible)
+    isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
+  }
   return (
     <div className="App">
       <NavBar/>
       <ProjectModal 
-      isVisible={isProjectVisible}
-      setIsVisible={setIsProjectVisible}
+      isProjectVisible={isProjectVisible}
+      setIsProjectVisible={setIsProjectVisible}
       projectData={projectData}
       setProjectData={setProjectData}
+      handleRemove={handleRemove}
       />
 
-      <AddButton/>
+      <AddButton
+      isProjectVisible={isProjectVisible}
+      setIsProjectVisible={setIsProjectVisible}
+      handleRemove={handleRemove}
+      />
+      <ProjectIcon
+      projectData={projectData}
+      />
     </div>
   );
 }

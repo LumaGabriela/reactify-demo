@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 
-const AddButton = () => {
+const AddButton = ({handleRemove}) => {
   return (
     <>
-      <Button variant="primary">Primary</Button>
+      <Button id='addProject' className="" variant="primary" onClick={ () => handleRemove()}>Add</Button>
     
     </>
   );
