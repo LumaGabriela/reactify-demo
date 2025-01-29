@@ -9,17 +9,22 @@
   background: #5f84ff;
 }
 
-.row {
-  margin: 0 0 1rem 0;
-  align-items: center;
+
+
+
+.project-container {
+  border: 1px solid gray;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin: auto 2rem;
+  cursor: pointer;
 }
 
-.col{
-  border: 1px solid #555;
-  height: 3.7rem;
-  text-align: center;
-  align-items: center ;
-  justify-content: center;
-  display: flex;
+.project-item {
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 15px;
+  
 }
-

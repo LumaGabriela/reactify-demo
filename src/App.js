@@ -7,9 +7,9 @@ import './App.css'
 
 
 import NavBar from './components/navbar/navbar'
-import ProjectModal from './components/modal/modal'
+import {AddProjectModal, ProjectDescriptionModal} from './components/modal/modal'
 import { AddButton } from './components/button/button'
-import ProjectIcon from './components/projects/projectIcon'
+import { ProjectIcon } from './components/projects/icon'
 ////
 
 
@@ -19,17 +19,33 @@ const App = () => {
 
 
   const [isProjectVisible, setIsProjectVisible] = useState(false)
-  const handleRemove = () => { console.log (isProjectVisible)
-    isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
+  const [descriptionModal, setDescriptionModal] = useState(false)
+  const [modalKey, setModalKey] = useState('')
+
+  const handleRemove = (type) => { 
+    if (type === 'project') {
+      return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
+    } else if (type === 'description') {
+      return descriptionModal ? setDescriptionModal(false) : setDescriptionModal(true)
+    }
   }
   return (
     <div className="App">
       <NavBar/>
-      <ProjectModal 
-      isProjectVisible={isProjectVisible}
-      setIsProjectVisible={setIsProjectVisible}
+      <AddProjectModal 
+      isVisible={isProjectVisible}
+      setIsVisible={setIsProjectVisible}
       projectData={projectData}
       setProjectData={setProjectData}
+      handleRemove={handleRemove}
+      />
+
+      <ProjectDescriptionModal
+      descriptionModal={descriptionModal}
+      setDescriptionModal={setDescriptionModal}
+      modalKey={modalKey}
+      setModalKey={setModalKey}
+      projectData={projectData}
       handleRemove={handleRemove}
       />
 
@@ -40,6 +56,8 @@ const App = () => {
       />
       <ProjectIcon
       projectData={projectData}
+      descriptionModal={descriptionModal}
+      setDescriptionModal={setDescriptionModal}
       />
     </div>
   );

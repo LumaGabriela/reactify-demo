@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Modal, Button, Form } from 'react-bootstrap';
+import { nanoid } from 'nanoid' 
 
 
-
-
-const ProjectModal = ({projectData, setProjectData, isProjectVisible, handleRemove}) => {
+const AddProjectModal = ({projectData, setProjectData, isVisible, handleRemove}) => {
     const [pName, setPName] = useState('')
 
     //salva o nome do projeto no objeto principal
@@ -15,10 +13,11 @@ const ProjectModal = ({projectData, setProjectData, isProjectVisible, handleRemo
           goalSketches: ['Goal 1', 'Goal 2', 'Goal 3'],
           journey: [],
           productView: 'Visão do produto',
-          id: 123
-      
+          key: nanoid()
         }
-      setProjectData([...projectData, project])  
+      setProjectData([...projectData, project]) 
+      setPName('') 
+      handleRemove('project')
     }
 
 
@@ -26,36 +25,69 @@ const ProjectModal = ({projectData, setProjectData, isProjectVisible, handleRemo
   // printa os dados do objeto toda vez que ele é alterado
   useEffect(() => {
     console.log(projectData)
-  }, [projectData, isProjectVisible])
+  }, [projectData, isVisible])
 
 
   return (
     <div
-      className={"modal show " + projectData.id}
-      style={{ display: 'block', position: 'initial' }}
+      className={"modal show "}
+      style={{ display: isVisible ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
-      {isProjectVisible && 
-      (<Modal.Dialog>
-        <Modal.Header closeButton onClick={ () => handleRemove()}>
+      <Modal.Dialog style={ {marginTop: '6rem'} }>
+        <Modal.Header closeButton onClick={ () => handleRemove('project')}>
           <Modal.Title>Criar Projeto</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <p>Nome do projeto: </p>
-          <Button className='bg-purple' id='project-name' as="input" onChange={(e) => setPName(e.target.value)} type="input" placeholder="Nome do projeto" style={{cursor: 'text'}} />
+          <Form.Control
+            type="text"
+            value={pName}
+            onKeyUp={(e) => { if (e.key === 'Enter') setProjectName() }}
+            onChange={(e) => setPName(e.target.value)}
+            placeholder="Nome do projeto"
+            style={{ cursor: 'text' }}
+          />
         </Modal.Body>
 
         <Modal.Footer>
           
-          <Button variant="primary" onClick={ () => {
-            handleRemove()
-            setProjectName()
-            }
+          <Button variant="primary" onClick={ () => setProjectName()
           }>Salvar</Button>
         </Modal.Footer>
-      </Modal.Dialog>)}
+      </Modal.Dialog>
     </div>
   );
 }
 
-export default ProjectModal;
+const ProjectDescriptionModal = ({descriptionModal, setDescriptionModal, projectData, handleRemove, modalKey, setModalKey}) => {
+  const project = projectData.find(project => project.key === descriptionModal.key)
+
+  useEffect(() => {
+  }, [descriptionModal])
+
+  return (
+    <div
+    className={"modal show "}
+    style={{ display: descriptionModal.isVisible ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    >
+      <Modal.Dialog>
+        <Modal.Header closeButton onClick={ () => handleRemove('description')}>
+          <Modal.Title>{project ? project.name : 'Projeto Não Encontrado'}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="primary" 
+           onClick={ () => handleRemove('description')}
+          >Salvar</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  );
+}
+
+export  {AddProjectModal, ProjectDescriptionModal}

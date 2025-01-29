@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 const AddButton = ({handleRemove}) => {
   return (
     <>
-      <Button id='addProject' className="" variant="primary" onClick={ () => handleRemove()}>Add</Button>
+      <Button id='addProject' className="position-fixed bottom-0 end-0 m-3 btn-lg" variant="primary" onClick={ () => handleRemove('project')}>Add</Button>
     
     </>
   );
