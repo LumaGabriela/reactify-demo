@@ -17,6 +17,7 @@ function NavBar ({modalKey, projectData}) {
             <Nav.Link href="#login">Log In</Nav.Link>
             <NavDropdown title={project ? project.name : "Teste"} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Visão Geral</NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.2">
                 Goal Sketch
               </NavDropdown.Item>
