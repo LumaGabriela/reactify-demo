@@ -3,7 +3,9 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
-function NavBar() {
+function NavBar ({modalKey, projectData}) {
+  const project = projectData ? projectData.find(project => project.key === modalKey) : null
+
   return (
     <Navbar  bg="purple" data-bs-theme="dark" expand="lg" >
       <Container>
@@ -13,7 +15,7 @@ function NavBar() {
           <Nav className="ms-auto " navbarScroll>
             <Nav.Link href="#signup">Sign Up</Nav.Link>
             <Nav.Link href="#login">Log In</Nav.Link>
-            <NavDropdown title="Projeto X" id="basic-nav-dropdown">
+            <NavDropdown title={project ? project.name : "Teste"} id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Visão Geral</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
                 Goal Sketch

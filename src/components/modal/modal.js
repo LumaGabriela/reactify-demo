@@ -61,7 +61,7 @@ const AddProjectModal = ({projectData, setProjectData, isVisible, handleRemove})
 }
 
 const ProjectDescriptionModal = ({descriptionModal, setDescriptionModal, projectData, handleRemove, modalKey, setModalKey}) => {
-  const project = projectData.find(project => project.key === descriptionModal.key)
+  const project = projectData.find(project => project.key === modalKey)
 
   useEffect(() => {
   }, [descriptionModal])

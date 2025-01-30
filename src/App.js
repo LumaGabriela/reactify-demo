@@ -20,7 +20,7 @@ const App = () => {
 
   const [isProjectVisible, setIsProjectVisible] = useState(false)
   const [descriptionModal, setDescriptionModal] = useState(false)
-  const [modalKey, setModalKey] = useState('')
+  const [modalKey, setModalKey] = useState('key ')
 
   const handleRemove = (type) => { 
     if (type === 'project') {
@@ -31,7 +31,10 @@ const App = () => {
   }
   return (
     <div className="App">
-      <NavBar/>
+      <NavBar
+      modalKey={modalKey}
+      projectData={projectData}
+      />
       <AddProjectModal 
       isVisible={isProjectVisible}
       setIsVisible={setIsProjectVisible}
@@ -57,7 +60,7 @@ const App = () => {
       <ProjectIcon
       projectData={projectData}
       descriptionModal={descriptionModal}
-      setDescriptionModal={setDescriptionModal}
+      setModalKey={setModalKey}
       />
     </div>
   );
