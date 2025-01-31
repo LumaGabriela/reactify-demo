@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router'
 import React, { useState } from 'react'
 ////
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -32,8 +32,9 @@ const App = () => {
     }
   }
   return (
+  <Router>
     <div className="App">
-      <Router>
+      
         <NavBar
         modalKey={modalKey}
         projectData={projectData}
@@ -57,9 +58,10 @@ const App = () => {
           <Route path="/personas" element={<Personas />} />
           <Route path="/journeys" element={<Journeys />} />
         </Routes>      
-      </Router>
+      
      
     </div>
+  </Router>
   );
 }
 

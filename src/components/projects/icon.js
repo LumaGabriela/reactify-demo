@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react'
-
 
 const ProjectIcon = ({projectData, setModalKey}) => {
     

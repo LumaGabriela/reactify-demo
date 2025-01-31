@@ -1,7 +1,7 @@
 const VisaoGeral = () => {    
     return (
         <div>
-            <h1>VisaoGeral</h1>
+            <h1>Goal Sketch</h1>
         </div>
     )
 }
