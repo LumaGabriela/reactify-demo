@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, react } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { nanoid } from 'nanoid' 
+import React from 'react'
 
 
 const AddProjectModal = ({projectData, setProjectData, isVisible, handleRemove}) => {
