@@ -7,11 +7,13 @@ import './App.css'
 
 
 import NavBar from './components/navbar/navbar'
-import {AddProjectModal, ProjectDescriptionModal} from './components/modal/modal'
-import { AddButton } from './components/button/button'
-import { ProjectIcon } from './components/projects/icon'
-////
 
+////
+import Home from './pages/Home';
+import VisaoGeral from './pages/VisaoGeral'
+import GoalSketch from './pages/GoalSketch'
+import Personas from './pages/Personas'
+import Journeys from './pages/Journeys'
 
 
 const App = () => {
@@ -31,37 +33,32 @@ const App = () => {
   }
   return (
     <div className="App">
-      <NavBar
-      modalKey={modalKey}
-      projectData={projectData}
-      />
-      <AddProjectModal 
-      isVisible={isProjectVisible}
-      setIsVisible={setIsProjectVisible}
-      projectData={projectData}
-      setProjectData={setProjectData}
-      handleRemove={handleRemove}
-      />
-
-      <ProjectDescriptionModal
-      descriptionModal={descriptionModal}
-      setDescriptionModal={setDescriptionModal}
-      modalKey={modalKey}
-      setModalKey={setModalKey}
-      projectData={projectData}
-      handleRemove={handleRemove}
-      />
-
-      <AddButton
-      isProjectVisible={isProjectVisible}
-      setIsProjectVisible={setIsProjectVisible}
-      handleRemove={handleRemove}
-      />
-      <ProjectIcon
-      projectData={projectData}
-      descriptionModal={descriptionModal}
-      setModalKey={setModalKey}
-      />
+      <Router>
+        <NavBar
+        modalKey={modalKey}
+        projectData={projectData}
+        />
+        <Routes>
+          <Route path='/' element={
+            <Home
+            isProjectVisible={isProjectVisible}
+            setIsProjectVisible={setIsProjectVisible}
+              projectData={projectData}
+              setProjectData={setProjectData}
+              handleRemove={handleRemove}
+              descriptionModal={descriptionModal}
+              setDescriptionModal={setDescriptionModal}
+              modalKey={modalKey}
+              setModalKey={setModalKey}
+          />
+            }/>
+          <Route path='/visao-geral' element={<VisaoGeral/>}/>
+          <Route path="/goal-sketch" element={<GoalSketch />} />
+          <Route path="/personas" element={<Personas />} />
+          <Route path="/journeys" element={<Journeys />} />
+        </Routes>      
+      </Router>
+     
     </div>
   );
 }

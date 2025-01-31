@@ -19,12 +19,13 @@
   gap: 20px;
   padding: 20px;
   margin: auto 2rem;
-  cursor: pointer;
+
 }
 
 .project-item {
   border: 1px solid gray;
   padding: 10px;
   border-radius: 15px;
+  cursor: pointer;
   
 }
