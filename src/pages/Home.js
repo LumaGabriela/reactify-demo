@@ -1,9 +1,8 @@
 import {AddProjectModal, ProjectDescriptionModal} from '../components/modal/modal'
 import { AddButton } from '../components/button/button'
 import { ProjectIcon } from '../components/projects/icon'
-import React from 'react'
 
-const  Home = () => ({
+const  Home = ({
     isProjectVisible,
     setIsProjectVisible,
     projectData,

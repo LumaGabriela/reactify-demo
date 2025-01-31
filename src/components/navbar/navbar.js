@@ -3,9 +3,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { LinkContainer } from 'react-router-bootstrap'
-import React from 'react'
 
-const NavBar = ({modalKey, projectData}) => {
+function NavBar ({modalKey, projectData}) {
   const project = projectData ? projectData.find(project => project.key === modalKey) : null
 
   return (
