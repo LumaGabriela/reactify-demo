@@ -59,7 +59,7 @@ const AddProjectModal = ({projectData, setProjectData, isVisible, handleRemove})
   );
 }
 
-const ProjectDescriptionModal = ({descriptionModal, setDescriptionModal, projectData, handleRemove, modalKey, setModalKey}) => {
+const ProjectDescriptionModal = ({descriptionModal, projectData, handleRemove, modalKey}) => {
   const project = projectData.find(project => project.key === modalKey)
 
   useEffect(() => {
@@ -68,9 +68,9 @@ const ProjectDescriptionModal = ({descriptionModal, setDescriptionModal, project
   return (
     <div
     className={"modal show "}
-    style={{ display: descriptionModal.isVisible ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    style={{ display: descriptionModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
-      <Modal.Dialog>
+      <Modal.Dialog style={ {marginTop: '6rem'} }>
         <Modal.Header closeButton onClick={ () => handleRemove('description')}>
           <Modal.Title>{project ? project.name : 'Projeto Não Encontrado'}</Modal.Title>
         </Modal.Header>
@@ -89,4 +89,34 @@ const ProjectDescriptionModal = ({descriptionModal, setDescriptionModal, project
   );
 }
 
-export  {AddProjectModal, ProjectDescriptionModal}
+const JourneyDescriptionModal = ({descriptionModal, projectData, handleRemove, project}) => {
+
+
+  useEffect(() => {
+  }, [descriptionModal])
+
+  return (
+    <div
+    className={"modal show "}
+    style={{ display: descriptionModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    >
+      <Modal.Dialog style={ {marginTop: '6rem'} }>
+        <Modal.Header closeButton onClick={ () => handleRemove('journey')}>
+          <Modal.Title>{project ? project.journey : 'Projeto Não Encontrado'}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="primary" 
+           onClick={ () => handleRemove('journey')}
+          >Salvar</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  );
+}
+
+export  {AddProjectModal, ProjectDescriptionModal, JourneyDescriptionModal}

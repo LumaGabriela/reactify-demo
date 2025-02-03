@@ -1,6 +1,6 @@
-import {AddProjectModal, ProjectDescriptionModal} from '../components/modal/modal'
-import { AddButton } from '../components/button/button'
-import { ProjectIcon } from '../components/projects/icon'
+import {AddProjectModal, ProjectDescriptionModal} from '../components/modal/Modals'
+import { AddButton } from '../components/button/Buttons'
+import { ProjectIcon } from '../components/projects/Icons'
 
 const  Home = ({
     isProjectVisible,
@@ -27,13 +27,13 @@ const  Home = ({
       descriptionModal={descriptionModal}
       setDescriptionModal={setDescriptionModal}
       modalKey={modalKey}
-      setModalKey={setModalKey}
       projectData={projectData}
       handleRemove={handleRemove}
+      type={'description'}
       />
 
       <AddButton
-      isProjectVisible={isProjectVisible}
+      type={'project'}
       setIsProjectVisible={setIsProjectVisible}
       handleRemove={handleRemove}
       />
@@ -41,6 +41,8 @@ const  Home = ({
       projectData={projectData}
       descriptionModal={descriptionModal}
       setModalKey={setModalKey}
+      handleRemove={handleRemove}
+      type={'description'}
       />  
     </div>
   )

@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { useNavigate } from 'react-router';
 
-const NavBar = ({modalKey, projectData}) => {
-  const project = projectData ? projectData.find(project => project.key === modalKey) : null
-  const navigate = useNavigate()  
+const NavBar = ({modalKey, projectData, project}) => {
+
+  const navigate = useNavigate() 
+  // const project = projectData ? projectData.find(project => project.key === modalKey) : null
+
+   useEffect(() => {}, [modalKey])
 
 
   return (
@@ -18,13 +22,12 @@ const NavBar = ({modalKey, projectData}) => {
           <Nav className="ms-auto" navbarScroll>
             <Nav.Link href="#signup">Sign Up</Nav.Link>
             <Nav.Link href="#login">Log In</Nav.Link>
-            <NavDropdown title={project ? project.name : "Teste"} id="basic-nav-dropdown">
+            <NavDropdown title={project ? project.name : "Projeto X"} id="basic-nav-dropdown">
 
               <NavDropdown.Item onClick={ () => navigate("/visao-geral")}> Visão Geral</NavDropdown.Item>
 
               <NavDropdown.Divider />
 
-              <NavDropdown.Item onClick={() => navigate("/visao-geral")}>Visão Geral</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/goal-sketch")}>Goal Sketch</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/personas")}>Personas</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/journeys")}>Journeys</NavDropdown.Item>
@@ -34,7 +37,7 @@ const NavBar = ({modalKey, projectData}) => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
+  )
 }
 
 export default NavBar
