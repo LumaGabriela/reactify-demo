@@ -207,7 +207,7 @@ const App = () => {
           } />
           <Route path="/journeys" element={
             <Journeys
-            modalKey={modalKey}
+              modalKey={modalKey}
               journeyModal={journeyModal}
               setJourneyModal={setJourneyModal}
               handleRemove={handleRemove}

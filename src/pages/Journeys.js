@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Journeys.css'; // Certifique-se de criar este arquivo CSS para estilização
 import { AddButton } from '../components/button/Buttons'
 import { JourneyDescriptionModal } from '../components/modal/Modals'
@@ -7,16 +7,20 @@ import { JourneyDescriptionModal } from '../components/modal/Modals'
 
 const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, setJourneyModal, modalKey }) => {
     const project = projectData.find(project => project.key === modalKey)
+    const [journeyData, setJourneyData] = useState({})
 
-    const updateJourney = (journeyIndex, stepIndex) => {
-
-    }
 
 
     const handleClick = (e) => {
-        const journeyElement = e.target.closest('.journey')
-        console.log(journeyElement.getAttribute('data-key'))
+        const stepElement = e.target.closest('.step');
+        if (stepElement) {
+            const journeyElement = { ...stepElement.dataset }
+            setJourneyData(journeyElement)
+            handleRemove('journey') 
+        }
     }
+
+    useEffect(() => { console.log(journeyData) }, [journeyData])
 
     return (
         <div>
@@ -24,7 +28,11 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
             <div className="journeys-grid">
                 <h1 className='title'>Journeys</h1>
                 {project.journeys.map((journey, journeyIndex) => (
-                    <div key={`${project.key}-${journeyIndex}`} data-key={`${project.key}-${journeyIndex}`} className="journey">
+                    <div 
+                    key={`${project.key}-${journeyIndex}`} 
+                    data-key={project.key} 
+                    data-journeyIndex={journeyIndex}
+                    className="journey">
                         <div className="steps-grid">
                             <div className="step first-step">
                                 <div className="step-content">
@@ -34,7 +42,13 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                             <div className="arrow">→</div>
                             {journey.steps.map((step, stepIndex) => (
                                 <React.Fragment key={stepIndex}>
-                                    <div className="step" onClick={(e) => handleClick(e)}>
+                                    <div 
+                                    className="step" 
+                                    data-key={project.key} 
+                                    data-journeyIndex={journeyIndex}
+                                    data-stepIndex={stepIndex}
+                                    onClick={(e) => handleClick(e)}>
+
                                         <div className="step-content">
                                             <p className="step-description">{step.description}</p>
                                         </div>
@@ -54,7 +68,10 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                 <JourneyDescriptionModal
                     journeyModal={journeyModal}
                     setJourneyModal={setJourneyModal}
-                    project={project}
+                    projectData={projectData}
+                    moidalKey={modalKey}
+                    handleRemove={handleRemove}
+                    journeyData={journeyData}
                 />
             </div>
         </div>

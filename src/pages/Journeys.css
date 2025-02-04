@@ -31,6 +31,7 @@
     border-radius: 5px;
     cursor: pointer;
     padding: 0 3px;
+    border: 1px solid #333;
 }
 
 .step-content {
