@@ -5,10 +5,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { useNavigate } from 'react-router';
 
-const NavBar = ({modalKey, projectData, project}) => {
+const NavBar = ({modalKey, projectData}) => {
 
   const navigate = useNavigate() 
-  // const project = projectData ? projectData.find(project => project.key === modalKey) : null
+  const project = projectData ? projectData.find(project => project.key === modalKey) : null
 
    useEffect(() => {}, [modalKey])
 
@@ -22,7 +22,7 @@ const NavBar = ({modalKey, projectData, project}) => {
           <Nav className="ms-auto" navbarScroll>
             <Nav.Link href="#signup">Sign Up</Nav.Link>
             <Nav.Link href="#login">Log In</Nav.Link>
-            <NavDropdown title={project ? project.name : "Projeto X"} id="basic-nav-dropdown">
+            <NavDropdown title={project ? project.name : "Projeto Teste"} id="basic-nav-dropdown">
 
               <NavDropdown.Item onClick={ () => navigate("/visao-geral")}> Visão Geral</NavDropdown.Item>
 
