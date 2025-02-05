@@ -16,7 +16,7 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
         if (stepElement) {
             const journeyElement = { ...stepElement.dataset }
             setJourneyData(journeyElement)
-            handleRemove('journey') 
+            handleRemove('journey')
         }
     }
 
@@ -28,11 +28,11 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
             <div className="journeys-grid">
                 <h1 className='title'>Journeys</h1>
                 {project.journeys.map((journey, journeyIndex) => (
-                    <div 
-                    key={`${project.key}-${journeyIndex}`} 
-                    data-key={project.key} 
-                    data-journeyIndex={journeyIndex}
-                    className="journey">
+                    <div
+                        key={`${project.key}-${journeyIndex}`}
+                        data-key={project.key}
+                        data-journeyIndex={journeyIndex}
+                        className="journey">
                         <div className="steps-grid">
                             <div className="step first-step">
                                 <div className="step-content">
@@ -42,12 +42,12 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                             <div className="arrow">→</div>
                             {journey.steps.map((step, stepIndex) => (
                                 <React.Fragment key={stepIndex}>
-                                    <div 
-                                    className="step" 
-                                    data-key={project.key} 
-                                    data-journeyIndex={journeyIndex}
-                                    data-stepIndex={stepIndex}
-                                    onClick={(e) => handleClick(e)}>
+                                    <div
+                                        className="step"
+                                        data-key={project.key}
+                                        data-journeyIndex={journeyIndex}
+                                        data-stepIndex={stepIndex}
+                                        onClick={(e) => handleClick(e)}>
 
                                         <div className="step-content">
                                             <p className="step-description">{step.description}</p>
@@ -78,4 +78,4 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
     );
 };
 
-export default Journeys;
+export default Journeys;    
