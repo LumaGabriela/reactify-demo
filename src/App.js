@@ -23,130 +23,65 @@ const App = () => {
       visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
       key: "key",
       goalSketch: [
-        {
-          step: 1,
-          description: "Definir os requisitos do aplicativo",
-          tasks: [
-            "Reunir requisitos funcionais e não funcionais",
-            "Identificar as partes interessadas",
-            "Criar um documento de especificação de requisitos"
-          ]
-        },
-        {
-          step: 2,
-          description: "Desenhar a interface do usuário",
-          tasks: [
-            "Criar wireframes para as principais telas",
-            "Desenvolver protótipos de alta fidelidade",
-            "Realizar testes de usabilidade"
-          ]
-        },
-        {
-          step: 3,
-          description: "Implementar a funcionalidade de streaming",
-          tasks: [
-            "Configurar o servidor de streaming",
-            "Desenvolver o player de música",
-            "Integrar o player com o servidor de streaming"
-          ]
-        },
-        {
-          step: 4,
-          description: "Adicionar funcionalidades de playlist",
-          tasks: [
-            "Permitir a criação de playlists",
-            "Implementar a funcionalidade de adicionar/remover músicas",
-            "Desenvolver a funcionalidade de compartilhamento de playlists"
-          ]
-        },
-        {
-          step: 5,
-          description: "Testar e lançar o aplicativo",
-          tasks: [
-            "Realizar testes de integração",
-            "Corrigir bugs encontrados",
-            "Lançar a versão beta para um grupo seleto de usuários",
-            "Lançar a versão final para o público"
-          ]
-        }
+        { step: 0, description: "Definir os requisitos do aplicativo" },
+        { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
+        { step: 2, description: "Identificar as partes interessadas" },
+        { step: 3, description: "Criar um documento de especificação de requisitos" },
+        { step: 4, description: "Desenhar a interface do usuário" },
+        { step: 5, description: "Criar wireframes para as principais telas" },
+        { step: 6, description: "Desenvolver protótipos de alta fidelidade" },
+        { step: 7, description: "Realizar testes de usabilidade" },
+        { step: 8, description: "Implementar a funcionalidade de streaming" },
+        { step: 9, description: "Configurar o servidor de streaming" },
+        { step: 10, description: "Desenvolver o player de música" },
+        { step: 11, description: "Integrar o player com o servidor de streaming" },
+        { step: 12, description: "Adicionar funcionalidades de playlist" },
+        { step: 13, description: "Permitir a criação de playlists" },
+        { step: 14, description: "Implementar a funcionalidade de adicionar/remover músicas" },
+        { step: 15, description: "Desenvolver a funcionalidade de compartilhamento de playlists" },
+        { step: 16, description: "Testar e lançar o aplicativo" },
+        { step: 17, description: "Realizar testes de integração" },
+        { step: 18, description: "Corrigir bugs encontrados" },
+        { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
+        { step: 20, description: "Lançar a versão final para o público" }
       ],
       personas: [],
       journeys: [
         {
           name: "Usuário cria uma conta",
           steps: [
-            {
-              step: 1,
-              description: "Usuário acessa a página de cadastro",
-              tasks: [
-                "Usuário clica no botão 'Sign Up'",
-                "Usuário é redirecionado para a página de cadastro"
-              ]
-            },
-            {
-              step: 2,
-              description: "Usuário preenche o formulário de cadastro",
-              tasks: [
-                "Usuário insere nome, email e senha",
-                "Usuário clica no botão 'Cadastrar'"
-              ]
-            },
-            {
-              step: 3,
-              description: "Usuário confirma o email",
-              tasks: [
-                "Usuário recebe um email de confirmação",
-                "Usuário clica no link de confirmação no email"
-              ]
-            },
-            {
-              step: 4,
-              description: "Usuário faz login",
-              tasks: [
-                "Usuário insere email e senha na página de login",
-                "Usuário clica no botão 'Log In'",
-                "Usuário é redirecionado para a página inicial"
-              ]
-            }
+            { step: 0, description: "Usuário acessa a página de cadastro" },
+            { step: 1, description: "Usuário clica no botão 'Sign Up'" },
+            { step: 2, description: "Usuário é redirecionado para a página de cadastro" },
+            { step: 3, description: "Usuário preenche o formulário de cadastro" },
+            { step: 4, description: "Usuário insere nome, email e senha" },
+            { step: 5, description: "Usuário clica no botão 'Cadastrar'" },
+            { step: 6, description: "Usuário confirma o email" },
+            { step: 7, description: "Usuário recebe um email de confirmação" },
+            { step: 8, description: "Usuário clica no link de confirmação no email" },
+            { step: 9, description: "Usuário faz login" },
+            { step: 10, description: "Usuário insere email e senha na página de login" },
+            { step: 11, description: "Usuário clica no botão 'Log In'" },
+            { step: 12, description: "Usuário é redirecionado para a página inicial" }
           ]
         },
         {
           name: "Usuário cria uma playlist",
           steps: [
-            {
-              step: 1,
-              description: "Usuário acessa a página de playlists",
-              tasks: [
-                "Usuário clica no menu 'Playlists'",
-                "Usuário é redirecionado para a página de playlists"
-              ]
-            },
-            {
-              step: 2,
-              description: "Usuário cria uma nova playlist",
-              tasks: [
-                "Usuário clica no botão 'Nova Playlist'",
-                "Usuário insere o nome da playlist",
-                "Usuário clica no botão 'Criar'"
-              ]
-            },
-            {
-              step: 3,
-              description: "Usuário adiciona músicas à playlist",
-              tasks: [
-                "Usuário pesquisa por músicas",
-                "Usuário clica no botão 'Adicionar' ao lado das músicas desejadas"
-              ]
-            },
-            {
-              step: 4,
-              description: "Usuário compartilha a playlist",
-              tasks: [
-                "Usuário clica no botão 'Compartilhar'",
-                "Usuário escolhe a forma de compartilhamento (link, redes sociais, etc.)",
-                "Usuário envia a playlist para amigos"
-              ]
-            }
+            { step: 0, description: "Usuário acessa a página de playlists" },
+            { step: 1, description: "Usuário clica no menu 'Playlists'" },
+            { step: 2, description: "Usuário é redirecionado para a página de playlists" },
+            { step: 3, description: "Usuário cria uma nova playlist" },
+            { step: 4, description: "Usuário clica no botão 'Nova Playlist'" },
+            { step: 5, description: "Usuário insere o nome da playlist" },
+            { step: 6, description: "Usuário clica no botão 'Criar'" },
+            { step: 7, description: "Usuário adiciona músicas à playlist" },
+            { step: 8, description: "Usuário pesquisa por músicas" },
+            { step: 9, description: "Usuário clica no botão 'Adicionar' ao lado das músicas desejadas" },
+            { step: 10, description: "Usuário compartilha a playlist" },
+            { step: 11, description: "Usuário clica no botão 'Compartilhar'" },
+            { step: 12, description: "Usuário escolhe a forma de compartilhamento (link, redes sociais, etc.)" },
+            { step: 13, description: "Usuário envia a playlist para amigos" }
           ]
         }
       ]
@@ -169,7 +104,6 @@ const App = () => {
       return descriptionModal ? setDescriptionModal(false) : setDescriptionModal(true)
 
     } else if (type === 'journey') {
-      console.log(projectData)
       return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
 
     }

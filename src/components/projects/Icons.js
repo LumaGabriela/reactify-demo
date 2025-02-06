@@ -5,7 +5,7 @@ const ProjectIcon = ({projectData, setModalKey, handleRemove}) => {
         <div  className="project-container mt-5">
         {projectData.map((project) => (
             <div key={project.key}  
-            className = {`project-item text-center ${project.key} `}
+            className = {`project-item text-center ${project.key}`}
             onClick={() => {
                 setModalKey(project.key)
                 handleRemove('description')

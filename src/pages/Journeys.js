@@ -14,13 +14,20 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
     const handleClick = (e) => {
         const stepElement = e.target.closest('.step');
         if (stepElement) {
-            const journeyElement = { ...stepElement.dataset }
-            setJourneyData(journeyElement)
-            handleRemove('journey')
+            const journeyElement = {};
+            for (const key in stepElement.dataset) {
+                if (key === 'journeyindex' || key === 'stepindex') {
+                    journeyElement[key] = Number(stepElement.dataset[key]);
+                } else {
+                    journeyElement[key] = stepElement.dataset[key];
+                }
+            }
+            setJourneyData(journeyElement);
+            handleRemove('journey');
         }
-    }
+    };
 
-    useEffect(() => { console.log(journeyData) }, [journeyData])
+    useEffect(() => { console.log(projectData) }, [journeyData])
 
     return (
         <div>
@@ -34,14 +41,19 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                         data-journeyIndex={journeyIndex}
                         className="journey">
                         <div className="steps-grid">
-                            <div className="step first-step">
-                                <div className="step-content">
-                                    <p className="step-description">{journey.name}</p>
+                            <div className="step-arrow">
+                                <div className="step first-step">
+                                    <div className="step-content">
+                                        <p className="step-description">{journey.name}</p>
+                                    </div>
+
                                 </div>
+                                <div className="arrow first-step">→</div>
                             </div>
-                            <div className="arrow">→</div>
+
                             {journey.steps.map((step, stepIndex) => (
                                 <React.Fragment key={stepIndex}>
+                                    <div className="step-arrow">
                                     <div
                                         className="step"
                                         data-key={project.key}
@@ -56,6 +68,7 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                                     {stepIndex < journey.steps.length - 1 && (
                                         <div className="arrow">→</div>
                                     )}
+                                    </div>
                                 </React.Fragment>
                             ))}
                         </div>
@@ -69,13 +82,14 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                     journeyModal={journeyModal}
                     setJourneyModal={setJourneyModal}
                     projectData={projectData}
-                    moidalKey={modalKey}
+                    setProjectData={setProjectData}
+                    modalKey={modalKey}
                     handleRemove={handleRemove}
                     journeyData={journeyData}
                 />
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Journeys;    
+export default Journeys 

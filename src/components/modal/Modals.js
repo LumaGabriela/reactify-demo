@@ -59,11 +59,11 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
   );
 }
 
-const ProjectDescriptionModal = ({ 
-  descriptionModal, 
-  projectData, 
-  handleRemove, 
-  modalKey 
+const ProjectDescriptionModal = ({
+  descriptionModal,
+  projectData,
+  handleRemove,
+  modalKey
 }) => {
   const project = projectData.find(project => project.key === modalKey)
 
@@ -96,21 +96,25 @@ const ProjectDescriptionModal = ({
 }
 
 const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, setJourneyModal, modalKey, journeyData }) => {
+  const [jValue, setJValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
-  const [currentStep, setCurrentStep] = useState({});
+  const [journey, setJourney] = useState(null);
 
-  useEffect(() => {
-    if (project && journeyData.journeyindex !== undefined && journeyData.stepindex !== undefined) {
-      const journey = project.journeys[journeyData.journeyindex];
-      const step = journey.steps[journeyData.stepindex];
-      setCurrentStep(step);
-    }
-  }, [project, journeyData, journeyModal]);
+
+  useEffect(() => {console.log(journeyData)
+    setJourney(project.journeys[journeyData.journeyindex]);
+
+    // console.log(journey) 
+
+  }, [journeyData, modalKey]);
+
+
 
   const updateJourney = (field, value) => {
-    if (project && journeyData.journeyindex !== undefined && journeyData.stepindex !== undefined) {
+    console.log(project, journeyData)
+    if ((project && journeyData) !== undefined) {
       const updatedProjectData = projectData.map(proj => {
-        if (proj.key === modalKey) {
+        if (proj.key === modalKey) { 
           const updatedJourneys = proj.journeys.map((journey, jIndex) => {
             if (jIndex === parseInt(journeyData.journeyindex)) {
               const updatedSteps = journey.steps.map((step, sIndex) => {
@@ -127,9 +131,11 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         }
         return proj;
       });
+      console.log('Updated Project Data:', updatedProjectData);
       setProjectData(updatedProjectData);
     }
   };
+
 
   return (
     <div
@@ -138,14 +144,15 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('journey')}>
-          <Modal.Title>{project ? project.journeys[journeyData.journeyIndex].name : 'Projeto Não Encontrado'}</Modal.Title>
+
+          {/* <Modal.Title>{project.journeys ? project.journeys[journeyData.journeyIndex].name : 'Projeto Não Encontrado'}</Modal.Title> */}
         </Modal.Header>
 
         <Modal.Body>
-        <Form.Control
+          <Form.Control
             type="text"
-            value={currentStep.name || ''}
-            onChange={(e) => updateJourney('name', e.target.value)}
+            // value={currentStep.name}
+            onChange={(e) => setJValue(e.target.value)}
             placeholder="Nome do passo"
             style={{ cursor: 'text' }}
           />
@@ -154,7 +161,11 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
         <Modal.Footer>
           <Button variant="primary"
-            onClick={() => handleRemove('journey')}
+            onClick={() => {
+              updateJourney('description', jValue)
+              handleRemove('journey')
+            }
+            }
           >Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>

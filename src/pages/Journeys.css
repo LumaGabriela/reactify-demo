@@ -5,24 +5,42 @@
 
 .journeys-grid {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+    box-sizing: border-box;
 }
 
 .journey {
+    display: flex;
+    gap: 10px;
     padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .steps-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
+    grid-template-rows: minmax(9rem, 12rem);
     align-items: center;
     gap: 10px;
+    width: 100%;
+}
+.step-arrow {
+    display: flex;
+    width: 11rem;
+    height: 9rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .step {
-    width: 9rem;
+    width: 1 1 9rem;
     height: 9rem;
     display: flex;
     align-items: center;
@@ -40,14 +58,9 @@
     align-items: center;
 }
 
-.step:first-child {
+.step.first-step {
     background-color: #333;
     color: #fff;
-}
-
-.step:not(:first-child) {
-    background-color: #f0f0f0;
-    color: #333;
 }
 
 .step-description {
@@ -57,4 +70,6 @@
 .arrow {
     font-size: 3rem;
     color: #333;
+    display: block;
+
 }
