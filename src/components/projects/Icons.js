@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router"
 
 const ProjectIcon = ({projectData, setModalKey, handleRemove}) => {
-    
+    const navigate = useNavigate()
     return (
         <div  className="project-container mt-5">
         {projectData.map((project) => (
@@ -8,7 +9,7 @@ const ProjectIcon = ({projectData, setModalKey, handleRemove}) => {
             className = {`project-item text-center ${project.key}`}
             onClick={() => {
                 setModalKey(project.key)
-                handleRemove('description')
+                navigate('/visao-geral' )
             }
         }
             

@@ -34,7 +34,7 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
 
             <div className="journeys-grid">
                 <h1 className='title'>Journeys</h1>
-                {project.journeys.map((journey, journeyIndex) => (
+                {project.journey.map((journey, journeyIndex) => (
                     <div
                         key={`${project.key}-${journeyIndex}`}
                         data-key={project.key}

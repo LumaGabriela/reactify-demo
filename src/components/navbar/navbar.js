@@ -22,7 +22,8 @@ const NavBar = ({modalKey, projectData}) => {
           <Nav className="ms-auto" navbarScroll>
             <Nav.Link href="#signup">Sign Up</Nav.Link>
             <Nav.Link href="#login">Log In</Nav.Link>
-            <NavDropdown title={project ? project.name : "Projeto Teste"} id="basic-nav-dropdown">
+
+            {project && <NavDropdown title={project ? project.name : "Projeto Teste"} id="basic-nav-dropdown">
 
               <NavDropdown.Item onClick={ () => navigate("/visao-geral")}> Visão Geral</NavDropdown.Item>
 
@@ -32,7 +33,7 @@ const NavBar = ({modalKey, projectData}) => {
               <NavDropdown.Item onClick={() => navigate("/personas")}>Personas</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/journeys")}>Journeys</NavDropdown.Item>
 
-            </NavDropdown>
+            </NavDropdown>}
           </Nav>
         </Navbar.Collapse>
       </Container>

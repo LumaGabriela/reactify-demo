@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router'
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router'
 import React, { useState } from 'react'
 ////
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -14,7 +14,7 @@ import VisaoGeral from './pages/VisaoGeral'
 import GoalSketch from './pages/GoalSketch'
 import Personas from './pages/Personas'
 import Journeys from './pages/Journeys'
-
+import UserStories from './pages/UserStories'
 
 const App = () => {
   const [projectData, setProjectData] = useState([
@@ -22,6 +22,7 @@ const App = () => {
       name: "Aplicativo de streaming de música",
       visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
       key: "key",
+      userStory: [],
       goalSketch: [
         { step: 0, description: "Definir os requisitos do aplicativo" },
         { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
@@ -45,8 +46,8 @@ const App = () => {
         { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
         { step: 20, description: "Lançar a versão final para o público" }
       ],
-      personas: [],
-      journeys: [
+      persona: [],
+      journey: [
         {
           name: "Usuário cria uma conta",
           steps: [
@@ -92,6 +93,7 @@ const App = () => {
   const [isProjectVisible, setIsProjectVisible] = useState(false)
   const [descriptionModal, setDescriptionModal] = useState(false)
   const [journeyModal, setJourneyModal] = useState(false)
+  const [storyModal, setStoryModal] = useState(false)
   const [modalKey, setModalKey] = useState('key')
 
 
@@ -100,11 +102,12 @@ const App = () => {
     if (type === 'project') {
       return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
 
-    } else if (type === 'description') {
-      return descriptionModal ? setDescriptionModal(false) : setDescriptionModal(true)
-
     } else if (type === 'journey') {
       return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
+
+    } else if (type === 'userStory') {
+      console.log(storyModal)
+      return storyModal ? setStoryModal(false) : setStoryModal(true)
 
     }
   }
@@ -131,14 +134,28 @@ const App = () => {
             />
           } />
           <Route path='/visao-geral' element={
-            <VisaoGeral />
+            <VisaoGeral 
+            modalKey={modalKey}
+            projectData={projectData}/>
           } />
+
+          <Route path="/user-stories" element={
+            <UserStories 
+              projectData={projectData}
+              handleRemove={handleRemove}
+              setProjectData={setProjectData}
+              storyModal={storyModal}
+            />
+          } />
+
           <Route path="/goal-sketch" element={
             <GoalSketch />
           } />
+
           <Route path="/personas" element={
             <Personas />
           } />
+
           <Route path="/journeys" element={
             <Journeys
               modalKey={modalKey}

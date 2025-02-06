@@ -1,4 +1,4 @@
-import {AddProjectModal, ProjectDescriptionModal} from '../components/modal/Modals'
+import {AddProjectModal} from '../components/modal/Modals'
 import { AddButton } from '../components/button/Buttons'
 import { ProjectIcon } from '../components/projects/Icons'
 
@@ -21,15 +21,6 @@ const  Home = ({
       projectData={projectData}
       setProjectData={setProjectData}
       handleRemove={handleRemove}
-      />
-
-      <ProjectDescriptionModal
-      descriptionModal={descriptionModal}
-      setDescriptionModal={setDescriptionModal}
-      modalKey={modalKey}
-      projectData={projectData}
-      handleRemove={handleRemove}
-      type={'description'}
       />
 
       <AddButton

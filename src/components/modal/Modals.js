@@ -59,52 +59,17 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
   );
 }
 
-const ProjectDescriptionModal = ({
-  descriptionModal,
-  projectData,
-  handleRemove,
-  modalKey
-}) => {
-  const project = projectData.find(project => project.key === modalKey)
-
-  useEffect(() => {
-  }, [descriptionModal])
-
-  return (
-    <div
-      className={"modal show "}
-      style={{ display: descriptionModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
-    >
-      <Modal.Dialog style={{ marginTop: '6rem' }}>
-        <Modal.Header closeButton onClick={() => handleRemove('description')}>
-          <Modal.Title>{project ? project.name : 'Projeto Não Encontrado'}</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
 
 
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="primary"
-            onClick={() => handleRemove('description')}
-          >Salvar</Button>
-        </Modal.Footer>
-      </Modal.Dialog>
-    </div>
-  );
-}
-
-const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, setJourneyModal, modalKey, journeyData }) => {
+const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey, journeyData }) => {
   const [jValue, setJValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
   const [journey, setJourney] = useState(null);
 
 
-  useEffect(() => {console.log(journeyData)
-    setJourney(project.journeys[journeyData.journeyindex]);
+  useEffect(() => {
+    console.log(journeyData)
 
-    // console.log(journey) 
 
   }, [journeyData, modalKey]);
 
@@ -114,8 +79,8 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     console.log(project, journeyData)
     if ((project && journeyData) !== undefined) {
       const updatedProjectData = projectData.map(proj => {
-        if (proj.key === modalKey) { 
-          const updatedJourneys = proj.journeys.map((journey, jIndex) => {
+        if (proj.key === modalKey) {
+          const updatedJourneys = proj.journey.map((journey, jIndex) => {
             if (jIndex === parseInt(journeyData.journeyindex)) {
               const updatedSteps = journey.steps.map((step, sIndex) => {
                 if (sIndex === parseInt(journeyData.stepindex)) {
@@ -127,12 +92,13 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
             }
             return journey;
           });
-          return { ...proj, journeys: updatedJourneys };
+          return { ...proj, journey: updatedJourneys };
         }
         return proj;
       });
       console.log('Updated Project Data:', updatedProjectData);
-      setProjectData(updatedProjectData);
+      setProjectData(updatedProjectData)
+      handleRemove('journey')
     }
   };
 
@@ -153,6 +119,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
             type="text"
             // value={currentStep.name}
             onChange={(e) => setJValue(e.target.value)}
+            onKeyUp={(e) => { if (e.key === 'Enter') updateJourney('description', jValue) }}
             placeholder="Nome do passo"
             style={{ cursor: 'text' }}
           />
@@ -161,11 +128,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
         <Modal.Footer>
           <Button variant="primary"
-            onClick={() => {
-              updateJourney('description', jValue)
-              handleRemove('journey')
-            }
-            }
+            onClick={() => updateJourney('description', jValue)}
           >Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>
@@ -173,4 +136,43 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   );
 }
 
-export { AddProjectModal, ProjectDescriptionModal, JourneyDescriptionModal }
+const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove, modalKey }) => {
+  const [sValue, setSValue] = useState('')
+  const project = projectData.find(project => project.key === modalKey);
+
+  useEffect(() => { console.log(project) }, [project, modalKey]);
+  return (
+    <div
+      className={"modal show "}
+      style={{ display: storyModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    >
+      <Modal.Dialog style={{ marginTop: '6rem' }}>
+        <Modal.Header closeButton onClick={() => handleRemove('userStory')}>
+
+          <Modal.Title>{project ? project.name : 'User Story'}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form.Control
+            type="text"
+
+            onChange={(e) => setSValue(e.target.value)}
+            onKeyUp={(e) => { if (e.key === 'Enter') console.log(sValue) }}
+            placeholder="Nome do passo"
+            style={{ cursor: 'text' }}
+          />
+
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="primary"
+
+            onClick={() => handleRemove('userStory')}
+          >Salvar</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  );
+}
+
+export { AddProjectModal, JourneyDescriptionModal, AddUserStories }
