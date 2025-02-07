@@ -118,11 +118,11 @@ const App = () => {
     if (type === 'project') {
       return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
 
-    } else if (type === 'journey') {
+    } else if (type === 'journey') {      console.log(projectData, modalKey)
       return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
 
     } else if (type === 'userStory') {
-      // console.log(projectData, modalKey)
+
       return storyModal ? setStoryModal(false) : setStoryModal(true)
 
     }

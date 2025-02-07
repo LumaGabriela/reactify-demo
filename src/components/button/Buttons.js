@@ -19,5 +19,24 @@ const AddButton = ({handleRemove, type}) => {
   );
 }
 
+const RemoveButton = ({handleRemove, type}) => {
+  return (
+    <>
+      <Button 
+      id='removeProject' 
+      className="  m-3 btn-lg" 
+      variant="danger" 
+      onClick={ () => handleRemove(type)}>
+      <div>
+      {type === 'project' && <>Remover Projeto</>}
+      {type === 'description' && <>Remover Descrição</>}
+      {type === 'journey' && <>Remover passo</>}
+      {type === 'userStory' && <>Remover User Story</>}
+    </div>
+      </Button>
+    </>
+  )
+} 
 
-export { AddButton }
+
+export { AddButton, RemoveButton }
