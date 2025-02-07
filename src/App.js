@@ -1,14 +1,14 @@
+//// Importa as dependencias
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router'
 import React, { useState } from 'react'
-////
+//// Importa os estilos
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 import './App.css'
 
 
 import NavBar from './components/navbar/NavBar'
 
-////
+//// Importa as paginas 
 import Home from './pages/Home';
 import VisaoGeral from './pages/VisaoGeral'
 import GoalSketch from './pages/GoalSketch'
@@ -22,7 +22,23 @@ const App = () => {
       name: "Aplicativo de streaming de música",
       visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
       key: "key",
-      userStory: [],
+      userStory: [
+        {
+          id: "US01",
+          title: "Como usuário, quero criar uma conta para acessar o aplicativo",
+          type: "user"
+        },
+        {
+          id: "US02",
+          title: "Como usuário, quero criar e gerenciar playlists para organizar minhas músicas",
+          type : "user"
+        },
+        {
+          id: "US03",
+          title: "Como administrador, quero gerenciar usuários para manter o controle de acesso ao sistema",
+          type: "system"
+        }
+      ],
       goalSketch: [
         { step: 0, description: "Definir os requisitos do aplicativo" },
         { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
@@ -106,7 +122,7 @@ const App = () => {
       return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
 
     } else if (type === 'userStory') {
-      console.log(storyModal)
+      // console.log(projectData, modalKey)
       return storyModal ? setStoryModal(false) : setStoryModal(true)
 
     }
@@ -142,6 +158,7 @@ const App = () => {
           <Route path="/user-stories" element={
             <UserStories 
               projectData={projectData}
+              modalKey={modalKey}
               handleRemove={handleRemove}
               setProjectData={setProjectData}
               storyModal={storyModal}

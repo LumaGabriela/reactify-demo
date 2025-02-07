@@ -31,6 +31,7 @@ const NavBar = ({modalKey, projectData}) => {
 
               <NavDropdown.Item onClick={() => navigate("/goal-sketch")}>Goal Sketch</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/personas")}>Personas</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => navigate("/user-stories")}>User Stories</NavDropdown.Item>
               <NavDropdown.Item onClick={() => navigate("/journeys")}>Journeys</NavDropdown.Item>
 
             </NavDropdown>}

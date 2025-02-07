@@ -111,7 +111,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('journey')}>
 
-          {/* <Modal.Title>{project.journeys ? project.journeys[journeyData.journeyIndex].name : 'Projeto Não Encontrado'}</Modal.Title> */}
+          {/* <Modal.Title>{(project.journey && journeyData) ? project.journey[journeyData.journeyindex].name : 'Projeto Não Encontrado'}</Modal.Title> */}
         </Modal.Header>
 
         <Modal.Body>
@@ -140,7 +140,19 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
   const [sValue, setSValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
 
-  useEffect(() => { console.log(project) }, [project, modalKey]);
+
+  const addUserStory = (value) => {
+    const userStories = project.userStory.length
+    const story = { title: value, id: "US"+ 2, type: 'user' }
+    console.log(story, userStories)
+  }
+
+  const updateUserStory = (value) => {}
+
+  
+
+
+  useEffect(() => { console.log(project, modalKey) }, [project, modalKey]);
   return (
     <div
       className={"modal show "}
@@ -149,7 +161,7 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('userStory')}>
 
-          <Modal.Title>{project ? project.name : 'User Story'}</Modal.Title>
+          <Modal.Title>Adicionar User Story</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -158,7 +170,7 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
 
             onChange={(e) => setSValue(e.target.value)}
             onKeyUp={(e) => { if (e.key === 'Enter') console.log(sValue) }}
-            placeholder="Nome do passo"
+            placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
 
@@ -167,7 +179,7 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
         <Modal.Footer>
           <Button variant="primary"
 
-            onClick={() => handleRemove('userStory')}
+            onClick={() => addUserStory(sValue)}
           >Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>
