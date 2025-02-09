@@ -19,24 +19,47 @@ const AddButton = ({handleRemove, type}) => {
   );
 }
 
-const RemoveButton = ({handleRemove, type}) => {
+const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory}) => {
+
+  const handleClick = () => {
+    switch (type) {
+      case 'project':
+        handleRemove(type);
+        break;
+      case 'description':
+        handleRemove(type);
+        break;
+      case 'journey':
+        handleRemove(type);
+        updateJourney('remove');
+        break;
+      case 'userStory':
+        handleRemove(type);
+        updateUserStory('remove');
+        break;
+      default:
+        console.log('Tipo desconhecido');
+    }
+  };
+
   return (
-    <>
+    <div className="remove-button-container">
       <Button 
-      id='removeProject' 
-      className="  m-3 btn-lg" 
-      variant="danger" 
-      onClick={ () => handleRemove(type)}>
-      <div>
-      {type === 'project' && <>Remover Projeto</>}
-      {type === 'description' && <>Remover Descrição</>}
-      {type === 'journey' && <>Remover passo</>}
-      {type === 'userStory' && <>Remover User Story</>}
-    </div>
+        id='removeProject' 
+        className="btn w-100 mt-auto" 
+        variant="danger" 
+        onClick={handleClick}
+      >
+        <div>
+          {type === 'project' && <>Remover Projeto</>}
+          {type === 'description' && <>Remover Descrição</>}
+          {type === 'journey' && <>Remover passo</>}
+          {type === 'userStory' && <>Remover User Story</>}
+        </div>
       </Button>
-    </>
-  )
-} 
+    </div>
+  );
+}
 
 
 export { AddButton, RemoveButton }

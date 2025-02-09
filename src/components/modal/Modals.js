@@ -71,19 +71,35 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
 
   useEffect(() => {
-    if ((project && journeyData) !== undefined) setOperation('description')
-      else setOperation('name')
+    if ( Object.keys(journeyData).length !== 0) setOperation('description')
+
+    else setOperation('name')
   }, [journeyData, project]);
 
   //Atualiza o array das journeys
-  const updateJourney = (field, value) => {
+  const updateJourney = (op) => {
+    const value = jValue
+    const operationType = (op ? op : operation)
 
-    console.log(project, journeyData)
-    switch (field) {
+    switch (operationType) {
       //Adiciona uma journey
       case 'name': {
+        const newJourney = {
+          name: value,
+          steps: []
+        };
 
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            return { ...proj, journey: [...proj.journey, newJourney] };
+          }
+          return proj;
+        });
+
+        setProjectData(updatedProjectData);
       }
+        break;
+
       case 'description': {
         //Atualiza a descrição de uma journey
         const updatedProjectData = projectData.map(proj => {
@@ -92,7 +108,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
               if (jIndex === parseInt(journeyData.journeyindex)) {
                 const updatedSteps = journey.steps.map((step, sIndex) => {
                   if (sIndex === parseInt(journeyData.stepindex)) {
-                    return { ...step, [field]: value };
+                    return { ...step, description: value };
                   }
                   return step;
                 });
@@ -106,6 +122,8 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         });
         setProjectData(updatedProjectData)
       }
+        break;
+
       case 'remove': {
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
@@ -125,9 +143,12 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         setProjectData(updatedProjectData);
 
       }
+        break;
+      default: console.log('Operacao desconhecida')
     }
-    setJourneyData(undefined)
+    setJourneyData({})
     handleRemove('journey')
+    console.log(projectData)  
   };
 
 
@@ -139,7 +160,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => {
           handleRemove('journey')
-          setJourneyData(undefined)
+          setJourneyData({})
         }
         }>
 
@@ -155,25 +176,23 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           <Form.Control
             type="text"
             onChange={(e) => setJValue(e.target.value)}
-            onKeyUp={(e) => { if (e.key === 'Enter') updateJourney('description', jValue) }}
-            placeholder={ () => {
-              if(operation === 'description') {
-                return 'Descrição da jornada'
-              } else {
-                return 'Nome da jornada'
-              }
-            }}
+            onKeyUp={(e) => { if (e.key === 'Enter') updateJourney() }}
+            placeholder='Descrição da jornada'
             style={{ cursor: 'text' }}
           />
 
         </Modal.Body>
 
         <Modal.Footer>
-
+          <RemoveButton
+            handleRemove={handleRemove}
+            type={'journey'}
+            updateJourney={updateJourney}
+          />
           <Button variant="primary"
-            onClick={() => updateJourney('description', jValue)}
+            onClick={() => updateJourney()}
           >Salvar</Button>
-          <RemoveButton/>
+
 
         </Modal.Footer>
       </Modal.Dialog>
@@ -181,18 +200,16 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   );
 }
 
-const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove, modalKey }) => {
+const AddUserStories = ({ projectData, setProjectData, handleRemove, storyModal, modalKey }) => {
   const [sValue, setSValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
+  const [operation, setOperation] = useState('')
 
 
-  const addUserStory = (value) => {
-    const userStories = project.userStory.length
-    const story = { title: value, id: "US" + 2, type: 'user' }
-    console.log(story, userStories)
+
+  const updateUserStory = (op) => { 
+
   }
-
-  const updateUserStory = (value) => { }
 
 
 
@@ -214,7 +231,7 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
             type="text"
 
             onChange={(e) => setSValue(e.target.value)}
-            onKeyUp={(e) => { if (e.key === 'Enter') console.log(sValue) }}
+            onKeyUp={(e) => { if (e.key === 'Enter') updateUserStory() }}
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
@@ -222,9 +239,14 @@ const AddUserStories = ({ projectData, setProjectData, storyModal, handleRemove,
         </Modal.Body>
 
         <Modal.Footer>
+          <RemoveButton
+            handleRemove={handleRemove}
+            type={'userStory'}
+            updateUserStory={updateUserStory}
+          />
           <Button variant="primary"
 
-            onClick={() => addUserStory(sValue)}
+            onClick={() => updateUserStory()}
           >Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>

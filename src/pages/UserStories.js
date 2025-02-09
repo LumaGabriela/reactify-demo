@@ -14,6 +14,7 @@ const UserStories = ({ projectData, setProjectData, storyModal, handleRemove, mo
           <div
             key={index}
             className={`user-story-block ${story.type === 'user' ? 'user-story' : 'system-story'}`}
+            dataset-id={story.id}
           >
             <div className="story-content">
               <p className="story-title">{story.title}</p>
