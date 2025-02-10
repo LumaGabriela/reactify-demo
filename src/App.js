@@ -22,7 +22,7 @@ const App = () => {
       name: "Aplicativo de streaming de música",
       visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
       key: "key",
-      userStory: [
+      stories: [
         {
           id: "US01",
           title: "Como usuário, quero criar uma conta para acessar o aplicativo",

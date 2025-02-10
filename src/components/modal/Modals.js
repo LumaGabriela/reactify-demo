@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { nanoid } from 'nanoid'
 import { RemoveButton } from '../button/Buttons'
+import './Modals.css'
 
 const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove }) => {
   const [pName, setPName] = useState('')
@@ -24,7 +25,6 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
 
   // printa os dados do objeto toda vez que ele é alterado
   useEffect(() => {
-    // console.log(projectData)
   }, [projectData, isVisible])
 
 
@@ -71,21 +71,20 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
 
   useEffect(() => {
-    if ( Object.keys(journeyData).length !== 0) setOperation('description')
+    if (Object.keys(journeyData).length !== 0) setOperation('description')
 
     else setOperation('name')
-  }, [journeyData, project]);
+  }, [journeyData]);
 
   //Atualiza o array das journeys
   const updateJourney = (op) => {
-    const value = jValue
     const operationType = (op ? op : operation)
 
     switch (operationType) {
       //Adiciona uma journey
       case 'name': {
         const newJourney = {
-          name: value,
+          name: jValue,
           steps: []
         };
 
@@ -108,7 +107,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
               if (jIndex === parseInt(journeyData.journeyindex)) {
                 const updatedSteps = journey.steps.map((step, sIndex) => {
                   if (sIndex === parseInt(journeyData.stepindex)) {
-                    return { ...step, description: value };
+                    return { ...step, description: jValue };
                   }
                   return step;
                 });
@@ -148,7 +147,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     }
     setJourneyData({})
     handleRemove('journey')
-    console.log(projectData)  
+    console.log(projectData)
   };
 
 
@@ -200,21 +199,102 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   );
 }
 
-const AddUserStories = ({ projectData, setProjectData, handleRemove, storyModal, modalKey }) => {
+const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, handleRemove, storyModal, modalKey }) => {
   const [sValue, setSValue] = useState('')
+  const [sType, setSType] = useState('')
   const project = projectData.find(project => project.key === modalKey);
   const [operation, setOperation] = useState('')
 
 
+  useEffect(() => {
+    if (storyData !== '') setOperation('description')
+    else setOperation('name')
+  }, [storyData]);
 
-  const updateUserStory = (op) => { 
+  //Renumerar os ids das userstories
+  const renumberUserStories = (stories) => {
+    return stories
+      .sort((a, b) => {
+        const idA = parseInt(a.id.replace('US', ''));
+        const idB = parseInt(b.id.replace('US', ''));
+        return idA - idB;
+      })
+      .map((story, index) => ({
+        ...story,
+        id: `US${(index + 1).toString().padStart(2, '0')}`
+      }));
+  }
+  //Atualiza os valores do array userStory    
+  const updateUserStory = (op) => {
+    const operationType = (op ? op : operation)
+
+    switch (operationType) {
+      //Adiciona uma nova STORY
+      case 'name': {
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            const newStory = {
+              id: `US${(proj.stories.length + 1).toString().padStart(2, '0')}`,
+              title: sValue,
+              type: 'user'
+            };
+
+            const updatedStories = renumberUserStories([
+              ...proj.stories,
+              newStory
+            ]);
+
+            return {
+              ...proj,
+              stories: updatedStories
+            };
+          }
+          return proj;
+        });
+        setProjectData(updatedProjectData);
+      }
+        break;
+
+      case 'description': {
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            const updatedStories = proj.stories.map((story) => {
+              if (story.id === storyData) {
+                return { ...story, title: sValue }
+              }
+              return story
+            })
+            return { ...proj, stories: updatedStories }
+          }
+          return proj
+        })
+        setProjectData(updatedProjectData)
+      }
+        break;
+      case 'remove': {
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            const updatedStories = proj.stories.filter(story => {
+              return story.id !== storyData
+            })
+            return { ...proj, stories: renumberUserStories(updatedStories) }
+          }
+          return proj
+        })
+        setProjectData(updatedProjectData)
+      }
+        break;
+      default: console.log('Operacao desconhecida')
+        break;
+    }
+    setStoryData('')
+    handleRemove('userStory')
 
   }
 
 
+  useEffect(() => console.log(project.stories, sType), [project, modalKey])
 
-
-  useEffect(() => { console.log(project, modalKey) }, [project, modalKey]);
   return (
     <div
       className={"modal show "}
@@ -227,14 +307,25 @@ const AddUserStories = ({ projectData, setProjectData, handleRemove, storyModal,
         </Modal.Header>
 
         <Modal.Body>
+          <>Título da story</>
           <Form.Control
             type="text"
-
             onChange={(e) => setSValue(e.target.value)}
             onKeyUp={(e) => { if (e.key === 'Enter') updateUserStory() }}
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
+          <>Tipo de story</>
+          <select 
+          value={sType}
+          onChange={ (e) => setSType(e.target.value)}
+          className="form-select" 
+          aria-label="Default select example"
+          >
+            <option value="user">Usuário</option>
+            <option value="system">Sistema</option>
+
+          </select>
 
         </Modal.Body>
 
@@ -253,5 +344,6 @@ const AddUserStories = ({ projectData, setProjectData, handleRemove, storyModal,
     </div>
   );
 }
+
 
 export { AddProjectModal, JourneyDescriptionModal, AddUserStories }

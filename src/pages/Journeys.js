@@ -80,7 +80,6 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
         />
         <JourneyDescriptionModal
           journeyModal={journeyModal}
-          setJourneyModal={setJourneyModal}
           projectData={projectData}
           setProjectData={setProjectData}
           modalKey={modalKey}
