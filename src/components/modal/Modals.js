@@ -206,14 +206,44 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
   const [operation, setOperation] = useState('')
 
 
+  //Adiciona efeitos caso as variaveis mudem
   useEffect(() => {
+    //Define sValue para ser o titulo da story clicada
+
+    let foundStory = null;
+    projectData.forEach(proj => {
+      if (proj.key === modalKey) {
+        proj.stories.forEach(story => {
+          if (story.id === storyData) {
+            foundStory = story;
+          }
+        });
+      }
+    })
+    setSValue(foundStory?.title)
+  }, [storyData, storyModal])
+
+  useEffect(() => {
+    //Define o tipo de operação
     if (storyData !== '') setOperation('description')
     else setOperation('name')
-  }, [storyData]);
+  }, [storyData, operation, sValue]);
+  //Deixa o campo sValue e o storyData vazios após o modal se fechar
+  useEffect(() => {
+    if (storyModal === false) { setSValue(''); setStoryData('') }
+  }, [storyModal])
+
+
+
 
   //Renumerar os ids das userstories
-  const renumberUserStories = (stories) => {
-    return stories
+  const renumberStories = (stories) => {
+    // Separar stories por tipo
+    const userStories = stories.filter(story => story.id.startsWith('US'));
+    const systemStories = stories.filter(story => story.id.startsWith('SS'));
+  
+    // Ordenar e renumerar US
+    const numberedUserStories = userStories
       .sort((a, b) => {
         const idA = parseInt(a.id.replace('US', ''));
         const idB = parseInt(b.id.replace('US', ''));
@@ -223,23 +253,40 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         ...story,
         id: `US${(index + 1).toString().padStart(2, '0')}`
       }));
-  }
+  
+    // Ordenar e renumerar SS  
+    const numberedSystemStories = systemStories
+      .sort((a, b) => {
+        const idA = parseInt(a.id.replace('SS', ''));
+        const idB = parseInt(b.id.replace('SS', ''));
+        return idA - idB;
+      })
+      .map((story, index) => ({
+        ...story,
+        id: `SS${(index + 1).toString().padStart(2, '0')}`
+      }));
+  
+    // Combinar os arrays mantendo a ordem
+    return [...numberedUserStories, ...numberedSystemStories];
+  };
   //Atualiza os valores do array userStory    
   const updateUserStory = (op) => {
     const operationType = (op ? op : operation)
 
     switch (operationType) {
       //Adiciona uma nova STORY
-      case 'name': {
+      case 'name': {console.log(sValue, sType)
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
             const newStory = {
-              id: `US${(proj.stories.length + 1).toString().padStart(2, '0')}`,
+              id: sType === 'user' ? 
+              `US${(proj.stories.length + 1).toString().padStart(2, '0')}` 
+              : `SS${(proj.stories.length + 1).toString().padStart(2, '0')}`,
               title: sValue,
-              type: 'user'
+              type: sType
             };
 
-            const updatedStories = renumberUserStories([
+            const updatedStories = renumberStories([
               ...proj.stories,
               newStory
             ]);
@@ -260,7 +307,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
           if (proj.key === modalKey) {
             const updatedStories = proj.stories.map((story) => {
               if (story.id === storyData) {
-                return { ...story, title: sValue }
+                return { ...story, title: sValue, type: sType }
               }
               return story
             })
@@ -277,7 +324,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
             const updatedStories = proj.stories.filter(story => {
               return story.id !== storyData
             })
-            return { ...proj, stories: renumberUserStories(updatedStories) }
+            return { ...proj, stories: renumberStories(updatedStories) }
           }
           return proj
         })
@@ -288,12 +335,13 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         break;
     }
     setStoryData('')
+    setSValue('')
     handleRemove('userStory')
 
   }
 
 
-  useEffect(() => console.log(project.stories, sType), [project, modalKey])
+  useEffect(() => console.log(sType), [sType])
 
   return (
     <div
@@ -310,17 +358,18 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
           <>Título da story</>
           <Form.Control
             type="text"
+            value={sValue}
             onChange={(e) => setSValue(e.target.value)}
             onKeyUp={(e) => { if (e.key === 'Enter') updateUserStory() }}
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
           <>Tipo de story</>
-          <select 
-          value={sType}
-          onChange={ (e) => setSType(e.target.value)}
-          className="form-select" 
-          aria-label="Default select example"
+          <select
+            value={sType}
+            onChange={(e) => setSType(e.target.value)}
+            className="form-select"
+            aria-label="Default select example"
           >
             <option value="user">Usuário</option>
             <option value="system">Sistema</option>

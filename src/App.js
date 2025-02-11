@@ -34,8 +34,13 @@ const App = () => {
           type : "user"
         },
         {
-          id: "US03",
+          id: "SS01",
           title: "Como administrador, quero gerenciar usuários para manter o controle de acesso ao sistema",
+          type: "system"
+        },
+        {
+          id: "SS02",
+          title: "Guaxinim fofo",
           type: "system"
         }
       ],

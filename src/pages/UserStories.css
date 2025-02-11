@@ -4,19 +4,27 @@
     text-align: center;
 }
 
-.user-stories-grid {
+.stories-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.stories-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); 
-    grid-template-rows: minmax(9rem, 12rem);
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); 
+    grid-template-rows: minmax(7rem, 12rem);
     align-items: center;
     gap: 1rem;
-    width: 100%;
+    width: 50%;
     margin: 4rem 0 0 0;
     padding: 0 2rem;
     box-sizing: border-box;
 }
 
-.user-story-block {
+
+.story-block {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
