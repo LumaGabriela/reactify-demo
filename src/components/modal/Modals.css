@@ -2,8 +2,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 11rem;
+
 }
 .form-select {
   cursor: pointer;
+  margin: 0 1rem;
 }

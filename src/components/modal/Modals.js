@@ -66,6 +66,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   const [jValue, setJValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
   const [operation, setOperation] = useState('')
+  const [edit, setEdit] = useState(false)
 
 
 
@@ -74,7 +75,13 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     if (Object.keys(journeyData).length !== 0) setOperation('description')
 
     else setOperation('name')
+    console.log(journeyData)
   }, [journeyData]);
+
+  useEffect(() => {
+    if (operation === 'name') setEdit(true)
+  }, [operation]);
+
 
   //Atualiza o array das journeys
   const updateJourney = (op) => {
@@ -163,11 +170,13 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         }
         }>
 
-          <Modal.Title>{
-            (project.journey && journeyData) ?
-              "Editar passo: " +
-              project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description :
-              'Adicionar Journey'}
+          <Modal.Title>
+            {
+              (Object.keys(journeyData).length > 0) ?
+                "Editar passo: " +
+                project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description :
+                'Adicionar Journey'
+            }
           </Modal.Title>
         </Modal.Header>
 
@@ -201,10 +210,9 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
 const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, handleRemove, storyModal, modalKey }) => {
   const [sValue, setSValue] = useState('')
-  const [sType, setSType] = useState('')
-  const project = projectData.find(project => project.key === modalKey);
+  const [sType, setSType] = useState('user')
   const [operation, setOperation] = useState('')
-
+  const [edit, setEdit] = useState(false)
 
   //Adiciona efeitos caso as variaveis mudem
   useEffect(() => {
@@ -223,8 +231,8 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
     setSValue(foundStory?.title)
   }, [storyData, storyModal])
 
+  //Define o tipo de operação
   useEffect(() => {
-    //Define o tipo de operação
     if (storyData !== '') setOperation('description')
     else setOperation('name')
   }, [storyData, operation, sValue]);
@@ -241,7 +249,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
     // Separar stories por tipo
     const userStories = stories.filter(story => story.id.startsWith('US'));
     const systemStories = stories.filter(story => story.id.startsWith('SS'));
-  
+
     // Ordenar e renumerar US
     const numberedUserStories = userStories
       .sort((a, b) => {
@@ -253,7 +261,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         ...story,
         id: `US${(index + 1).toString().padStart(2, '0')}`
       }));
-  
+
     // Ordenar e renumerar SS  
     const numberedSystemStories = systemStories
       .sort((a, b) => {
@@ -265,7 +273,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         ...story,
         id: `SS${(index + 1).toString().padStart(2, '0')}`
       }));
-  
+
     // Combinar os arrays mantendo a ordem
     return [...numberedUserStories, ...numberedSystemStories];
   };
@@ -275,13 +283,14 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
 
     switch (operationType) {
       //Adiciona uma nova STORY
-      case 'name': {console.log(sValue, sType)
+      case 'name': {
+        console.log(sValue, sType)
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
             const newStory = {
-              id: sType === 'user' ? 
-              `US${(proj.stories.length + 1).toString().padStart(2, '0')}` 
-              : `SS${(proj.stories.length + 1).toString().padStart(2, '0')}`,
+              id: sType === 'user' ?
+                `US${(proj.stories.length + 1).toString().padStart(2, '0')}`
+                : `SS${(proj.stories.length + 1).toString().padStart(2, '0')}`,
               title: sValue,
               type: sType
             };
