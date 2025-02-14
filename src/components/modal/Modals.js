@@ -66,8 +66,12 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   const [jValue, setJValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
   const [operation, setOperation] = useState('')
-  const [edit, setEdit] = useState(false)
-
+  const [bodyHeight, setBodyHeight] = useState('100%');
+  
+  useEffect(() => {
+    const height = document.body.scrollHeight;
+    setBodyHeight(`${height}px`);
+  }, [journeyModal]);
 
 
 
@@ -77,10 +81,6 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     else setOperation('name')
     console.log(journeyData)
   }, [journeyData]);
-
-  useEffect(() => {
-    if (operation === 'name') setEdit(true)
-  }, [operation]);
 
 
   //Atualiza o array das journeys
@@ -161,7 +161,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   return (
     <div
       className={"modal show "}
-      style={{ display: journeyModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display: journeyModal ? 'block' : 'none', position: 'absolute', background: '#00000080', height: bodyHeight }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => {

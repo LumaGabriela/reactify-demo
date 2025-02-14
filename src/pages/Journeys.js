@@ -5,10 +5,10 @@ import { JourneyDescriptionModal } from '../components/modal/Modals'
 
 
 
-const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, setJourneyModal, modalKey }) => {
+const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey }) => {
   const project = projectData.find(project => project.key === modalKey)
   const [journeyData, setJourneyData] = useState({})
-
+  const [stepVisible, setStepVisible] = useState(false)
 
 
   const handleClick = (e) => {
@@ -27,6 +27,10 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
     }
   };
 
+  useEffect(() => {
+    console.log(stepVisible)
+  }, [stepVisible]);
+
 
   return (
     <div>
@@ -41,16 +45,18 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
             className="journey">
             <div className="steps-grid">
               <div className="step-arrow">
-                <div className="step first-step">
+                <div className="step first-step" 
+                onClick={ () => stepVisible ? setStepVisible(false) : setStepVisible(true)}
+                >
                   <div className="step-content">
                     <p className="step-description">{journey.name}</p>
                   </div>
 
                 </div>
-                <div className="arrow first-step">→</div>
+                {stepVisible && (<div className="arrow first-step">→</div>)}
               </div>
 
-              {journey.steps.map((step, stepIndex) => (
+              {stepVisible && journey.steps.map((step, stepIndex) => (
                 <React.Fragment key={stepIndex}>
                   <div className="step-arrow">
                     <div
@@ -64,19 +70,19 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, set
                         <p className="step-description">{step.description}</p>
                       </div>
                     </div>
-                    {stepIndex < journey.steps.length - 1 && (
+                    {(stepIndex < journey.steps.length - 1) && (
                       <div className="arrow">→</div>
                     )}
                   </div>
                 </React.Fragment>
-              ))}
+              )) }
             </div>
           </div>
         ))}
         <AddButton
           handleRemove={handleRemove}
           type={'journey'}
-    
+
         />
         <JourneyDescriptionModal
           journeyModal={journeyModal}
