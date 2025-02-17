@@ -25,7 +25,7 @@
 .steps-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); 
-    grid-template-rows: minmax(9rem, 12rem);
+    grid-template-rows: minmax(9rem, 1fr);
     align-items: center;
     gap: 10px;
     width: 100%;
@@ -72,4 +72,18 @@
     color: #333;
     display: block;
 
+}
+.add-step-button {
+  width: 9rem;
+  height: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0 3px;
+  border: 1px solid #333;
+  background-color: #f0f0f0;
+  font-size: 16px;
 }

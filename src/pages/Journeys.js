@@ -8,8 +8,14 @@ import { JourneyDescriptionModal } from '../components/modal/Modals'
 const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey }) => {
   const project = projectData.find(project => project.key === modalKey)
   const [journeyData, setJourneyData] = useState({})
-  const [stepVisible, setStepVisible] = useState(false)
-
+  const [visibleJourneys, setVisibleJourneys] = useState({})
+  const [operation, setOperation] = useState('')
+  const toggleJourneyVisibility = (journeyIndex) => {
+    setVisibleJourneys(prev => ({
+      ...prev,
+      [journeyIndex]: !prev[journeyIndex]
+    }));
+  };
 
   const handleClick = (e) => {
     const stepElement = e.target.closest('.step');
@@ -23,14 +29,21 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
         }
       }
       setJourneyData(journeyElement);
+      setOperation('description')
       handleRemove('journey');
     }
   };
 
-  useEffect(() => {
-    console.log(stepVisible)
-  }, [stepVisible]);
 
+  const addStep = (journeyIndex) => {
+    setJourneyData({
+      journeyindex: journeyIndex,
+      stepindex: project.journey[journeyIndex].steps.length ,
+      description: ''
+    });
+    setOperation('add-step')
+    handleRemove('journey');
+  }
 
   return (
     <div>
@@ -42,21 +55,16 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
             key={`${project.key}-${journeyIndex}`}
             data-key={project.key}
             data-journeyIndex={journeyIndex}
-            className="journey">
+            className="journey"
+          >
+            <div className="step-arrow">
+            <div className='step first-step' onClick={() => toggleJourneyVisibility(journeyIndex)}>
+              {journey.name} 
+            </div>
+            {visibleJourneys[journeyIndex] ? (<div className="arrow">→</div>) : '' }
+            </div>
             <div className="steps-grid">
-              <div className="step-arrow">
-                <div className="step first-step" 
-                onClick={ () => stepVisible ? setStepVisible(false) : setStepVisible(true)}
-                >
-                  <div className="step-content">
-                    <p className="step-description">{journey.name}</p>
-                  </div>
-
-                </div>
-                {stepVisible && (<div className="arrow first-step">→</div>)}
-              </div>
-
-              {stepVisible && journey.steps.map((step, stepIndex) => (
+              {visibleJourneys[journeyIndex] && journey.steps.map((step, stepIndex) => (
                 <React.Fragment key={stepIndex}>
                   <div className="step-arrow">
                     <div
@@ -64,8 +72,8 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
                       data-key={project.key}
                       data-journeyIndex={journeyIndex}
                       data-stepIndex={stepIndex}
-                      onClick={(e) => handleClick(e)}>
-
+                      onClick={(e) => handleClick(e)}
+                    >
                       <div className="step-content">
                         <p className="step-description">{step.description}</p>
                       </div>
@@ -75,10 +83,16 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
                     )}
                   </div>
                 </React.Fragment>
-              )) }
+              ))}
+              {visibleJourneys[journeyIndex] && (
+                <div className="step-arrow">
+                  <button className="add-step-button" onClick={() => addStep(journeyIndex)}>Adicionar Passo</button>
+                </div>
+              )}
             </div>
           </div>
         ))}
+        
         <AddButton
           handleRemove={handleRemove}
           type={'journey'}
@@ -92,6 +106,8 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
           handleRemove={handleRemove}
           journeyData={journeyData}
           setJourneyData={setJourneyData}
+          operation={operation}
+          setOperation={setOperation}
         />
       </div>
     </div>

@@ -62,26 +62,37 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
 
 
 
-const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey, journeyData, setJourneyData }) => {
+const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
   const project = projectData.find(project => project.key === modalKey);
-  const [operation, setOperation] = useState('')
   const [bodyHeight, setBodyHeight] = useState('100%');
-  
+
+  //Torna a altura da sombra do modal variavel 
   useEffect(() => {
     const height = document.body.scrollHeight;
     setBodyHeight(`${height}px`);
+    if (!journeyModal) setJourneyData({})
   }, [journeyModal]);
 
-
-
   useEffect(() => {
-    if (Object.keys(journeyData).length !== 0) setOperation('description')
-
+    if (operation !== '' && Object.keys(journeyData).length !== 0) void 0
+    else if (Object.keys(journeyData).length !== 0) setOperation('description')
     else setOperation('name')
-    console.log(journeyData)
-  }, [journeyData]);
+  }, [journeyData])
+  
 
+
+  const getPlaceholder = () => {
+    if (operation === 'add-step') {
+      return 'Descreva o passo';
+    } else if (operation === 'description' && Object.keys(journeyData).length > 0) {
+      return 'Descreva o passo';
+    } else if (operation === 'name') {
+      return 'Nome da jornada';
+    } else {
+      return 'Digite aqui';
+    }
+  }
 
   //Atualiza o array das journeys
   const updateJourney = (op) => {
@@ -106,8 +117,9 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
       }
         break;
 
+      //Atualiza a descrição de uma journey
       case 'description': {
-        //Atualiza a descrição de uma journey
+
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
             const updatedJourneys = proj.journey.map((journey, jIndex) => {
@@ -129,7 +141,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         setProjectData(updatedProjectData)
       }
         break;
-
+      //Remove um passo de uma journey
       case 'remove': {
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
@@ -150,14 +162,29 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
 
       }
         break;
+      //Adiciona um passo na journey selecionada
+      case 'add-step': {
+        const newStep = { step: journeyData.stepindex, description: jValue };
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            const journeyIndex = parseInt(journeyData.journeyindex);
+            const updatedJourneys = [...proj.journey];
+            updatedJourneys[journeyIndex].steps.push(newStep);
+
+            return { ...proj, journey: updatedJourneys };
+          }
+          return proj;
+        });
+        setProjectData(updatedProjectData);
+
+      }
+        break;
       default: console.log('Operacao desconhecida')
     }
     setJourneyData({})
     handleRemove('journey')
-    console.log(projectData)
-  };
-
-
+    console.log(operationType, projectData)
+  }
   return (
     <div
       className={"modal show "}
@@ -171,12 +198,10 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         }>
 
           <Modal.Title>
-            {
-              (Object.keys(journeyData).length > 0) ?
-                "Editar passo: " +
-                project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description :
-                'Adicionar Journey'
-            }
+            {(operation === 'add-step') && ("Adicionar passo")}
+            {(Object.keys(journeyData).length > 0 && operation === 'description') && ("Editar passo: " + project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description)}
+            {(operation === 'name') && ('Adicionar Journey')}
+
           </Modal.Title>
         </Modal.Header>
 
@@ -185,7 +210,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
             type="text"
             onChange={(e) => setJValue(e.target.value)}
             onKeyUp={(e) => { if (e.key === 'Enter') updateJourney() }}
-            placeholder='Descrição da jornada'
+            placeholder={getPlaceholder()}
             style={{ cursor: 'text' }}
           />
 
