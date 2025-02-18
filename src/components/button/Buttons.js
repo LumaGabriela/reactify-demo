@@ -1,25 +1,25 @@
 import Button from 'react-bootstrap/Button'
 
-const AddButton = ({handleRemove, type}) => {
+const AddButton = ({ handleRemove, type }) => {
   return (
     <>
-      <Button 
-      id='addProject' 
-      className="position-fixed bottom-0 end-0 m-3 btn-lg" 
-      variant="primary" 
-      onClick={ () => handleRemove(type)}>
-      <div>
-      {type === 'project' && <>Adicionar Projeto</>}
-      {type === 'description' && <>Adicionar Descrição</>}
-      {type === 'journey' && <>Adicionar journey</>}
-      {type === 'userStory' && <>Adicionar User Story</>}
-    </div>
+      <Button
+        id='addProject'
+        className="position-fixed bottom-0 end-0 m-3 btn-lg"
+        variant="primary"
+        onClick={() => handleRemove(type)}>
+        <div>
+          {type === 'project' && <>Adicionar Projeto</>}
+          {type === 'description' && <>Adicionar Descrição</>}
+          {type === 'journey' && <>Adicionar journey</>}
+          {type === 'userStory' && <>Adicionar User Story</>}
+        </div>
       </Button>
     </>
   );
 }
 
-const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory}) => {
+const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) => {
 
   const handleClick = () => {
     switch (type) {
@@ -27,8 +27,11 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory}) => 
         break;
       case 'description':
         break;
-      case 'journey':
-        updateJourney('remove');
+      case 'remove-journey-step':
+        updateJourney('remove-journey-step');
+        break;
+      case 'remove-journey':
+        updateJourney('remove-journey');
         break;
       case 'userStory':
         updateUserStory('remove');
@@ -41,16 +44,17 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory}) => 
 
   return (
     <div className="remove-button-container">
-      <Button 
-        id='removeProject' 
-        className="btn w-100 mt-auto" 
-        variant="danger" 
+      <Button
+        id='removeProject'
+        className="btn w-100 mt-auto"
+        variant="danger"
         onClick={handleClick}
       >
         <div>
           {type === 'project' && <>Remover Projeto</>}
           {type === 'description' && <>Remover Descrição</>}
-          {type === 'journey' && <>Remover passo</>}
+          {type === 'remove-journey-step' && <>Remover passo</>}
+          {type === 'remove-journey' && <>Remover journey</>}
           {type === 'userStory' && <>Remover User Story</>}
         </div>
       </Button>

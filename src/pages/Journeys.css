@@ -36,7 +36,7 @@
     height: 9rem;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .step {
@@ -68,7 +68,7 @@
 }
 
 .arrow {
-    font-size: 3rem;
+    font-size: 2rem;
     color: #333;
     display: block;
 

@@ -60,10 +60,9 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
   );
 }
 
-
-
 const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
+  const [removeType, setRemoveType] = useState('')
   const project = projectData.find(project => project.key === modalKey);
   const [bodyHeight, setBodyHeight] = useState('100%');
 
@@ -71,16 +70,30 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   useEffect(() => {
     const height = document.body.scrollHeight;
     setBodyHeight(`${height}px`);
-    if (!journeyModal) setJourneyData({})
+    if (!journeyModal) {
+      setJourneyData({})
+      setJValue('')
+    }
   }, [journeyModal]);
 
+  //Define o tipo de botao remove
+  useEffect(() => {console.log(operation)
+    switch(operation) {
+      case 'remove-journey': setRemoveType(operation)
+      break
+      case 'description': setRemoveType(operation)
+      break
+    }
+  }, [operation])
+  //Define o valor de operation
   useEffect(() => {
+    //Caso haja valor previo (remove ou add-step), manter o valor
     if (operation !== '' && Object.keys(journeyData).length !== 0) void 0
+    //caso não e o journeyData tenha valores definidos, operacao sera atualizar descricao
     else if (Object.keys(journeyData).length !== 0) setOperation('description')
+    //do contrario, a operaccao sera de adicionar uma nova journey
     else setOperation('name')
   }, [journeyData])
-  
-
 
   const getPlaceholder = () => {
     if (operation === 'add-step') {
@@ -92,6 +105,17 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     } else {
       return 'Digite aqui';
     }
+  }
+  const getTitle = () => {
+    if (operation === 'add-step') {
+      return 'Adicionar novo passo';
+    } else if (operation === 'description' && Object.keys(journeyData).length > 0) {
+      return `Editar passo: ${project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description}`
+    } else if (operation === 'name') {
+      return 'Nome da jornada';
+    }else if (operation === 'remove-journey'){
+      return 'Deseja remover a jornada?'
+      }
   }
 
   //Atualiza o array das journeys
@@ -142,7 +166,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
       }
         break;
       //Remove um passo de uma journey
-      case 'remove': {
+      case 'remove-journey-step': {
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
             const updatedJourneys = proj.journey.map((journey, jIndex) => {
@@ -160,6 +184,20 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         });
         setProjectData(updatedProjectData);
 
+      }
+        break;
+      //Remove a journey por inteiro
+      case 'remove-journey': {
+        const updatedProjectData = projectData.map(proj => {
+          if (proj.key === modalKey) {
+            const updatedJourneys = proj.journey.filter((journey, jIndex) => {
+              return jIndex !== parseInt(journeyData.journeyindex)
+            });
+            return { ...proj, journey: updatedJourneys };
+          }
+          return proj;
+        });
+        setProjectData(updatedProjectData)
       }
         break;
       //Adiciona um passo na journey selecionada
@@ -185,6 +223,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     handleRemove('journey')
     console.log(operationType, projectData)
   }
+
   return (
     <div
       className={"modal show "}
@@ -197,31 +236,28 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
         }
         }>
 
-          <Modal.Title>
-            {(operation === 'add-step') && ("Adicionar passo")}
-            {(Object.keys(journeyData).length > 0 && operation === 'description') && ("Editar passo: " + project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description)}
-            {(operation === 'name') && ('Adicionar Journey')}
-
-          </Modal.Title>
+          <Modal.Title> {getTitle()} </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
+          {(operation !== 'remove-journey') &&
           <Form.Control
+            value={jValue}
             type="text"
             onChange={(e) => setJValue(e.target.value)}
             onKeyUp={(e) => { if (e.key === 'Enter') updateJourney() }}
             placeholder={getPlaceholder()}
             style={{ cursor: 'text' }}
-          />
+          />}
 
         </Modal.Body>
 
         <Modal.Footer>
-          <RemoveButton
+          {(operation !== 'add-step') && <RemoveButton
             handleRemove={handleRemove}
-            type={'journey'}
+            type={removeType}
             updateJourney={updateJourney}
-          />
+          />}
           <Button variant="primary"
             onClick={() => updateJourney()}
           >Salvar</Button>
@@ -335,7 +371,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         setProjectData(updatedProjectData);
       }
         break;
-
+      //Altera a descrição da story
       case 'description': {
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
@@ -352,6 +388,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         setProjectData(updatedProjectData)
       }
         break;
+      //Remove a story
       case 'remove': {
         const updatedProjectData = projectData.map(proj => {
           if (proj.key === modalKey) {
@@ -373,9 +410,6 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
     handleRemove('userStory')
 
   }
-
-
-  useEffect(() => console.log(sType), [sType])
 
   return (
     <div
@@ -413,6 +447,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
         </Modal.Body>
 
         <Modal.Footer>
+
           <RemoveButton
             handleRemove={handleRemove}
             type={'userStory'}
@@ -427,6 +462,5 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
     </div>
   );
 }
-
 
 export { AddProjectModal, JourneyDescriptionModal, AddUserStories }

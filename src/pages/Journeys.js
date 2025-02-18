@@ -34,7 +34,7 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
     }
   };
 
-
+  //Abre o modal para confirmar a adicao do passo novo
   const addStep = (journeyIndex) => {
     setJourneyData({
       journeyindex: journeyIndex,
@@ -42,6 +42,16 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
       description: ''
     });
     setOperation('add-step')
+    handleRemove('journey');
+  }
+  //Abre o modal para confirmar a remocao da journey
+  const removeJourney = (journeyIndex) => {
+    setJourneyData({
+      journeyindex: journeyIndex,
+      stepindex: null ,
+      description: null
+    });
+    setOperation('remove-journey')
     handleRemove('journey');
   }
 
@@ -54,7 +64,7 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
           <div
             key={`${project.key}-${journeyIndex}`}
             data-key={project.key}
-            data-journeyIndex={journeyIndex}
+            data-journeyindex={journeyIndex}
             className="journey"
           >
             <div className="step-arrow">
@@ -70,8 +80,8 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
                     <div
                       className="step"
                       data-key={project.key}
-                      data-journeyIndex={journeyIndex}
-                      data-stepIndex={stepIndex}
+                      data-journeyindex={journeyIndex}
+                      data-stepindex={stepIndex}
                       onClick={(e) => handleClick(e)}
                     >
                       <div className="step-content">
@@ -85,9 +95,15 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
                 </React.Fragment>
               ))}
               {visibleJourneys[journeyIndex] && (
+                <>
                 <div className="step-arrow">
-                  <button className="add-step-button" onClick={() => addStep(journeyIndex)}>Adicionar Passo</button>
-                </div>
+                    <button className="add-step-button" onClick={() => removeJourney(journeyIndex)}>Remover Journey</button>
+                  </div>
+                  <div className="step-arrow">
+                    <button className="add-step-button" onClick={() => addStep(journeyIndex)}>Adicionar Passo</button>
+                  </div>
+                  
+                </>
               )}
             </div>
           </div>

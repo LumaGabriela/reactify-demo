@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import './VisaoGeral.css'
 import { useNavigate } from 'react-router'
+import { FormControl } from 'react-bootstrap'
 
 const VisaoGeral = ({ modalKey, projectData }) => {
   const project = projectData.find(project => project.key === modalKey)
@@ -10,14 +11,21 @@ const VisaoGeral = ({ modalKey, projectData }) => {
   return (
     <Container className="visao-geral-container">
       <h1 className="visao-geral-title">Visão Geral</h1>
+      <h3>Descreva o projeto</h3>
+      <FormControl
+      style={{ cursor: 'text' }}
+      type='text'
+      placeholder='Este projeto...'
+      />
+
       <div className="visao-geral-buttons">
         {project && (
           <>
             <Button variant="primary" className="visao-geral-button bg-purple"
-            onClick={() => navigate('/goal-sketches')}>
+            onClick={() => navigate('/goal-sketch')}>
               Goal Sketchs
             </Button>
-            <Button variant="primary" className="visao-geral-button bg-danger"
+            <Button variant="primary" className="visao-geral-button bg-purple"
             onClick={() => navigate('/user-stories')}>
               User Stories
             </Button>
