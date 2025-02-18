@@ -1,22 +1,36 @@
 //// Importa as dependencias
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router'
 import React, { useState } from 'react'
+import { nanoid } from 'nanoid'
 //// Importa os estilos
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-
-
+//Importa componentes
 import NavBar from './components/navbar/NavBar'
 
-//// Importa as paginas 
+// Importa as paginas 
 import Home from './pages/Home';
 import VisaoGeral from './pages/VisaoGeral'
 import GoalSketch from './pages/GoalSketch'
 import Personas from './pages/Personas'
 import Journeys from './pages/Journeys'
 import UserStories from './pages/UserStories'
+import Config from './pages/Config'
+import Usuarios from './pages/Usuarios'
 
 const App = () => {
+  const [users, setUsers] = useState([
+    {
+      name: 'Luma',
+      key: nanoid(),
+      projects: [],
+      role: 'user',
+      permissions: {
+        write: false,
+        read: true,
+      }
+    }
+  ])
   const [projectData, setProjectData] = useState([
     {
       name: "Aplicativo de streaming de música",
@@ -109,38 +123,47 @@ const App = () => {
       ]
     }
   ])
-
-
   const [isProjectVisible, setIsProjectVisible] = useState(false)
   const [descriptionModal, setDescriptionModal] = useState(false)
   const [journeyModal, setJourneyModal] = useState(false)
   const [storyModal, setStoryModal] = useState(false)
   const [modalKey, setModalKey] = useState('key')
 
-
-
   const handleRemove = (type) => {
-    if (type === 'project') {
-      return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
-
-    } else if (type === 'journey') {  
-      return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
-
-    } else if (type === 'userStory') {
-
-      return storyModal ? setStoryModal(false) : setStoryModal(true)
-
+    switch (type) {
+      case 'project': return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
+        break;
+      case 'journey': return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
+        break;
+      case 'userStory': return storyModal ? setStoryModal(false) : setStoryModal(true)
+        break;
+        case 'user': return console.log('Menu de usuarios')
+        break;
+      default: console.log('Operação não encontrada')
     }
-  }
+}
+
+
   return (
     <Router>
       <div className="App">
-
         <NavBar
           modalKey={modalKey}
           projectData={projectData}
         />
         <Routes>
+          <Route path='/config'
+            element={Config}
+
+          />
+          <Route path='/usuarios'
+            element={
+            <Usuarios
+            handleRemove={handleRemove}
+            users={users}
+            />}
+
+          />
           <Route path='/' element={
             <Home
               isProjectVisible={isProjectVisible}

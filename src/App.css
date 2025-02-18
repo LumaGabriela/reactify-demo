@@ -1,8 +1,17 @@
+:root {
+
+  --purple-primary: #441b97;
+  --black-primary: #1a1a1a;
+  --red-primary: #dc3545;
+  --blue-primary: #5f84ff;
+  --white-primary: #ffffff;
+}
 .App {
   box-sizing: border-box;
 }
-.bg-purple{
-  background: #712cf9 ;
+
+.bg-purple {
+  background: var(--purple-primary);
 }
 
 .bg-blue {

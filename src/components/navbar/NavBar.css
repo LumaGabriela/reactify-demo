@@ -1,0 +1,10 @@
+.nav-divider {
+  margin: 0.5rem 0;
+  border-color: #000000ea;
+  width: 100%;
+}
+
+.offcanvas-body, .offcanvas-header{
+  background: var(--purple-primary);
+  color: var(--white-primary);
+}

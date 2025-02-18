@@ -69,7 +69,8 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   //Torna a altura da sombra do modal variavel 
   useEffect(() => {
     const height = document.body.scrollHeight;
-    setBodyHeight(`${height}px`);
+    setBodyHeight(`${height}px`)
+    //Se o modal está fechado, redefine os valores da journey
     if (!journeyModal) {
       setJourneyData({})
       setJValue('')
@@ -95,6 +96,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     else setOperation('name')
   }, [journeyData])
 
+  //Seletor de valores para o placeholder
   const getPlaceholder = () => {
     if (operation === 'add-step') {
       return 'Descreva o passo';
@@ -106,6 +108,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
       return 'Digite aqui';
     }
   }
+  //Seletor de valores para o titulo
   const getTitle = () => {
     if (operation === 'add-step') {
       return 'Adicionar novo passo';

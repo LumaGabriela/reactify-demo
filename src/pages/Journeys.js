@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import './Journeys.css';
+import React, { useEffect, useState } from 'react'
+import './Journeys.css'
 import { AddButton } from '../components/button/Buttons'
 import { JourneyDescriptionModal } from '../components/modal/Modals'
 

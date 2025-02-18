@@ -13,6 +13,7 @@ const AddButton = ({ handleRemove, type }) => {
           {type === 'description' && <>Adicionar Descrição</>}
           {type === 'journey' && <>Adicionar journey</>}
           {type === 'userStory' && <>Adicionar User Story</>}
+          {type === 'user' && <>Adicionar Usuario</>}
         </div>
       </Button>
     </>
