@@ -1,5 +1,6 @@
 //// Importa as dependencias
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router'
+
 import React, { useState } from 'react'
 import { nanoid } from 'nanoid'
 //// Importa os estilos
@@ -17,16 +18,27 @@ import Journeys from './pages/Journeys'
 import UserStories from './pages/UserStories'
 import Config from './pages/Config'
 import Usuarios from './pages/Usuarios'
+import Usuario from './pages/Usuario'
 
 const App = () => {
   const [users, setUsers] = useState([
     {
       name: 'Luma',
-      key: nanoid(),
+      key: 'chave',
       projects: [],
       role: 'user',
       permissions: {
         write: false,
+        read: true,
+      }
+    },
+    {
+      name: 'Raccoon',
+      key: nanoid(),
+      projects: [],
+      role: 'admin',
+      permissions: {
+        write: true,
         read: true,
       }
     }
@@ -45,7 +57,7 @@ const App = () => {
         {
           id: "US02",
           title: "Como usuário, quero criar e gerenciar playlists para organizar minhas músicas",
-          type : "user"
+          type: "user"
         },
         {
           id: "SS01",
@@ -127,8 +139,14 @@ const App = () => {
   const [descriptionModal, setDescriptionModal] = useState(false)
   const [journeyModal, setJourneyModal] = useState(false)
   const [storyModal, setStoryModal] = useState(false)
+  const [userModal, setUserModal] = useState(false)
   const [modalKey, setModalKey] = useState('key')
 
+  // Lógica de autenticação
+  const PrivateRoute = ({ children }) => {
+    const isAuthenticated = true; 
+    return isAuthenticated ? children : <Navigate to="/" />;
+  }
   const handleRemove = (type) => {
     switch (type) {
       case 'project': return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
@@ -137,11 +155,11 @@ const App = () => {
         break;
       case 'userStory': return storyModal ? setStoryModal(false) : setStoryModal(true)
         break;
-        case 'user': return console.log('Menu de usuarios')
+      case 'user': return userModal ? setUserModal(false) : setUserModal(true)
         break;
       default: console.log('Operação não encontrada')
     }
-}
+  }
 
 
   return (
@@ -158,12 +176,21 @@ const App = () => {
           />
           <Route path='/usuarios'
             element={
-            <Usuarios
-            handleRemove={handleRemove}
-            users={users}
-            />}
+              <Usuarios
+                handleRemove={handleRemove}
+                users={users}
+              />}
 
           />
+          <Route path='/usuarios/:userId'
+            element={
+              <PrivateRoute>
+                <Usuario
+                users={users}
+                setUsers={setUsers}
+              />
+              </PrivateRoute>
+              }/>
           <Route path='/' element={
             <Home
               isProjectVisible={isProjectVisible}
@@ -178,13 +205,13 @@ const App = () => {
             />
           } />
           <Route path='/visao-geral' element={
-            <VisaoGeral 
-            modalKey={modalKey}
-            projectData={projectData}/>
+            <VisaoGeral
+              modalKey={modalKey}
+              projectData={projectData} />
           } />
 
           <Route path="/user-stories" element={
-            <UserStories 
+            <UserStories
               projectData={projectData}
               modalKey={modalKey}
               handleRemove={handleRemove}

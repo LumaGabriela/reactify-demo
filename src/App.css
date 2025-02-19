@@ -5,6 +5,7 @@
   --red-primary: #dc3545;
   --blue-primary: #5f84ff;
   --white-primary: #ffffff;
+  --grey-primary: #707478;
 }
 .App {
   box-sizing: border-box;

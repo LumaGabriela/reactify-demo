@@ -5,7 +5,7 @@ const AddButton = ({ handleRemove, type }) => {
     <>
       <Button
         id='addProject'
-        className="position-fixed bottom-0 end-0 m-3 btn-lg"
+        className="bottom-0 end-0 m-3 "
         variant="primary"
         onClick={() => handleRemove(type)}>
         <div>
@@ -63,5 +63,16 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
   );
 }
 
+const EditButton = ({  }) => {
+  return (
+    <Button
+      className="btn w-30 mt-auto"
+      variant="secondary"
+      onClick={()=> console.log('Botao de editar')}
+    >
+      Editar
+    </Button>
+  );
+}
 
-export { AddButton, RemoveButton }
+export { AddButton, RemoveButton, EditButton }
