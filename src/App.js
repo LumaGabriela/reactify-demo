@@ -163,7 +163,7 @@ const App = () => {
 
 
   return (
-    <Router>
+    <Router basename='/reactify-demo'>
       <div className="App">
         <NavBar
           modalKey={modalKey}
