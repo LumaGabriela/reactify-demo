@@ -5,8 +5,8 @@ import { JourneyDescriptionModal } from '../components/modal/Modals'
 
 
 
-const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey }) => {
-  const project = projectData.find(project => project.key === modalKey)
+const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKey }) => {
+  const project = userData.projects?.find(project => project.key === projectKey)
   const [journeyData, setJourneyData] = useState({})
   const [visibleJourneys, setVisibleJourneys] = useState({})
   const [operation, setOperation] = useState('')
@@ -116,9 +116,9 @@ const Journeys = ({ projectData, setProjectData, handleRemove, journeyModal, mod
         />
         <JourneyDescriptionModal
           journeyModal={journeyModal}
-          projectData={projectData}
-          setProjectData={setProjectData}
-          modalKey={modalKey}
+          userData={userData}
+          setUserData={setUserData}
+          projectKey={projectKey}
           handleRemove={handleRemove}
           journeyData={journeyData}
           setJourneyData={setJourneyData}

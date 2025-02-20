@@ -24,8 +24,99 @@ const App = () => {
   const [users, setUsers] = useState([
     {
       name: 'Luma',
-      key: 'chave',
-      projects: [],
+      key: 'user-key',
+      projects: [
+        {
+          name: "Aplicativo de streaming de música",
+          visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
+          key: "project-key",
+          stories: [
+            {
+              id: "US01",
+              title: "Como usuário, quero criar uma conta para acessar o aplicativo",
+              type: "user"
+            },
+            {
+              id: "US02",
+              title: "Como usuário, quero criar e gerenciar playlists para organizar minhas músicas",
+              type: "user"
+            },
+            {
+              id: "SS01",
+              title: "Como administrador, quero gerenciar usuários para manter o controle de acesso ao sistema",
+              type: "system"
+            },
+            {
+              id: "SS02",
+              title: "Guaxinim fofo",
+              type: "system"
+            }
+          ],
+          goalSketch: [
+            { step: 0, description: "Definir os requisitos do aplicativo" },
+            { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
+            { step: 2, description: "Identificar as partes interessadas" },
+            { step: 3, description: "Criar um documento de especificação de requisitos" },
+            { step: 4, description: "Desenhar a interface do usuário" },
+            { step: 5, description: "Criar wireframes para as principais telas" },
+            { step: 6, description: "Desenvolver protótipos de alta fidelidade" },
+            { step: 7, description: "Realizar testes de usabilidade" },
+            { step: 8, description: "Implementar a funcionalidade de streaming" },
+            { step: 9, description: "Configurar o servidor de streaming" },
+            { step: 10, description: "Desenvolver o player de música" },
+            { step: 11, description: "Integrar o player com o servidor de streaming" },
+            { step: 12, description: "Adicionar funcionalidades de playlist" },
+            { step: 13, description: "Permitir a criação de playlists" },
+            { step: 14, description: "Implementar a funcionalidade de adicionar/remover músicas" },
+            { step: 15, description: "Desenvolver a funcionalidade de compartilhamento de playlists" },
+            { step: 16, description: "Testar e lançar o aplicativo" },
+            { step: 17, description: "Realizar testes de integração" },
+            { step: 18, description: "Corrigir bugs encontrados" },
+            { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
+            { step: 20, description: "Lançar a versão final para o público" }
+          ],
+          persona: [],
+          journey: [
+            {
+              name: "Usuário cria uma conta",
+              steps: [
+                { step: 0, description: "Usuário acessa a página de cadastro" },
+                { step: 1, description: "Usuário clica no botão 'Sign Up'" },
+                { step: 2, description: "Usuário é redirecionado para a página de cadastro" },
+                { step: 3, description: "Usuário preenche o formulário de cadastro" },
+                { step: 4, description: "Usuário insere nome, email e senha" },
+                { step: 5, description: "Usuário clica no botão 'Cadastrar'" },
+                { step: 6, description: "Usuário confirma o email" },
+                { step: 7, description: "Usuário recebe um email de confirmação" },
+                { step: 8, description: "Usuário clica no link de confirmação no email" },
+                { step: 9, description: "Usuário faz login" },
+                { step: 10, description: "Usuário insere email e senha na página de login" },
+                { step: 11, description: "Usuário clica no botão 'Log In'" },
+                { step: 12, description: "Usuário é redirecionado para a página inicial" }
+              ]
+            },
+            {
+              name: "Usuário cria uma playlist",
+              steps: [
+                { step: 0, description: "Usuário acessa a página de playlists" },
+                { step: 1, description: "Usuário clica no menu 'Playlists'" },
+                { step: 2, description: "Usuário é redirecionado para a página de playlists" },
+                { step: 3, description: "Usuário cria uma nova playlist" },
+                { step: 4, description: "Usuário clica no botão 'Nova Playlist'" },
+                { step: 5, description: "Usuário insere o nome da playlist" },
+                { step: 6, description: "Usuário clica no botão 'Criar'" },
+                { step: 7, description: "Usuário adiciona músicas à playlist" },
+                { step: 8, description: "Usuário pesquisa por músicas" },
+                { step: 9, description: "Usuário clica no botão 'Adicionar' ao lado das músicas desejadas" },
+                { step: 10, description: "Usuário compartilha a playlist" },
+                { step: 11, description: "Usuário clica no botão 'Compartilhar'" },
+                { step: 12, description: "Usuário escolhe a forma de compartilhamento (link, redes sociais, etc.)" },
+                { step: 13, description: "Usuário envia a playlist para amigos" }
+              ]
+            }
+          ]
+        }
+      ],
       role: 'user',
       permissions: {
         write: false,
@@ -43,104 +134,115 @@ const App = () => {
       }
     }
   ])
-  const [projectData, setProjectData] = useState([
+  const [userData, setUserData] = useState(
     {
-      name: "Aplicativo de streaming de música",
-      visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
-      key: "key",
-      stories: [
+      name: 'Luma',
+      key: 'user-key',
+      projects: [
         {
-          id: "US01",
-          title: "Como usuário, quero criar uma conta para acessar o aplicativo",
-          type: "user"
-        },
-        {
-          id: "US02",
-          title: "Como usuário, quero criar e gerenciar playlists para organizar minhas músicas",
-          type: "user"
-        },
-        {
-          id: "SS01",
-          title: "Como administrador, quero gerenciar usuários para manter o controle de acesso ao sistema",
-          type: "system"
-        },
-        {
-          id: "SS02",
-          title: "Guaxinim fofo",
-          type: "system"
+          name: "Aplicativo de streaming de música",
+          visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
+          key: "project-key",
+          stories: [
+            {
+              id: "US01",
+              title: "Como usuário, quero criar uma conta para acessar o aplicativo",
+              type: "user"
+            },
+            {
+              id: "US02",
+              title: "Como usuário, quero criar e gerenciar playlists para organizar minhas músicas",
+              type: "user"
+            },
+            {
+              id: "SS01",
+              title: "Como administrador, quero gerenciar usuários para manter o controle de acesso ao sistema",
+              type: "system"
+            },
+            {
+              id: "SS02",
+              title: "Guaxinim fofo",
+              type: "system"
+            }
+          ],
+          goalSketch: [
+            { step: 0, description: "Definir os requisitos do aplicativo" },
+            { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
+            { step: 2, description: "Identificar as partes interessadas" },
+            { step: 3, description: "Criar um documento de especificação de requisitos" },
+            { step: 4, description: "Desenhar a interface do usuário" },
+            { step: 5, description: "Criar wireframes para as principais telas" },
+            { step: 6, description: "Desenvolver protótipos de alta fidelidade" },
+            { step: 7, description: "Realizar testes de usabilidade" },
+            { step: 8, description: "Implementar a funcionalidade de streaming" },
+            { step: 9, description: "Configurar o servidor de streaming" },
+            { step: 10, description: "Desenvolver o player de música" },
+            { step: 11, description: "Integrar o player com o servidor de streaming" },
+            { step: 12, description: "Adicionar funcionalidades de playlist" },
+            { step: 13, description: "Permitir a criação de playlists" },
+            { step: 14, description: "Implementar a funcionalidade de adicionar/remover músicas" },
+            { step: 15, description: "Desenvolver a funcionalidade de compartilhamento de playlists" },
+            { step: 16, description: "Testar e lançar o aplicativo" },
+            { step: 17, description: "Realizar testes de integração" },
+            { step: 18, description: "Corrigir bugs encontrados" },
+            { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
+            { step: 20, description: "Lançar a versão final para o público" }
+          ],
+          persona: [],
+          journey: [
+            {
+              name: "Usuário cria uma conta",
+              steps: [
+                { step: 0, description: "Usuário acessa a página de cadastro" },
+                { step: 1, description: "Usuário clica no botão 'Sign Up'" },
+                { step: 2, description: "Usuário é redirecionado para a página de cadastro" },
+                { step: 3, description: "Usuário preenche o formulário de cadastro" },
+                { step: 4, description: "Usuário insere nome, email e senha" },
+                { step: 5, description: "Usuário clica no botão 'Cadastrar'" },
+                { step: 6, description: "Usuário confirma o email" },
+                { step: 7, description: "Usuário recebe um email de confirmação" },
+                { step: 8, description: "Usuário clica no link de confirmação no email" },
+                { step: 9, description: "Usuário faz login" },
+                { step: 10, description: "Usuário insere email e senha na página de login" },
+                { step: 11, description: "Usuário clica no botão 'Log In'" },
+                { step: 12, description: "Usuário é redirecionado para a página inicial" }
+              ]
+            },
+            {
+              name: "Usuário cria uma playlist",
+              steps: [
+                { step: 0, description: "Usuário acessa a página de playlists" },
+                { step: 1, description: "Usuário clica no menu 'Playlists'" },
+                { step: 2, description: "Usuário é redirecionado para a página de playlists" },
+                { step: 3, description: "Usuário cria uma nova playlist" },
+                { step: 4, description: "Usuário clica no botão 'Nova Playlist'" },
+                { step: 5, description: "Usuário insere o nome da playlist" },
+                { step: 6, description: "Usuário clica no botão 'Criar'" },
+                { step: 7, description: "Usuário adiciona músicas à playlist" },
+                { step: 8, description: "Usuário pesquisa por músicas" },
+                { step: 9, description: "Usuário clica no botão 'Adicionar' ao lado das músicas desejadas" },
+                { step: 10, description: "Usuário compartilha a playlist" },
+                { step: 11, description: "Usuário clica no botão 'Compartilhar'" },
+                { step: 12, description: "Usuário escolhe a forma de compartilhamento (link, redes sociais, etc.)" },
+                { step: 13, description: "Usuário envia a playlist para amigos" }
+              ]
+            }
+          ]
         }
       ],
-      goalSketch: [
-        { step: 0, description: "Definir os requisitos do aplicativo" },
-        { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
-        { step: 2, description: "Identificar as partes interessadas" },
-        { step: 3, description: "Criar um documento de especificação de requisitos" },
-        { step: 4, description: "Desenhar a interface do usuário" },
-        { step: 5, description: "Criar wireframes para as principais telas" },
-        { step: 6, description: "Desenvolver protótipos de alta fidelidade" },
-        { step: 7, description: "Realizar testes de usabilidade" },
-        { step: 8, description: "Implementar a funcionalidade de streaming" },
-        { step: 9, description: "Configurar o servidor de streaming" },
-        { step: 10, description: "Desenvolver o player de música" },
-        { step: 11, description: "Integrar o player com o servidor de streaming" },
-        { step: 12, description: "Adicionar funcionalidades de playlist" },
-        { step: 13, description: "Permitir a criação de playlists" },
-        { step: 14, description: "Implementar a funcionalidade de adicionar/remover músicas" },
-        { step: 15, description: "Desenvolver a funcionalidade de compartilhamento de playlists" },
-        { step: 16, description: "Testar e lançar o aplicativo" },
-        { step: 17, description: "Realizar testes de integração" },
-        { step: 18, description: "Corrigir bugs encontrados" },
-        { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
-        { step: 20, description: "Lançar a versão final para o público" }
-      ],
-      persona: [],
-      journey: [
-        {
-          name: "Usuário cria uma conta",
-          steps: [
-            { step: 0, description: "Usuário acessa a página de cadastro" },
-            { step: 1, description: "Usuário clica no botão 'Sign Up'" },
-            { step: 2, description: "Usuário é redirecionado para a página de cadastro" },
-            { step: 3, description: "Usuário preenche o formulário de cadastro" },
-            { step: 4, description: "Usuário insere nome, email e senha" },
-            { step: 5, description: "Usuário clica no botão 'Cadastrar'" },
-            { step: 6, description: "Usuário confirma o email" },
-            { step: 7, description: "Usuário recebe um email de confirmação" },
-            { step: 8, description: "Usuário clica no link de confirmação no email" },
-            { step: 9, description: "Usuário faz login" },
-            { step: 10, description: "Usuário insere email e senha na página de login" },
-            { step: 11, description: "Usuário clica no botão 'Log In'" },
-            { step: 12, description: "Usuário é redirecionado para a página inicial" }
-          ]
-        },
-        {
-          name: "Usuário cria uma playlist",
-          steps: [
-            { step: 0, description: "Usuário acessa a página de playlists" },
-            { step: 1, description: "Usuário clica no menu 'Playlists'" },
-            { step: 2, description: "Usuário é redirecionado para a página de playlists" },
-            { step: 3, description: "Usuário cria uma nova playlist" },
-            { step: 4, description: "Usuário clica no botão 'Nova Playlist'" },
-            { step: 5, description: "Usuário insere o nome da playlist" },
-            { step: 6, description: "Usuário clica no botão 'Criar'" },
-            { step: 7, description: "Usuário adiciona músicas à playlist" },
-            { step: 8, description: "Usuário pesquisa por músicas" },
-            { step: 9, description: "Usuário clica no botão 'Adicionar' ao lado das músicas desejadas" },
-            { step: 10, description: "Usuário compartilha a playlist" },
-            { step: 11, description: "Usuário clica no botão 'Compartilhar'" },
-            { step: 12, description: "Usuário escolhe a forma de compartilhamento (link, redes sociais, etc.)" },
-            { step: 13, description: "Usuário envia a playlist para amigos" }
-          ]
-        }
-      ]
+      role: 'user',
+      permissions: {
+        write: false,
+        read: true,
+      }
     }
-  ])
+  )
   const [isProjectVisible, setIsProjectVisible] = useState(false)
   const [descriptionModal, setDescriptionModal] = useState(false)
   const [journeyModal, setJourneyModal] = useState(false)
   const [storyModal, setStoryModal] = useState(false)
   const [userModal, setUserModal] = useState(false)
-  const [modalKey, setModalKey] = useState('key')
+  const [projectKey, setProjectKey] = useState('project-key')
 
   // Lógica de autenticação
   const PrivateRoute = ({ children }) => {
@@ -166,8 +268,8 @@ const App = () => {
     <Router basename='/reactify-demo'>
       <div className="App">
         <NavBar
-          modalKey={modalKey}
-          projectData={projectData}
+          projectKey={projectKey}
+          userData={userData}
         />
         <Routes>
           <Route path='/config'
@@ -195,27 +297,27 @@ const App = () => {
             <Home
               isProjectVisible={isProjectVisible}
               setIsProjectVisible={setIsProjectVisible}
-              projectData={projectData}
-              setProjectData={setProjectData}
+              userData={userData}
+              setUserData={setUserData}
               handleRemove={handleRemove}
               descriptionModal={descriptionModal}
               setDescriptionModal={setDescriptionModal}
-              modalKey={modalKey}
-              setModalKey={setModalKey}
+              projectKey={projectKey}
+              setProjectKey={setProjectKey}
             />
           } />
-          <Route path='/visao-geral' element={
+          <Route path='/projectId/visao-geral/' element={
             <VisaoGeral
-              modalKey={modalKey}
-              projectData={projectData} />
+              projectKey={projectKey}
+              userData={userData} />
           } />
 
           <Route path="/user-stories" element={
             <UserStories
-              projectData={projectData}
-              modalKey={modalKey}
+              userData={userData}
+              projectKey={projectKey}
               handleRemove={handleRemove}
-              setProjectData={setProjectData}
+              setUserData={setUserData}
               storyModal={storyModal}
             />
           } />
@@ -230,12 +332,12 @@ const App = () => {
 
           <Route path="/journeys" element={
             <Journeys
-              modalKey={modalKey}
+              projectKey={projectKey}
               journeyModal={journeyModal}
               setJourneyModal={setJourneyModal}
               handleRemove={handleRemove}
-              setProjectData={setProjectData}
-              projectData={projectData} />
+              setUserData={setUserData}
+              userData={userData} />
           } />
         </Routes>
 

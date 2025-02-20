@@ -8,3 +8,6 @@
   background: var(--purple-primary);
   color: var(--white-primary);
 }
+.nav-link{
+  padding: 0 0.5rem;
+}

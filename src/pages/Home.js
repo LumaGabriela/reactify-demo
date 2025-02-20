@@ -5,20 +5,20 @@ import { ProjectIcon } from '../components/projects/Icons'
 const Home = ({
   isProjectVisible,
   setIsProjectVisible,
-  projectData,
-  setProjectData,
+  userData,
+  setUserData,
   handleRemove,
   descriptionModal,
-  modalKey,
-  setModalKey
+  projectKey,
+  setProjectKey
 }) => {
   return (
     <div>
       <AddProjectModal
         isVisible={isProjectVisible}
         setIsVisible={setIsProjectVisible}
-        projectData={projectData}
-        setProjectData={setProjectData}
+        userData={userData}
+        setUserData={setUserData}
         handleRemove={handleRemove}
       />
 
@@ -28,9 +28,9 @@ const Home = ({
         handleRemove={handleRemove}
       />
       <ProjectIcon
-        projectData={projectData}
+        userData={userData}
         descriptionModal={descriptionModal}
-        setModalKey={setModalKey}
+        setProjectKey={setProjectKey}
         handleRemove={handleRemove}
         type={'description'}
       />

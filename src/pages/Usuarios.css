@@ -7,7 +7,7 @@
 
 span.badge, tr {cursor: pointer;}
 
-td{
+td, th{
 
   text-align: center;
 }

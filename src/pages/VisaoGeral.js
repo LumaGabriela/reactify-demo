@@ -1,13 +1,16 @@
 import React from 'react'
+import { useParams } from 'react-router'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import './VisaoGeral.css'
 import { useNavigate } from 'react-router'
 import { FormControl } from 'react-bootstrap'
 
-const VisaoGeral = ({ modalKey, projectData }) => {
-  const project = projectData.find(project => project.key === modalKey)
+const VisaoGeral = ({ projectKey, userData }) => {
+  const { projectId } = useParams();
+  const project = userData.projects?.find(project => project.key === projectId)
   const navigate = useNavigate()
+
   return (
     <Container className="visao-geral-container">
       <h1 className="visao-geral-title">Visão Geral</h1>

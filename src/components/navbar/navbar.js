@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -6,11 +6,16 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useNavigate } from 'react-router'
 import './NavBar.css'
 
-const NavBar = ({ modalKey, projectData }) => {
+const NavBar = ({ projectKey, userData }) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
-  const navigate = useNavigate();
-  const project = projectData ? projectData.find(project => project.key === modalKey) : null;
+  const navigate = useNavigate()
+  const [project, setProject] = useState({})
+
+  useEffect(()=> setProject(userData?.projects ? 
+    userData.projects.find(project => project?.key === projectKey) 
+    : null), [projectKey])
+ 
 
   return (
     <Navbar bg="purple" data-bs-theme="dark" expand={false}>
@@ -20,7 +25,7 @@ const NavBar = ({ modalKey, projectData }) => {
           aria-controls="offcanvasNavbar-left" 
           onClick={() => setShowLeft(!showLeft)}
         />
-        <Navbar.Brand href="/">Reactify</Navbar.Brand>
+        <Navbar.Brand ><Nav.Link onClick={() => navigate("/")}>Reactify</Nav.Link></Navbar.Brand>
 
         <Navbar.Offcanvas
           show={showLeft}
@@ -41,8 +46,9 @@ const NavBar = ({ modalKey, projectData }) => {
         </Navbar.Offcanvas>
 
         <Nav className="flex-row" style={{justifyContent: 'space-between'}}>
-          <Nav.Link style={{margin: '0 0.5rem'}} onClick={() => navigate("/sign-up")}>Sign Up</Nav.Link>
+          <Nav.Link onClick={() => navigate("/sign-up")}>Sign Up</Nav.Link>
           <Nav.Link onClick={() => navigate("/log-in")}>Log In</Nav.Link>
+          <Nav.Link> Projeto: {project ?  project?.name : 'Sem projetos'}</Nav.Link>
         </Nav>
         {/* Right Menu Toggle & Offcanvas */}
         <Navbar.Toggle 

@@ -4,28 +4,33 @@ import { nanoid } from 'nanoid'
 import { RemoveButton } from '../button/Buttons'
 import './Modals.css'
 
-const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove }) => {
+const AddProjectModal = ({ userData, setUserData, isVisible, handleRemove, projectKey }) => {
   const [pName, setPName] = useState('')
 
   //salva o nome do projeto no objeto principal
   const setProjectName = () => {
-    let project = {
-      name: pName,
-      goalSketches: [],
-      journey: [],
-      productView: 'Visão do produto',
-      key: nanoid()
+    const updatedUserData =
+    {
+      ...userData,
+      projects: [...userData.projects, {
+        name: pName,
+        goalSketches: [],
+        journey: [],
+        productView: 'Visão do produto',
+        key: nanoid()
+      }]
     }
-    setProjectData([...projectData, project])
-    setPName('')
-    handleRemove('project')
+
+    setUserData(updatedUserData);
+    setPName('');
+    handleRemove('project');
   }
 
 
 
   // printa os dados do objeto toda vez que ele é alterado
   useEffect(() => {
-  }, [projectData, isVisible])
+  }, [userData, isVisible])
 
 
   return (
@@ -60,10 +65,10 @@ const AddProjectModal = ({ projectData, setProjectData, isVisible, handleRemove 
   );
 }
 
-const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, journeyModal, modalKey, journeyData, setJourneyData, operation, setOperation }) => {
+const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyModal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
   const [removeType, setRemoveType] = useState('')
-  const project = projectData.find(project => project.key === modalKey);
+  const project = userData.projects?.find(project => project.key === projectKey);
   const [bodyHeight, setBodyHeight] = useState('100%');
 
   //Torna a altura da sombra do modal variavel 
@@ -133,22 +138,22 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           steps: []
         };
 
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             return { ...proj, journey: [...proj.journey, newJourney] };
           }
           return proj;
         });
 
-        setProjectData(updatedProjectData);
+        setUserData(updateduserData);
       }
         break;
 
       //Atualiza a descrição de uma journey
       case 'description': {
 
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const updatedJourneys = proj.journey.map((journey, jIndex) => {
               if (jIndex === parseInt(journeyData.journeyindex)) {
                 const updatedSteps = journey.steps.map((step, sIndex) => {
@@ -165,13 +170,13 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           }
           return proj;
         });
-        setProjectData(updatedProjectData)
+        setUserData(updateduserData)
       }
         break;
       //Remove um passo de uma journey
       case 'remove-journey-step': {
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const updatedJourneys = proj.journey.map((journey, jIndex) => {
               if (jIndex === parseInt(journeyData.journeyindex)) {
                 const updatedSteps = journey.steps.filter((step, sIndex) => {
@@ -185,14 +190,14 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           }
           return proj;
         });
-        setProjectData(updatedProjectData);
+        setUserData(updateduserData);
 
       }
         break;
       //Remove a journey por inteiro
       case 'remove-journey': {
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const updatedJourneys = proj.journey.filter((journey, jIndex) => {
               return jIndex !== parseInt(journeyData.journeyindex)
             });
@@ -200,14 +205,14 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           }
           return proj;
         });
-        setProjectData(updatedProjectData)
+        setUserData(updateduserData)
       }
         break;
       //Adiciona um passo na journey selecionada
       case 'add-step': {
         const newStep = { step: journeyData.stepindex, description: jValue };
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const journeyIndex = parseInt(journeyData.journeyindex);
             const updatedJourneys = [...proj.journey];
             updatedJourneys[journeyIndex].steps.push(newStep);
@@ -216,7 +221,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
           }
           return proj;
         });
-        setProjectData(updatedProjectData);
+        setUserData(updateduserData);
 
       }
         break;
@@ -224,7 +229,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
     }
     setJourneyData({})
     handleRemove('journey')
-    console.log(operationType, projectData)
+    console.log(operationType, userData)
   }
 
   return (
@@ -272,7 +277,7 @@ const JourneyDescriptionModal = ({ projectData, setProjectData, handleRemove, jo
   );
 }
 
-const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, handleRemove, storyModal, modalKey }) => {
+const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handleRemove, storyModal, projectKey }) => {
   const [sValue, setSValue] = useState('')
   const [sType, setSType] = useState('user')
   const [operation, setOperation] = useState('')
@@ -283,8 +288,8 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
     //Define sValue para ser o titulo da story clicada
 
     let foundStory = null;
-    projectData.forEach(proj => {
-      if (proj.key === modalKey) {
+    userData.forEach(proj => {
+      if (proj.key === projectKey) {
         proj.stories.forEach(story => {
           if (story.id === storyData) {
             foundStory = story;
@@ -349,8 +354,8 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
       //Adiciona uma nova STORY
       case 'name': {
         console.log(sValue, sType)
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const newStory = {
               id: sType === 'user' ?
                 `US${(proj.stories.length + 1).toString().padStart(2, '0')}`
@@ -371,13 +376,13 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
           }
           return proj;
         });
-        setProjectData(updatedProjectData);
+        setUserData(updateduserData);
       }
         break;
       //Altera a descrição da story
       case 'description': {
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const updatedStories = proj.stories.map((story) => {
               if (story.id === storyData) {
                 return { ...story, title: sValue, type: sType }
@@ -388,13 +393,13 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
           }
           return proj
         })
-        setProjectData(updatedProjectData)
+        setUserData(updateduserData)
       }
         break;
       //Remove a story
       case 'remove': {
-        const updatedProjectData = projectData.map(proj => {
-          if (proj.key === modalKey) {
+        const updateduserData = userData.projects?.map(proj => {
+          if (proj.key === projectKey) {
             const updatedStories = proj.stories.filter(story => {
               return story.id !== storyData
             })
@@ -402,7 +407,7 @@ const AddUserStories = ({ projectData, setProjectData, storyData, setStoryData, 
           }
           return proj
         })
-        setProjectData(updatedProjectData)
+        setUserData(updateduserData)
       }
         break;
       default: console.log('Operacao desconhecida')
