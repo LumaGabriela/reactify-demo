@@ -25,19 +25,19 @@ const VisaoGeral = ({ projectKey, userData }) => {
         {project && (
           <>
             <Button variant="primary" className="visao-geral-button bg-purple"
-            onClick={() => navigate('/goal-sketch')}>
+            onClick={() => navigate(`/${projectId}/goal-sketches`)}>
               Goal Sketchs
             </Button>
             <Button variant="primary" className="visao-geral-button bg-purple"
-            onClick={() => navigate('/user-stories')}>
+            onClick={() => navigate(`/${projectId}/user-stories`)}>
               User Stories
             </Button>
             <Button variant="primary" className="visao-geral-button bg-purple"
-            onClick={() => navigate('/personas')}>
+            onClick={() => navigate(`/${projectId}/personas`)}>
               Personas
             </Button>
             <Button variant="primary" className="visao-geral-button bg-purple"
-            onClick={() => navigate('/journeys')}>
+            onClick={() => navigate(`/${projectId}/journeys`)}>
               Journeys
             </Button>
           </>

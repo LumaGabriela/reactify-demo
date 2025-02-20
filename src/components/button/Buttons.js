@@ -40,7 +40,7 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
         updateUserStory('remove');
         break;
       default:
-        console.log('Tipo desconhecido');
+        console.log('Tipo desconhecido:' + type);
     }
     handleRemove(type)
   };

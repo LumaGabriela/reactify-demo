@@ -49,6 +49,7 @@ const NavBar = ({ projectKey, userData }) => {
           <Nav.Link onClick={() => navigate("/sign-up")}>Sign Up</Nav.Link>
           <Nav.Link onClick={() => navigate("/log-in")}>Log In</Nav.Link>
           <Nav.Link> Projeto: {project ?  project?.name : 'Sem projetos'}</Nav.Link>
+          <Nav.Link> Key: {projectKey ?  projectKey : 'Sem Chave'}</Nav.Link>
         </Nav>
         {/* Right Menu Toggle & Offcanvas */}
         <Navbar.Toggle 

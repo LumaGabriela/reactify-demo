@@ -10,7 +10,7 @@ import './App.css'
 import NavBar from './components/navbar/NavBar'
 
 // Importa as paginas 
-import Home from './pages/Home';
+import Home from './pages/Home'
 import VisaoGeral from './pages/VisaoGeral'
 import GoalSketch from './pages/GoalSketch'
 import Personas from './pages/Personas'
@@ -19,6 +19,7 @@ import UserStories from './pages/UserStories'
 import Config from './pages/Config'
 import Usuarios from './pages/Usuarios'
 import Usuario from './pages/Usuario'
+//
 
 const App = () => {
   const [users, setUsers] = useState([
@@ -246,7 +247,7 @@ const App = () => {
 
   // Lógica de autenticação
   const PrivateRoute = ({ children }) => {
-    const isAuthenticated = true; 
+    const isAuthenticated = true;
     return isAuthenticated ? children : <Navigate to="/" />;
   }
   const handleRemove = (type) => {
@@ -262,7 +263,6 @@ const App = () => {
       default: console.log('Operação não encontrada')
     }
   }
-
 
   return (
     <Router basename='/reactify-demo'>
@@ -288,11 +288,11 @@ const App = () => {
             element={
               <PrivateRoute>
                 <Usuario
-                users={users}
-                setUsers={setUsers}
-              />
+                  users={users}
+                  setUsers={setUsers}
+                />
               </PrivateRoute>
-              }/>
+            } />
           <Route path='/' element={
             <Home
               isProjectVisible={isProjectVisible}
@@ -306,13 +306,15 @@ const App = () => {
               setProjectKey={setProjectKey}
             />
           } />
-          <Route path='/projectId/visao-geral/' element={
+          <Route path='/:projectId/visao-geral/' element={
+            <PrivateRoute>
             <VisaoGeral
               projectKey={projectKey}
               userData={userData} />
+            </PrivateRoute>
           } />
 
-          <Route path="/user-stories" element={
+          <Route path="/:projectId/user-stories" element={
             <UserStories
               userData={userData}
               projectKey={projectKey}
@@ -322,15 +324,15 @@ const App = () => {
             />
           } />
 
-          <Route path="/goal-sketch" element={
+          <Route path="/:projectId/goal-sketches" element={
             <GoalSketch />
           } />
 
-          <Route path="/personas" element={
+          <Route path="/:projectId/personas" element={
             <Personas />
           } />
 
-          <Route path="/journeys" element={
+          <Route path="/:projectId/journeys" element={
             <Journeys
               projectKey={projectKey}
               journeyModal={journeyModal}
