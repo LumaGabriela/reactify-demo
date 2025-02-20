@@ -21,16 +21,16 @@ const Usuario = ({ users }) => {
         <Card.Header as="h5" className="bg-purple text-white">
           <div>
 
-<Button 
-  variant="link" 
-  className="text-white me-3 p-0"
-  onClick={() => navigate('/usuarios')}
->
-  ←
-</Button>
+            <Button
+              variant="link"
+              className="text-white me-3 p-0"
+              onClick={() => navigate('/usuarios')}
+            >
+              ←
+            </Button>
 
 
-            Detalhes do Usuário</div>
+            Editar Usuário</div>
         </Card.Header>
         <Card.Body>
           <Card.Title>{user.name}</Card.Title>
@@ -73,7 +73,7 @@ const Usuario = ({ users }) => {
         </Card.Body>
       </Card>
     </Container>
-  );
-};
+  )
+}
 
-export default Usuario;
+export default Usuario

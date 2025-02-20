@@ -1,6 +1,8 @@
 import Button from 'react-bootstrap/Button'
+import { useNavigate } from 'react-router';
 
 const AddButton = ({ handleRemove, type }) => {
+
   return (
     <>
       <Button
@@ -63,12 +65,13 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
   );
 }
 
-const EditButton = ({  }) => {
+const EditButton = ({ path }) => {
+  const navigate = useNavigate()
   return (
     <Button
       className="btn w-30 mt-auto"
       variant="secondary"
-      onClick={()=> console.log('Botao de editar')}
+      onClick={() => navigate('/usuarios/' + path)}
     >
       Editar
     </Button>

@@ -28,7 +28,7 @@ const Usuarios = ({ users, handleRemove }) => {
             </thead>
             <tbody>
               {users?.map((user, i )=> (
-                <tr key={user.key} onClick={()=> navigate('/usuarios/' + user.name)}>
+                <tr key={user.key} >
                   <td>{user.name}</td>
                   <td>
                     <Badge bg={user.role === 'admin' ? 'purple' : 'primary'}>
@@ -37,7 +37,9 @@ const Usuarios = ({ users, handleRemove }) => {
                   </td>
                   <td>{user.projects?.length || 0}</td>
                   <td>{user.key}</td>
-                  <td><EditButton/></td>
+                  <td><EditButton 
+                  path={user.name}
+                  /></td>
                 </tr>
               ))}
             </tbody>
