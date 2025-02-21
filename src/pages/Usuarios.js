@@ -2,19 +2,18 @@ import './Usuarios.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AddButton, EditButton } from '../components/button/Buttons'
 import { Container, Table, Badge, Card, Nav } from 'react-bootstrap'
-import { useNavigate } from 'react-router'
 
-const Usuarios = ({ users, handleRemove }) => {    
-  const navigate = useNavigate();
+
+const Usuarios = ({ users, handleRemove }) => {
   return (
     <Container fluid className="p-4">
       <Card>
         <Card.Header as="h5" className="bg-purple text-white">
           Gerenciamento de Usuários
           <AddButton
-        handleRemove={handleRemove}
-        type={'user'}
-      />
+            handleRemove={handleRemove}
+            type={'user'}
+          />
         </Card.Header>
         <Card.Body>
           <Table hover responsive>
@@ -27,7 +26,7 @@ const Usuarios = ({ users, handleRemove }) => {
               </tr>
             </thead>
             <tbody>
-              {users?.map((user, i )=> (
+              {users?.map((user, i) => (
                 <tr key={user.key} >
                   <td>{user.name}</td>
                   <td>
@@ -37,9 +36,12 @@ const Usuarios = ({ users, handleRemove }) => {
                   </td>
                   <td>{user.projects?.length || 0}</td>
                   <td>{user.key}</td>
-                  <td><EditButton 
-                  path={user.name}
-                  /></td>
+                  <td>
+                    <EditButton
+                      type={'usuarios'}
+                      path={user.key}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -47,7 +49,7 @@ const Usuarios = ({ users, handleRemove }) => {
         </Card.Body>
       </Card>
 
-      
+
     </Container>
   )
 }

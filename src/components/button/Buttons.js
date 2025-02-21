@@ -65,17 +65,29 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
   );
 }
 
-const EditButton = ({ path }) => {
+const EditButton = ({ path, type }) => {
   const navigate = useNavigate()
   return (
     <Button
       className="btn w-30 mt-auto"
       variant="secondary"
-      onClick={() => navigate('/usuarios/' + path)}
+      onClick={() => navigate(`/admin/${type}/${path}`)}
     >
       Editar
     </Button>
   );
 }
 
-export { AddButton, RemoveButton, EditButton }
+const SaveButton = ({updateUser}) => {
+  return (
+    <Button
+      className="btn w-30 mt-auto"
+      variant="success"
+      onClick={() => updateUser()}
+    >
+      Salvar
+    </Button>
+  );
+}
+
+export { AddButton, RemoveButton, EditButton, SaveButton }

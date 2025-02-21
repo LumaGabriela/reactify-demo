@@ -39,8 +39,8 @@ const NavBar = ({ projectKey, userData }) => {
           <Offcanvas.Body>
             <Nav className="flex-column">
             <hr className="nav-divider" />
-              <Nav.Link  onClick={() => navigate("/usuarios")}>Usuários</Nav.Link>
-              <Nav.Link  onClick={() => navigate("/config")}>Configurações</Nav.Link>
+              <Nav.Link  onClick={() => navigate("/admin/usuarios")}>Usuários</Nav.Link>
+              <Nav.Link  onClick={() => navigate("/admin/config")}>Configurações</Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

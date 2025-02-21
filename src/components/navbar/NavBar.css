@@ -8,6 +8,7 @@
   background: var(--purple-primary);
   color: var(--white-primary);
 }
+.offcanvas-body .nav-link {padding: 0.7rem 0;}
 .nav-link{
   padding: 0 0.5rem;
 }

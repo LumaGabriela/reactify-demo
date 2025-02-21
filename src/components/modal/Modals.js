@@ -68,7 +68,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
   // Torna a altura da sombra do modal variável
   useEffect(() => {
     const height = document.body.scrollHeight;
-    setBodyHeight(`${height}px`)
+    setBodyHeight(`${height*1.2}px`)
     console.log(removeType)
     // Se o modal está fechado, redefine os valores da journey
     if (!journeyModal) {
