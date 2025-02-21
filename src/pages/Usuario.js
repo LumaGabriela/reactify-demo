@@ -3,25 +3,23 @@ import { Card, Container, Form, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { SaveButton } from '../components/button/Buttons';
 
-const Usuario = ({ users, setUsers }) => {
+const Usuario = ({ users, setUsers, user, setUser }) => {
   const { userId } = useParams();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState(() => users.find(user => user.key === userId));
   const [currentUser, setCurrentUser] = useState({ ...user })
+  //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
     if (!user) {
       navigate('/');
     }
   }, [user, navigate]);
-
+  //redefine o valor do usuario atual sempre que o objeto users se alterar
   useEffect(() => {
     setUser(() => users.find(user => user.key === userId))
   }, [users])
 
-  useEffect(() => {
-    console.log(currentUser)
-  }, [currentUser])
+
 
   // Atualiza os valores do current user
   const updateCurrentUser = (prop, value) => {
@@ -45,9 +43,7 @@ const Usuario = ({ users, setUsers }) => {
     const updatedUsers = users.map(u =>
       u.key === currentUser.key ? currentUser : u
     )
-    console.log(updatedUsers)
     setUsers(updatedUsers)
-    
   }
 
   return (

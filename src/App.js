@@ -195,6 +195,8 @@ const App = () => {
                 <Usuario
                   users={users}
                   setUsers={setUsers}
+                  user={userData}
+                  setUser={setUserData}
                 />
               </PrivateRoute>
             } />

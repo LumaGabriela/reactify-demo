@@ -12,10 +12,16 @@ const NavBar = ({ projectKey, userData }) => {
   const navigate = useNavigate()
   const [project, setProject] = useState({})
 
-  useEffect(()=> setProject(userData?.projects ? 
-    userData.projects.find(project => project?.key === projectKey) 
-    : null), [projectKey])
- 
+  useEffect(() => {
+    if (userData?.projects) {
+      const foundProject = userData.projects.find(proj => proj.key === projectKey);
+      setProject(foundProject || {});
+    } else {
+      setProject({});
+    }
+  }, [projectKey, userData])
+
+
 
   return (
     <Navbar bg="purple" data-bs-theme="dark" expand={false}>
@@ -71,11 +77,11 @@ const NavBar = ({ projectKey, userData }) => {
               <hr className="nav-divider" />
               {project && (
                 <>
-                  <Nav.Link onClick={() => navigate("/visao-geral")}>Visão Geral</Nav.Link>
-                  <Nav.Link onClick={() => navigate("/goal-sketch")}>Goal Sketch</Nav.Link>
-                  <Nav.Link onClick={() => navigate("/personas")}>Personas</Nav.Link>
-                  <Nav.Link onClick={() => navigate("/user-stories")}>User Stories</Nav.Link>
-                  <Nav.Link onClick={() => navigate("/journeys")}>Journeys</Nav.Link>
+                  <Nav.Link onClick={() => navigate(`${projectKey}/visao-geral`)}>Visão Geral</Nav.Link>
+                  <Nav.Link onClick={() => navigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
+                  <Nav.Link onClick={() => navigate(`${projectKey}/personas`)}>Personas</Nav.Link>
+                  <Nav.Link onClick={() => navigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link>
+                  <Nav.Link onClick={() => navigate(`${projectKey}/journeys`)}>Journeys</Nav.Link>
                 </>
               )}
             </Nav>

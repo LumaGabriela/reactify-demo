@@ -27,7 +27,7 @@ const AddProjectModal = ({ userData, setUserData, isVisible, handleRemove }) => 
   // Printa os dados do objeto toda vez que ele é alterado
   useEffect(() => {
     console.log(userData);
-  }, [userData, isVisible])
+  }, [userData])
 
   return (
     <div
@@ -69,7 +69,6 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
   useEffect(() => {
     const height = document.body.scrollHeight;
     setBodyHeight(`${height*1.2}px`)
-    console.log(removeType)
     // Se o modal está fechado, redefine os valores da journey
     if (!journeyModal) {
       setJourneyData({})
