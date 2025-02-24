@@ -228,6 +228,8 @@ const App = () => {
               handleRemove={handleRemove}
               setUserData={setUserData}
               storyModal={storyModal}
+              users={users}
+                  setUsers={setUsers}
             />
           } />
 
@@ -246,7 +248,10 @@ const App = () => {
               setJourneyModal={setJourneyModal}
               handleRemove={handleRemove}
               setUserData={setUserData}
-              userData={userData} />
+              userData={userData} 
+              users={users}
+              setUsers={setUsers}
+              />
           } />
         </Routes>
 

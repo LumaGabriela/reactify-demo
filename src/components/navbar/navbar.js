@@ -15,10 +15,9 @@ const NavBar = ({ projectKey, userData }) => {
   useEffect(() => {
     if (userData?.projects) {
       const foundProject = userData.projects.find(proj => proj.key === projectKey);
-      setProject(foundProject || {});
-    } else {
-      setProject({});
-    }
+      setProject(foundProject || {})
+    } else setProject({})
+    
   }, [projectKey, userData])
 
 
@@ -89,7 +88,7 @@ const NavBar = ({ projectKey, userData }) => {
         </Navbar.Offcanvas>
       </Container>
     </Navbar>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
