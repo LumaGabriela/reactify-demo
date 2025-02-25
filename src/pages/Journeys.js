@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Journeys.css'
 import { AddButton } from '../components/button/Buttons'
 import { JourneyDescriptionModal } from '../components/modal/Modals'
 
 
 
-const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKey }) => {
+const Journeys = ({ userData, setUserData, userKey, users, setUsers, handleRemove, modal, projectKey }) => {
   const project = userData.projects?.find(project => project.key === projectKey)
   const [journeyData, setJourneyData] = useState({})
   const [visibleJourneys, setVisibleJourneys] = useState({})
@@ -38,7 +38,7 @@ const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKe
   const addStep = (journeyIndex) => {
     setJourneyData({
       journeyindex: journeyIndex,
-      stepindex: project.journey[journeyIndex].steps.length ,
+      stepindex: project.journey[journeyIndex].steps.length,
       description: ''
     });
     setOperation('add-step')
@@ -48,7 +48,7 @@ const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKe
   const removeJourney = (journeyIndex) => {
     setJourneyData({
       journeyindex: journeyIndex,
-      stepindex: null ,
+      stepindex: null,
       description: null
     });
     setOperation('remove-journey')
@@ -67,10 +67,10 @@ const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKe
             className="journey"
           >
             <div className="step-arrow">
-            <div className='step first-step' onClick={() => toggleJourneyVisibility(journeyIndex)}>
-              {journey.name} 
-            </div>
-            {visibleJourneys[journeyIndex] ? (<div className="arrow">→</div>) : '' }
+              <div className='step first-step' onClick={() => toggleJourneyVisibility(journeyIndex)}>
+                {journey.name}
+              </div>
+              {visibleJourneys[journeyIndex] ? (<div className="arrow">→</div>) : ''}
             </div>
             <div className="steps-grid">
               {visibleJourneys[journeyIndex] && journey.steps.map((step, stepIndex) => (
@@ -95,28 +95,31 @@ const Journeys = ({ userData, setUserData, handleRemove, journeyModal, projectKe
               ))}
               {visibleJourneys[journeyIndex] && (
                 <>
-                <div className="step-arrow">
+                  <div className="step-arrow">
                     <button className="add-step-button" onClick={() => removeJourney(journeyIndex)}>Remover Journey</button>
                   </div>
                   <div className="step-arrow">
                     <button className="add-step-button" onClick={() => addStep(journeyIndex)}>Adicionar Passo</button>
                   </div>
-                  
+
                 </>
               )}
             </div>
           </div>
         ))}
-        
+
         <AddButton
           handleRemove={handleRemove}
           type={'journey'}
 
         />
         <JourneyDescriptionModal
-          journeyModal={journeyModal}
+          modal={modal}
           userData={userData}
           setUserData={setUserData}
+          userKey={userKey}
+          users={users}
+          setUsers={setUsers}
           projectKey={projectKey}
           handleRemove={handleRemove}
           journeyData={journeyData}

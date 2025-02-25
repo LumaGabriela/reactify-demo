@@ -1,4 +1,4 @@
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Container, Form, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { SaveButton } from '../components/button/Buttons';
@@ -11,7 +11,7 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
   //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
     if (!user) {
-      navigate('/');
+      navigate('/admin/usuarios/');
     }
   }, [user, navigate]);
   //redefine o valor do usuario atual sempre que o objeto users se alterar
@@ -26,7 +26,8 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
     switch (prop) {
       case 'name': setCurrentUser({ ...currentUser, name: value })
         break
-      case 'key': setCurrentUser({ ...currentUser, key: value })
+      case 'key': 
+      // setCurrentUser({ ...currentUser, key: value })
         break
       case 'role': setCurrentUser({ ...currentUser, role: value })
         break
@@ -44,6 +45,7 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
       u.key === currentUser.key ? currentUser : u
     )
     setUsers(updatedUsers)
+    navigate('/admin/usuarios')
   }
 
   return (

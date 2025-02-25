@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import { RemoveButton } from '../button/Buttons'
 import './Modals.css'
 
-const AddProjectModal = ({ userData, setUserData, isVisible, handleRemove }) => {
+const AddProjectModal = ({ modal, userData, setUserData, userKey, users, setUsers, handleRemove }) => {
   const [pName, setPName] = useState('')
 
   // Salva o nome do projeto no objeto principal
@@ -20,19 +20,24 @@ const AddProjectModal = ({ userData, setUserData, isVisible, handleRemove }) => 
       }]
     }
     setUserData(updatedUserData);
-    setPName('');
-    handleRemove('project');
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);
+
+    setPName('')
+    handleRemove('project')
   }
 
   // Printa os dados do objeto toda vez que ele é alterado
-  useEffect(() => {
-    console.log(userData);
-  }, [userData])
+
 
   return (
     <div
       className={"modal show "}
-      style={{ display: isVisible ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display: modal.project ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('project')}>
@@ -59,7 +64,7 @@ const AddProjectModal = ({ userData, setUserData, isVisible, handleRemove }) => 
   );
 }
 
-const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyModal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
+const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUsers, handleRemove, modal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
   const [removeType, setRemoveType] = useState('')
   const project = userData.projects?.find(project => project.key === projectKey);
@@ -70,11 +75,11 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
     const height = document.body.scrollHeight;
     setBodyHeight(`${height*1.2}px`)
     // Se o modal está fechado, redefine os valores da journey
-    if (!journeyModal) {
+    if (!modal.journeys) {
       setJourneyData({})
       setJValue('')
     }
-  }, [journeyModal]);
+  }, [modal.journeys]);
 
   // Define o tipo de botão remove
   useEffect(() => {
@@ -146,6 +151,12 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
         };
 
         setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);;
       }
         break;
 
@@ -172,7 +183,13 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
             return proj;
           })
         };
-        setUserData(updatedUserData)
+        setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);
       }
         break;
 
@@ -197,6 +214,12 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
           })
         };
         setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);;
       }
         break;
 
@@ -214,7 +237,13 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
             return proj;
           })
         };
-        setUserData(updatedUserData)
+        setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);
       }
         break;
 
@@ -235,6 +264,12 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
           })
         };
         setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);;
       }
         break;
 
@@ -248,7 +283,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
   return (
     <div
       className={"modal show "}
-      style={{ display: journeyModal ? 'block' : 'none', position: 'absolute', background: '#00000080', height: bodyHeight }}
+      style={{ display: modal.journeys ? 'block' : 'none', position: 'absolute', background: '#00000080', height: bodyHeight }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => {
@@ -284,11 +319,10 @@ const JourneyDescriptionModal = ({ userData, setUserData, handleRemove, journeyM
   );
 }
 
-const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handleRemove, storyModal, projectKey }) => {
+const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, storyData, setStoryData, handleRemove, modal, projectKey }) => {
   const [sValue, setSValue] = useState('')
   const [sType, setSType] = useState('user')
   const [operation, setOperation] = useState('')
-  const [edit, setEdit] = useState(false)
 
   // Adiciona efeitos caso as variáveis mudem
   useEffect(() => {
@@ -304,7 +338,7 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
       }
     })
     setSValue(foundStory?.title)
-  }, [storyData, storyModal])
+  }, [storyData, modal.userStories])
 
   // Define o tipo de operação
   useEffect(() => {
@@ -314,8 +348,8 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
 
   // Deixa o campo sValue e o storyData vazios após o modal se fechar
   useEffect(() => {
-    if (storyModal === false) { setSValue(''); setStoryData('') }
-  }, [storyModal])
+    if ( modal.userStories === false) { setSValue(''); setStoryData('') }
+  }, [ modal.userStories])
 
   // Renumerar os ids das userstories
   const renumberStories = (stories) => {
@@ -384,6 +418,12 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
           })
         };
         setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);;
       }
         break;
 
@@ -404,7 +444,13 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
             return proj
           })
         };
-        setUserData(updatedUserData)
+        setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);
       }
         break;
 
@@ -422,7 +468,13 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
             return proj
           })
         };
-        setUserData(updatedUserData)
+        setUserData(updatedUserData);
+
+  // Update user in users array
+  const updatedUsers = users.map(user => 
+    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+  );
+  setUsers(updatedUsers);
       }
         break;
 
@@ -437,7 +489,7 @@ const AddUserStories = ({ userData, setUserData, storyData, setStoryData, handle
   return (
     <div
       className={"modal show "}
-      style={{ display: storyModal ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display:  modal.userStories ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('userStory')}>

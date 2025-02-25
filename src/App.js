@@ -22,6 +22,7 @@ import Usuario from './pages/Usuario'
 //
 
 const App = () => {
+  //
   const [users, setUsers] = useState([
     {
       name: 'Luma',
@@ -136,11 +137,13 @@ const App = () => {
     }
   ])
   const [userData, setUserData] = useState({})// Usuario da sessao
-  const [isProjectVisible, setIsProjectVisible] = useState(false)
-  const [descriptionModal, setDescriptionModal] = useState(false)
-  const [journeyModal, setJourneyModal] = useState(false)
-  const [storyModal, setStoryModal] = useState(false)
-  const [userModal, setUserModal] = useState(false)
+  //Seletores de modais  ( define se está aberto ou fechado)
+  const [modal, setModal] = useState({
+    project: false, 
+    userStories:false,
+    journeys: false,
+    user: false
+  })
   const [projectKey, setProjectKey] = useState('project-key')
   const [userKey, setUserKey] = useState('user-key')
   // Lógica de autenticação
@@ -151,17 +154,20 @@ const App = () => {
   // Lida com a abertura de modal menus
   const handleRemove = (type) => {
     switch (type) {
-      case 'project': return isProjectVisible ? setIsProjectVisible(false) : setIsProjectVisible(true)
+      case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
         break;
-      case 'journey': return journeyModal ? setJourneyModal(false) : setJourneyModal(true)
+      case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
         break;
-      case 'userStory': return storyModal ? setStoryModal(false) : setStoryModal(true)
+      case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
         break;
-      case 'user': return userModal ? setUserModal(false) : setUserModal(true)
+      case 'user': return modal.user ? setModal({ ...modal, user: false }) : setModal({ ...modal, user: true })
         break;
       default: console.log('Operação não encontrada')
     }
   }
+  useEffect(() => {
+    console.log( modal);
+  }, [modal])
   // Sempre que se atualizar a userKey, se atualiza o userData
   useEffect(() => {
     setUserData(users.find(user => user.key === userKey));
@@ -177,7 +183,7 @@ const App = () => {
         <Routes>
           <Route path='/config'
             element={
-              <Config/>
+              <Config />
             }
 
           />
@@ -202,22 +208,24 @@ const App = () => {
             } />
           <Route path='/' element={
             <Home
-              isProjectVisible={isProjectVisible}
-              setIsProjectVisible={setIsProjectVisible}
+              modal={modal}
+              setModal={setModal}
+
               userData={userData}
               setUserData={setUserData}
               handleRemove={handleRemove}
-              descriptionModal={descriptionModal}
-              setDescriptionModal={setDescriptionModal}
+              userKey={userKey}
+              users={users}
+              setUsers={setUsers}
               projectKey={projectKey}
               setProjectKey={setProjectKey}
             />
           } />
           <Route path='/:projectId/visao-geral/' element={
             <PrivateRoute>
-            <VisaoGeral
-              projectKey={projectKey}
-              userData={userData} />
+              <VisaoGeral
+                projectKey={projectKey}
+                userData={userData} />
             </PrivateRoute>
           } />
 
@@ -227,38 +235,47 @@ const App = () => {
               projectKey={projectKey}
               handleRemove={handleRemove}
               setUserData={setUserData}
-              storyModal={storyModal}
+              modal={modal}
+              userKey={userKey}
               users={users}
-                  setUsers={setUsers}
+              setUsers={setUsers}
             />
           } />
 
           <Route path="/:projectId/goal-sketches" element={
-            <GoalSketch />
+            <GoalSketch
+              userKey={userKey}
+              users={users}
+              setUsers={setUsers} />
           } />
 
           <Route path="/:projectId/personas" element={
-            <Personas />
+            <Personas
+              userKey={userKey}
+              users={users}
+              setUsers={setUsers}
+
+            />
           } />
 
           <Route path="/:projectId/journeys" element={
             <Journeys
+              modal={modal}
               projectKey={projectKey}
-              journeyModal={journeyModal}
-              setJourneyModal={setJourneyModal}
               handleRemove={handleRemove}
               setUserData={setUserData}
-              userData={userData} 
+              userData={userData}
+              userKey={userKey}
               users={users}
               setUsers={setUsers}
-              />
+            />
           } />
         </Routes>
 
 
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

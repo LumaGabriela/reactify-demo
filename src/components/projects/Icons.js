@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 
-const ProjectIcon = ({ userData, setProjectKey, handleRemove }) => {
+const ProjectIcon = ({ userData, setProjectKey }) => {
   const navigate = useNavigate()
   return (
     <div className="project-container mt-5">

@@ -3,7 +3,7 @@ import { AddButton } from '../components/button/Buttons';
 import { AddUserStories } from '../components/modal/Modals';
 import './UserStories.css';
 
-const UserStories = ({ userData, setUserData, storyModal, handleRemove, projectKey }) => {
+const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
   const projeto = userData.projects?.find(project => project.key === projectKey);
   const [storyData, setStoryData] = useState('');
 
@@ -65,7 +65,10 @@ const UserStories = ({ userData, setUserData, storyModal, handleRemove, projectK
       <AddUserStories
         userData={userData}
         setUserData={setUserData}
-        storyModal={storyModal}
+        userKey={userKey}
+        users={users}
+        setUsers={setUsers}
+        modal={modal}
         handleRemove={handleRemove}
         projectKey={projectKey}
         storyData={storyData}
