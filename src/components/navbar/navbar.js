@@ -10,6 +10,12 @@ const NavBar = ({ projectKey, userData }) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
   const navigate = useNavigate()
+  //Fecha todos os menus laterais ao clicar em um link
+  const handleNavigate = (path) => {
+    setShowLeft(false)
+    setShowRight(false)
+    navigate(path)
+  }
   const [project, setProject] = useState({})
 
   useEffect(() => {
@@ -30,7 +36,7 @@ const NavBar = ({ projectKey, userData }) => {
           aria-controls="offcanvasNavbar-left" 
           onClick={() => setShowLeft(!showLeft)}
         />
-        <Navbar.Brand ><Nav.Link onClick={() => navigate("/")}>Reactify</Nav.Link></Navbar.Brand>
+        <Navbar.Brand ><Nav.Link onClick={() => handleNavigate("/")}>Reactify</Nav.Link></Navbar.Brand>
 
         <Navbar.Offcanvas
           show={showLeft}
@@ -44,15 +50,15 @@ const NavBar = ({ projectKey, userData }) => {
           <Offcanvas.Body>
             <Nav className="flex-column">
             <hr className="nav-divider" />
-              <Nav.Link  onClick={() => navigate("/admin/usuarios")}>Usuários</Nav.Link>
-              <Nav.Link  onClick={() => navigate("/admin/config")}>Configurações</Nav.Link>
+              <Nav.Link  onClick={() => handleNavigate("/admin/usuarios")}>Usuários</Nav.Link>
+              <Nav.Link  onClick={() => handleNavigate("/admin/config")}>Configurações</Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
 
         <Nav className="flex-row" style={{justifyContent: 'space-between'}}>
-          <Nav.Link onClick={() => navigate("/sign-up")}>Sign Up</Nav.Link>
-          <Nav.Link onClick={() => navigate("/log-in")}>Log In</Nav.Link>
+          <Nav.Link onClick={() => handleNavigate("/sign-up")}>Sign Up</Nav.Link>
+          <Nav.Link onClick={() => handleNavigate("/log-in")}>Log In</Nav.Link>
           <Nav.Link> Projeto: {project ?  project?.name : 'Sem projetos'}</Nav.Link>
           <Nav.Link> Key: {projectKey ?  projectKey : 'Sem Chave'}</Nav.Link>
         </Nav>
@@ -76,11 +82,11 @@ const NavBar = ({ projectKey, userData }) => {
               <hr className="nav-divider" />
               {project && (
                 <>
-                  <Nav.Link onClick={() => navigate(`${projectKey}/visao-geral`)}>Visão Geral</Nav.Link>
-                  <Nav.Link onClick={() => navigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
-                  <Nav.Link onClick={() => navigate(`${projectKey}/personas`)}>Personas</Nav.Link>
-                  <Nav.Link onClick={() => navigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link>
-                  <Nav.Link onClick={() => navigate(`${projectKey}/journeys`)}>Journeys</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/visao-geral`)}>Visão Geral</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/personas`)}>Personas</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/journeys`)}>Journeys</Nav.Link>
                 </>
               )}
             </Nav>

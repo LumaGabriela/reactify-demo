@@ -1,13 +1,33 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { Card, Container, Form, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { SaveButton } from '../components/button/Buttons';
+import { useParams, useNavigate } from 'react-router-dom'
+import { Modal, Card, Container, Form, Button } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { RemoveButton, SaveButton } from '../components/button/Buttons'
 
-const Usuario = ({ users, setUsers, user, setUser }) => {
-  const { userId } = useParams();
-  const navigate = useNavigate();
+const UserModal = ({modal, handleRemove, removeUser}) => {
+  return (
+    <div
+      className={"modal show "}
+      style={{ display: modal.user ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    >
+      <Modal.Dialog style={{ marginTop: '6rem' }}>
+        <Modal.Header closeButton onClick={() => handleRemove('user')}>
+          <Modal.Title>Deseja remover este usuário?</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => console.log('Bu')}>Salvar</Button>
+          <Button variant='primary' onClick={removeUser}>Remover</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  );
+}
+
+const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserKey }) => {
+  const { userId } = useParams()
+  const navigate = useNavigate()
 
   const [currentUser, setCurrentUser] = useState({ ...user })
+
   //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
     if (!user) {
@@ -16,11 +36,12 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
   }, [user, navigate]);
   //redefine o valor do usuario atual sempre que o objeto users se alterar
   useEffect(() => {
-    setUser(() => users.find(user => user.key === userId))
-  }, [users])
-
-
-
+    setCurrentUser({...user})
+  }, [user])
+//
+useEffect(() => {
+  setUser(() => users.find(user => user.key === userId))
+}, [users])
   // Atualiza os valores do current user
   const updateCurrentUser = (prop, value) => {
     switch (prop) {
@@ -45,6 +66,12 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
       u.key === currentUser.key ? currentUser : u
     )
     setUsers(updatedUsers)
+    navigate('/admin/usuarios')
+  }
+  const removeUser = () => {
+    const updatedUsers = users.filter(u => u.key !== currentUser.key);
+    setUsers(updatedUsers)
+    setUserKey('user-key')
     navigate('/admin/usuarios')
   }
 
@@ -113,9 +140,18 @@ const Usuario = ({ users, setUsers, user, setUser }) => {
             </Form.Group>
 
             <SaveButton updateUser={updateUser} />
+            <RemoveButton
+            handleRemove={handleRemove}
+            type={'user'}
+            />
           </Form>
         </Card.Body>
       </Card>
+      <UserModal
+      modal={modal}
+      handleRemove={handleRemove}
+      removeUser={removeUser}
+      />
     </Container>
   );
 };

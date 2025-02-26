@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router'
 
 const AddButton = ({ handleRemove, type }) => {
 
@@ -19,11 +19,11 @@ const AddButton = ({ handleRemove, type }) => {
         </div>
       </Button>
     </>
-  );
+  )
 }
 
 const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) => {
-
+//Executa a acao de remoção adequada e depois fecha o modal escolhido
   const handleClick = () => {
     switch (type) {
       case 'project':
@@ -39,17 +39,18 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
       case 'userStory':
         updateUserStory('remove');
         break;
+      case 'user' : break;
+
       default:
-        console.log('Tipo desconhecido:' + type);
+        console.log('Tipo desconhecido:' + type )
     }
     handleRemove(type)
-  };
+  }
 
   return (
     <div className="remove-button-container">
       <Button
-        id='removeProject'
-        className="btn w-100 mt-auto"
+        className="btn w-30 mt-auto"
         variant="danger"
         onClick={handleClick}
       >
@@ -59,10 +60,11 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
           {type === 'remove-journey-step' && <>Remover passo</>}
           {type === 'remove-journey' && <>Remover journey</>}
           {type === 'userStory' && <>Remover User Story</>}
+          {type === 'user' && <>Remover</>}
         </div>
       </Button>
     </div>
-  );
+  )
 }
 
 const EditButton = ({ path, type }) => {
@@ -71,23 +73,23 @@ const EditButton = ({ path, type }) => {
     <Button
       className="btn w-30 mt-auto"
       variant="secondary"
-      onClick={() => navigate(`/admin/${type}/${path}`)}
+      onClick={() => navigate(`/${type}/${path}`)}
     >
       Editar
     </Button>
-  );
+  )
 }
 
-const SaveButton = ({updateUser}) => {
+const SaveButton = ({updateUser, type}) => {
   return (
     <Button
       className="btn w-30 mt-auto"
       variant="success"
-      onClick={() => updateUser()}
+      onClick={() => updateUser(type)}
     >
       Salvar
     </Button>
-  );
+  )
 }
 
 export { AddButton, RemoveButton, EditButton, SaveButton }

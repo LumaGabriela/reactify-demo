@@ -38,7 +38,7 @@ const Usuarios = ({ users, handleRemove }) => {
                   <td>{user.key}</td>
                   <td>
                     <EditButton
-                      type={'usuarios'}
+                      type={'admin/usuarios'}
                       path={user.key}
                     />
                   </td>

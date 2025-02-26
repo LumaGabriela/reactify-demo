@@ -142,7 +142,7 @@ const App = () => {
     project: false, 
     userStories:false,
     journeys: false,
-    user: false
+    user: true
   })
   const [projectKey, setProjectKey] = useState('project-key')
   const [userKey, setUserKey] = useState('user-key')
@@ -162,7 +162,7 @@ const App = () => {
     }
   }
   useEffect(() => {
-    console.log( modal);
+    // console.log( modal);
   }, [modal])
   // Sempre que se atualizar a userKey, se atualiza o userData
   useEffect(() => {
@@ -181,7 +181,6 @@ const App = () => {
             element={
               <Config />
             }
-
           />
           <Route path='/admin/usuarios'
             element={
@@ -199,6 +198,9 @@ const App = () => {
                   setUsers={setUsers}
                   user={userData}
                   setUser={setUserData}
+                  handleRemove={handleRemove}
+                  modal={modal}
+                  setUserKey={setUserKey}
                 />
               </PrivateRoute>
             } />
@@ -250,9 +252,8 @@ const App = () => {
               userKey={userKey}
               users={users}
               setUsers={setUsers}
-
             />
-          } />
+          }/>
 
           <Route path="/:projectId/journeys" element={
             <Journeys
