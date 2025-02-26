@@ -1,7 +1,7 @@
 import './Usuarios.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AddButton, EditButton } from '../components/button/Buttons'
-import { Container, Table, Badge, Card, Nav } from 'react-bootstrap'
+import { Container, Table, Badge, Card } from 'react-bootstrap'
 
 
 const Usuarios = ({ users, handleRemove }) => {

@@ -155,13 +155,9 @@ const App = () => {
   const handleRemove = (type) => {
     switch (type) {
       case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
-        break;
       case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
-        break;
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
-        break;
-      case 'user': return modal.user ? setModal({ ...modal, user: false }) : setModal({ ...modal, user: true })
-        break;
+      case 'user': return modal.user ? setModal({ ...modal, user: false }) : setModal({ ...modal, user: true })          
       default: console.log('Operação não encontrada')
     }
   }
