@@ -45,13 +45,12 @@ const NavBar = ({ projectKey, userData }) => {
           id="offcanvasNavbar-left"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Admin Menu</Offcanvas.Title>
+            <Offcanvas.Title>Configurações</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-column">
             <hr className="nav-divider" />
               <Nav.Link  onClick={() => handleNavigate("/admin/usuarios")}>Usuários</Nav.Link>
-              <Nav.Link  onClick={() => handleNavigate("/admin/config")}>Configurações</Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

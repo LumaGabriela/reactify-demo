@@ -12,7 +12,7 @@ const Usuarios = ({ users, handleRemove }) => {
           Gerenciamento de Usuários
           <AddButton
             handleRemove={handleRemove}
-            type={'user'}
+            type={'userAdd'}
           />
         </Card.Header>
         <Card.Body>

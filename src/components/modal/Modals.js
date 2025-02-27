@@ -531,4 +531,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
   );
 }
 
+const AddUserModal = () => {
+  
+}
 export { AddProjectModal, JourneyDescriptionModal, AddUserStories }

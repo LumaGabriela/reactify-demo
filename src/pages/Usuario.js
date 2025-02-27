@@ -7,30 +7,28 @@ const UserModal = ({modal, handleRemove, removeUser}) => {
   return (
     <div
       className={"modal show "}
-      style={{ display: modal.user ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display: modal.userRemove ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('user')}>
           <Modal.Title>Deseja remover este usuário?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => console.log('Bu')}>Salvar</Button>
+          <Button variant="secondary" >Salvar</Button>
           <Button variant='primary' onClick={removeUser}>Remover</Button>
         </Modal.Footer>
       </Modal.Dialog>
     </div>
   );
 }
-
-const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserKey }) => {
+const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserKey, userKey }) => {
   const { userId } = useParams()
   const navigate = useNavigate()
-
   const [currentUser, setCurrentUser] = useState({ ...user })
 
   //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
-    if (!user) {
+    if (!userKey) {
       navigate('/admin/usuarios/');
     }
   }, [user, navigate]);
@@ -40,8 +38,9 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
   }, [user])
 //
 useEffect(() => {
-  setUser(() => users.find(user => user.key === userId))
-}, [users])
+  setUserKey(userId)
+}, [userKey])
+
   // Atualiza os valores do current user
   const updateCurrentUser = (prop, value) => {
     switch (prop) {
@@ -71,7 +70,7 @@ useEffect(() => {
   const removeUser = () => {
     const updatedUsers = users.filter(u => u.key !== currentUser.key);
     setUsers(updatedUsers)
-    setUserKey('user-key')
+    setUserKey(null)
     navigate('/admin/usuarios')
   }
 
@@ -94,17 +93,17 @@ useEffect(() => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Nome do Usuário</Form.Label>
-              <Form.Control type="text" defaultValue={user.name} onChange={(e) => updateCurrentUser('name', e.target.value)} />
+              <Form.Control type="text" defaultValue={user?.name} onChange={(e) => updateCurrentUser('name', e.target.value)} />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>ID do Usuário</Form.Label>
-              <Form.Control type="text" defaultValue={user.key} onChange={(e) => updateCurrentUser('key', e.target.value)} />
+              <Form.Control type="text" defaultValue={user?.key} onChange={(e) => updateCurrentUser('key', e.target.value)} />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Função</Form.Label>
-              <Form.Select defaultValue={user.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
+              <Form.Select defaultValue={user?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
               </Form.Select>
@@ -112,7 +111,7 @@ useEffect(() => {
 
             <Form.Group className="mb-3">
               <Form.Label>Permissões</Form.Label>
-              {Object.entries(user.permissions).map(([key, value]) => (
+              {user?.permissions && Object.entries(user.permissions).map(([key, value]) => (
                 <div key={key} className="mb-2">
                   <Form.Label>{key}</Form.Label>
                   {typeof value === 'object' ? (
@@ -142,7 +141,7 @@ useEffect(() => {
             <SaveButton updateUser={updateUser} />
             <RemoveButton
             handleRemove={handleRemove}
-            type={'user'}
+            type={'userRemove'}
             />
           </Form>
         </Card.Body>
@@ -154,6 +153,6 @@ useEffect(() => {
       />
     </Container>
   );
-};
+}
 
 export default Usuario

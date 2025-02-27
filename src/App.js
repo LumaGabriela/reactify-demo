@@ -19,6 +19,7 @@ import UserStories from './pages/UserStories'
 import Config from './pages/Config'
 import Usuarios from './pages/Usuarios'
 import Usuario from './pages/Usuario'
+import Cadastrar from './pages/Cadastrar'
 //
 
 const App = () => {
@@ -142,7 +143,8 @@ const App = () => {
     project: false, 
     userStories:false,
     journeys: false,
-    user: true
+    userRemove: false,
+    userAdd: false
   })
   const [projectKey, setProjectKey] = useState('project-key')
   const [userKey, setUserKey] = useState('user-key')
@@ -155,15 +157,12 @@ const App = () => {
   const handleRemove = (type) => {
     switch (type) {
       case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
-      case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
+      case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: false })
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
-      case 'user': return modal.user ? setModal({ ...modal, user: false }) : setModal({ ...modal, user: true })          
-      default: console.log('Operação não encontrada')
+      case 'userRemove': return modal.userRemove ? setModal({ ...modal, userRemove: false }) : setModal({ ...modal, userRemove: true })    
+      default: console.log('Operação não encontrada: ' + type)
     }
   }
-  useEffect(() => {
-    // console.log( modal);
-  }, [modal])
   // Sempre que se atualizar a userKey, se atualiza o userData
   useEffect(() => {
     setUserData(users.find(user => user.key === userKey));
@@ -188,7 +187,13 @@ const App = () => {
                 handleRemove={handleRemove}
                 users={users}
               />}
-
+          />
+          <Route path='/admin/usuarios/cadastrar'
+            element={
+              <Cadastrar
+                users={users}
+                setUsers={setUsers}
+              />}
           />
           <Route path='/admin/usuarios/:userId'
             element={
@@ -200,6 +205,7 @@ const App = () => {
                   setUser={setUserData}
                   handleRemove={handleRemove}
                   modal={modal}
+                  userKey={userKey}
                   setUserKey={setUserKey}
                 />
               </PrivateRoute>
