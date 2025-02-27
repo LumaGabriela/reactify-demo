@@ -70,7 +70,7 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
   }
 
   return (
-    <div className="remove-button-container">
+    <>
       <Button
         className="btn w-30 mt-auto"
         variant="danger"
@@ -85,7 +85,7 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
           {type === 'userRemove' && <>Remover</>}
         </div>
       </Button>
-    </div>
+    </>
   )
 }
 

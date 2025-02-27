@@ -2,8 +2,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { Modal, Card, Container, Form, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 import { RemoveButton, SaveButton } from '../components/button/Buttons'
-
-const UserModal = ({modal, handleRemove, removeUser}) => {
+import { ReactComponent as BackArrow } from '../components/imgs/back-svgrepo-com.svg'
+//////////////////////////////////////////////
+const UserModal = ({ modal, handleRemove, removeUser }) => {
   return (
     <div
       className={"modal show "}
@@ -14,7 +15,7 @@ const UserModal = ({modal, handleRemove, removeUser}) => {
           <Modal.Title>Deseja remover este usuário?</Modal.Title>
         </Modal.Header>
         <Modal.Footer>
-          <Button variant="secondary" >Salvar</Button>
+          <Button variant="secondary" onClick={() => handleRemove('userRemove')}>Cancelar</Button>
           <Button variant='primary' onClick={removeUser}>Remover</Button>
         </Modal.Footer>
       </Modal.Dialog>
@@ -29,25 +30,25 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
   //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
     if (!userKey) {
-      navigate('/admin/usuarios/');
+      navigate('/admin/usuarios/')
     }
   }, [user, navigate]);
   //redefine o valor do usuario atual sempre que o objeto users se alterar
   useEffect(() => {
-    setCurrentUser({...user})
+    setCurrentUser({ ...user })
   }, [user])
-//
-useEffect(() => {
-  setUserKey(userId)
-}, [userKey])
+  // define a chave como sendo o userId da URL
+  useEffect(() => {
+    setUserKey(userId)
+  }, [userKey])
 
   // Atualiza os valores do current user
   const updateCurrentUser = (prop, value) => {
     switch (prop) {
       case 'name': setCurrentUser({ ...currentUser, name: value })
         break
-      case 'key': 
-      // setCurrentUser({ ...currentUser, key: value })
+      case 'key':
+        // setCurrentUser({ ...currentUser, key: value })
         break
       case 'role': setCurrentUser({ ...currentUser, role: value })
         break
@@ -67,6 +68,7 @@ useEffect(() => {
     setUsers(updatedUsers)
     navigate('/admin/usuarios')
   }
+  //remove o usuário do objeto users
   const removeUser = () => {
     const updatedUsers = users.filter(u => u.key !== currentUser.key);
     setUsers(updatedUsers)
@@ -84,7 +86,7 @@ useEffect(() => {
               className="text-white me-3 p-0"
               onClick={() => navigate('/admin/usuarios')}
             >
-              ←
+              <BackArrow className='back-arrow' />
             </Button>
             Editar Usuário
           </div>
@@ -137,22 +139,23 @@ useEffect(() => {
                 </div>
               ))}
             </Form.Group>
-
-            <SaveButton updateUser={updateUser} />
-            <RemoveButton
-            handleRemove={handleRemove}
-            type={'userRemove'}
-            />
+            <div className='btn-container'>
+              <SaveButton updateUser={updateUser} />
+              <RemoveButton
+                handleRemove={handleRemove}
+                type={'userRemove'}
+              />
+            </div>
           </Form>
         </Card.Body>
       </Card>
       <UserModal
-      modal={modal}
-      handleRemove={handleRemove}
-      removeUser={removeUser}
+        modal={modal}
+        handleRemove={handleRemove}
+        removeUser={removeUser}
       />
     </Container>
-  );
+  )
 }
 
 export default Usuario

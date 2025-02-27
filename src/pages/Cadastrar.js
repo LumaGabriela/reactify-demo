@@ -1,55 +1,67 @@
 import { useNavigate } from 'react-router-dom'
 import { Modal, Card, Container, Form, Button } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
-import { AddButton, SaveButton } from '../components/button/Buttons'
+import {  useState } from 'react'
 import { nanoid } from 'nanoid'
+import {ReactComponent as BackArrow} from '../components/imgs/back-svgrepo-com.svg'
 const Cadastrar = ({ users, setUsers }) => {
   const [currentUser, setCurrentUser] = useState({
-    name:'',
+    name: '',
     key: nanoid(),
     projects: [],
     role: 'user',
     permissions: {
-      read:false,
-      write:false
+      read: false,
+      write: false
     }
   })
 
   const navigate = useNavigate()
-    // Atualiza os valores do current user
-    const updateCurrentUser = (prop, value) => {
-      switch (prop) {
-        case 'name': setCurrentUser({ ...currentUser, name: value })
-          break
-        case 'key': 
+  // Atualiza os valores do current user ao alterar os campos
+  const updateCurrentUser = (prop, value) => {
+    switch (prop) {
+      case 'name': setCurrentUser({ ...currentUser, name: value })
+        break
+      case 'key':
         // setCurrentUser({ ...currentUser, key: value })
-          break
-        case 'role': setCurrentUser({ ...currentUser, role: value })
-          break
-        case 'write': setCurrentUser({ ...currentUser, permissions: { ...currentUser.permissions, write: value } })
-          break
-        case 'read': setCurrentUser({ ...currentUser, permissions: { ...currentUser.permissions, read: value } })
-          break
-  
-        default: console.log('Operacao nao encontrada')
-      }
+        break
+      case 'role': setCurrentUser({ ...currentUser, role: value })
+        break
+      case 'write': setCurrentUser({ ...currentUser, permissions: { ...currentUser.permissions, write: value } })
+        break
+      case 'read': setCurrentUser({ ...currentUser, permissions: { ...currentUser.permissions, read: value } })
+        break
+
+      default: console.log('Operacao nao encontrada')
     }
-    const addUser = () => {
-      setUsers([...users, currentUser])
-      navigate('/admin/usuarios')
-    }
+  }
+  const addUser = () => {
+    setUsers([...users, currentUser])
+    navigate('/admin/usuarios')
+  }
 
   return (
     <Container fluid className="p-4">
       <Card>
-        <Card.Header as="h5" className="bg-purple text-white">Cadastrar Usuário</Card.Header>
+        <Card.Header as="h5" className="bg-purple text-white">
+          <div>
+            <Button
+              variant="link"
+              className="text-white me-3 p-0 back-arrow-btn"
+              onClick={() => navigate('/admin/usuarios')}
+            >
+              <BackArrow className='back-arrow'/>
+            </Button>
+            
+            Cadastrar Usuário
+          </div>
+        </Card.Header>
         <Card.Body>
           <Form>
-          <Form.Group className="mb-3">
+            <Form.Group className="mb-3">
               <Form.Label>Nome do Usuário</Form.Label>
               <Form.Control type="text" defaultValue={currentUser?.name} onChange={(e) => updateCurrentUser('name', e.target.value)} />
             </Form.Group>
-            
+
             <Form.Group className="mb-3">
               <Form.Label>Função</Form.Label>
               <Form.Select defaultValue={currentUser?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
@@ -57,7 +69,7 @@ const Cadastrar = ({ users, setUsers }) => {
                 <option value="user">Usuário</option>
               </Form.Select>
             </Form.Group>
-            
+
             <Form.Group className="mb-3">
               <Form.Label>Permissões</Form.Label>
               {currentUser?.permissions && Object.entries(currentUser.permissions).map(([key, value]) => (
@@ -86,13 +98,14 @@ const Cadastrar = ({ users, setUsers }) => {
                 </div>
               ))}
             </Form.Group>
-            
+
           </Form>
-        </Card.Body>
-        <div>
-        <Button variant="primary" onClick={()=> addUser()}>Salvar</Button>
-        <Button variant="secondary" >Cancelar</Button>
+          <div className='btn-container'>
+          <Button variant="primary" onClick={() => addUser()}>Salvar</Button>
+          <Button variant="secondary" onClick={() => navigate('/admin/usuarios')}>Cancelar</Button>
         </div>
+        </Card.Body>
+        
       </Card>
 
     </Container>

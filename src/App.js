@@ -176,11 +176,6 @@ const App = () => {
           userData={userData}
         />
         <Routes>
-          <Route path='/config'
-            element={
-              <Config />
-            }
-          />
           <Route path='/admin/usuarios'
             element={
               <Usuarios
