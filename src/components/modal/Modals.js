@@ -310,7 +310,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
           <RemoveButton
             handleRemove={handleRemove}
             type={removeType}
-            updateJourney={updateJourney}
+            update={updateJourney}
           />}
           <Button variant="primary" onClick={() => updateJourney()}>Salvar</Button>
         </Modal.Footer>
@@ -522,7 +522,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
           <RemoveButton
             handleRemove={handleRemove}
             type={'userStory'}
-            updateUserStory={updateUserStory}
+            update={updateUserStory}
           />
           <Button variant="primary" onClick={() => updateUserStory()}>Salvar</Button>
         </Modal.Footer>

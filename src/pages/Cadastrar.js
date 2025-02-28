@@ -63,10 +63,12 @@ const Cadastrar = ({ users, setUsers }) => {
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Função</Form.Label>
+              <Form.Label>Papel</Form.Label>
               <Form.Select defaultValue={currentUser?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
                 <option value="admin">Administrador</option>
-                <option value="user">Usuário</option>
+                <option value="customer">Cliente</option>
+                <option value="project-manager">Gerente de Projeto</option>
+                <option value="domain-expert">Domain Expert</option>
               </Form.Select>
             </Form.Group>
 

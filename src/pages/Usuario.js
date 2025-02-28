@@ -104,10 +104,12 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
             </Form.Group>
 
             <Form.Group className="mb-3">
-              <Form.Label>Função</Form.Label>
+              <Form.Label>Papel</Form.Label>
               <Form.Select defaultValue={user?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
+                <option value="admin">Administrador</option>
+                <option value="customer">Cliente</option>
+                <option value="project-manager">Gerente de Projeto</option>
+                <option value="domain-expert">Domain Expert</option>
               </Form.Select>
             </Form.Group>
 
@@ -140,7 +142,7 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
               ))}
             </Form.Group>
             <div className='btn-container'>
-              <SaveButton updateUser={updateUser} />
+              <SaveButton update={updateUser} />
               <RemoveButton
                 handleRemove={handleRemove}
                 type={'userRemove'}

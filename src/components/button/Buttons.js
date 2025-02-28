@@ -2,27 +2,27 @@ import Button from 'react-bootstrap/Button'
 import { useNavigate } from 'react-router'
 
 const AddButton = ({ handleRemove, type }) => {
-//Executa a acao de remoção adequada e depois fecha o modal escolhido
-const navigate = useNavigate()
-const handleClick = () => {
-  switch (type) {
-    case 'project':
-      break;
-    case 'description':
-      break;
-    case 'userStory':
-      break;
+  //Executa a acao de remoção adequada e depois fecha o modal escolhido
+  const navigate = useNavigate()
+  const handleClick = () => {
+    switch (type) {
+      case 'project':
+        break;
+      case 'description':
+        break;
+      case 'userStory':
+        break;
       case 'journey':
         break;
-    case 'userRemove' : 
-    break;
-    case 'userAdd' : navigate('/admin/usuarios/cadastrar')
-    break;
-    default:
-      console.log('Tipo desconhecido:' + type )
+      case 'userRemove':
+        break;
+      case 'userAdd': navigate('/admin/usuarios/cadastrar')
+        break;
+      default:
+        console.log('Tipo desconhecido:' + type)
+    }
+    handleRemove(type)
   }
-  handleRemove(type)
-}
 
   return (
     <>
@@ -43,8 +43,8 @@ const handleClick = () => {
   )
 }
 
-const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) => {
-//Executa a acao de remoção adequada e depois fecha o modal escolhido
+const RemoveButton = ({ handleRemove, type, update }) => {
+  //Executa a acao de remoção adequada e depois fecha o modal escolhido
   const handleClick = () => {
     switch (type) {
       case 'project':
@@ -52,18 +52,21 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
       case 'description':
         break;
       case 'remove-journey-step':
-        updateJourney('remove-journey-step');
+        update('remove-journey-step');
         break;
       case 'remove-journey':
-        updateJourney('remove-journey');
+        update('remove-journey');
         break;
       case 'userStory':
-        updateUserStory('remove');
+        update('remove');
         break;
-      case 'userRemove' : break;
+      case 'userRemove': break;
+      case 'clean':
+        update()
+        return
 
       default:
-        console.log('Tipo desconhecido:' + type )
+        console.log('Tipo desconhecido:' + type)
     }
     console.log(type)
     handleRemove(type)
@@ -83,6 +86,7 @@ const RemoveButton = ({ handleRemove, type, updateJourney, updateUserStory }) =>
           {type === 'remove-journey' && <>Remover journey</>}
           {type === 'userStory' && <>Remover User Story</>}
           {type === 'userRemove' && <>Remover</>}
+          {type === 'clean' && <>Limpar</>}
         </div>
       </Button>
     </>
@@ -102,12 +106,12 @@ const EditButton = ({ path, type }) => {
   )
 }
 
-const SaveButton = ({updateUser, type}) => {
+const SaveButton = ({ update, type }) => {
   return (
     <Button
       className="btn w-30 mt-auto"
       variant="success"
-      onClick={() => updateUser(type)}
+      onClick={() => update(type)}
     >
       Salvar
     </Button>

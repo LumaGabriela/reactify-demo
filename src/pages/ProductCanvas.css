@@ -1,0 +1,25 @@
+.product-canvas-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0px;
+  height: 80vh;
+}
+
+.product-canvas-item {
+  border: 1px solid #000000;
+  padding: 10px;
+  position: relative;
+}
+
+.product-canvas-item h5 {
+  margin-bottom: 10px;
+}
+
+.product-canvas-item .form-control {
+  margin-bottom: 10px;
+}
+
+.product-canvas-item .btn {
+  margin-right: 5px;
+}

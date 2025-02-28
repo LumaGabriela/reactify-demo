@@ -111,7 +111,6 @@ const Journeys = ({ userData, setUserData, userKey, users, setUsers, handleRemov
         <AddButton
           handleRemove={handleRemove}
           type={'journey'}
-
         />
         <JourneyDescriptionModal
           modal={modal}

@@ -20,7 +20,7 @@ const Usuarios = ({ users, handleRemove }) => {
             <thead>
               <tr >
                 <th>Nome</th>
-                <th>Função</th>
+                <th>Papel</th>
                 <th>Projetos</th>
                 <th>ID</th>
               </tr>
@@ -30,8 +30,11 @@ const Usuarios = ({ users, handleRemove }) => {
                 <tr key={user.key} >
                   <td>{user.name}</td>
                   <td>
-                    <Badge bg={user.role === 'admin' ? 'purple' : 'primary'}>
-                      {user.role}
+                    <Badge bg={user.role}>
+                      {user.role === 'admin' && <>Adminsitrador</>}
+                      {user.role === 'customer' && <>Cliente</>}
+                      {user.role === 'project-manager' && <>Gerente de Projeto</>}
+                      {user.role === 'domain-expert' && <>Domain Expert</>}
                     </Badge>
                   </td>
                   <td>{user.projects?.length || 0}</td>

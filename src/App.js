@@ -16,10 +16,11 @@ import GoalSketch from './pages/GoalSketch'
 import Personas from './pages/Personas'
 import Journeys from './pages/Journeys'
 import UserStories from './pages/UserStories'
-import Config from './pages/Config'
+
 import Usuarios from './pages/Usuarios'
 import Usuario from './pages/Usuario'
 import Cadastrar from './pages/Cadastrar'
+import ProductCanvas from './pages/ProductCanvas.js'
 //
 
 const App = () => {
@@ -33,6 +34,17 @@ const App = () => {
           name: "Aplicativo de streaming de música",
           visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
           key: "project-key",
+          productCanvas:{
+            issues: [
+              'Problema1', 'problema2'
+            ],
+            solutions: [],
+            personas: [],
+            restrictions: [],
+            is: [],
+            isNot: []
+
+          },
           stories: [
             {
               id: "US01",
@@ -120,7 +132,7 @@ const App = () => {
           ]
         }
       ],
-      role: 'user',
+      role: 'customer',
       permissions: {
         write: false,
         read: true,
@@ -167,6 +179,9 @@ const App = () => {
   useEffect(() => {
     setUserData(users.find(user => user.key === userKey));
   }, [userKey, users])
+  useEffect(() => {
+    console.log(users)
+  }, [users])
 
   return (
     <Router basename='/reactify-demo'>
@@ -209,7 +224,6 @@ const App = () => {
             <Home
               modal={modal}
               setModal={setModal}
-
               userData={userData}
               setUserData={setUserData}
               handleRemove={handleRemove}
@@ -223,11 +237,20 @@ const App = () => {
           <Route path='/:projectId/visao-geral/' element={
             <PrivateRoute>
               <VisaoGeral
-                projectKey={projectKey}
+              users={users}
+              setUsers={setUsers}
                 userData={userData} />
             </PrivateRoute>
           } />
 
+          <Route path="/:projectId/product-canvas" element={
+            <ProductCanvas
+              projectKey={projectKey}
+              userKey={userKey}
+              users={users}
+              setUsers={setUsers}
+            />
+          } />
           <Route path="/:projectId/user-stories" element={
             <UserStories
               userData={userData}
