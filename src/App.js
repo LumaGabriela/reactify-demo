@@ -24,7 +24,7 @@ import ProductCanvas from './pages/ProductCanvas.js'
 //
 
 const App = () => {
-  //
+  //objeto que contem todos os usuarios do sistema
   const [users, setUsers] = useState([
     {
       name: 'Luma',
