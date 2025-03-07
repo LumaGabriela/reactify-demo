@@ -72,7 +72,7 @@ const Cadastrar = ({ users, setUsers }) => {
               </Form.Select>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            {/* <Form.Group className="mb-3">
               <Form.Label>Permissões</Form.Label>
               {currentUser?.permissions && Object.entries(currentUser.permissions).map(([key, value]) => (
                 <div key={key} className="mb-2">
@@ -99,7 +99,7 @@ const Cadastrar = ({ users, setUsers }) => {
                   )}
                 </div>
               ))}
-            </Form.Group>
+            </Form.Group> */}
 
           </Form>
           <div className='btn-container'>

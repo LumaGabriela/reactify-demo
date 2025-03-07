@@ -73,12 +73,12 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
     <Container fluid className="p-4">
       <Card>
         <Card.Header as="h5" className="bg-purple text-white">
-          Nome do Produto
+          Nome do Produto: {currentProductCanvas.name}
         </Card.Header>
         <Card.Body>
           <div className="product-canvas-container">
             {['issues', 'solutions', 'personas', 'restrictions', 'is', 'isNot'].map((section, idx) => (
-              <div key={idx} className="product-canvas-item">
+              <div key={idx} className={"product-canvas-item " + section}>
                 <h5>{handleTitle(section)}:</h5>
                 {currentProductCanvas[section]?.map((item, index) => (
                   <div key={index} className='btn-container'>
@@ -90,12 +90,14 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
                     <Button variant="danger" onClick={() => handleRemove(section, index)}>-</Button>
                   </div>
                 ))}
-                {(section === 'solutions' && currentProductCanvas.solutions.length === 0) && <Button variant="primary" onClick={() => handleAdd(section)}>+</Button>}
-                {(section !== 'solutions' ) && <Button variant="primary" onClick={() => handleAdd(section)}>+</Button>}
+                {(section === 'solutions' && currentProductCanvas.solutions.length === 0) 
+                && <Button variant="primary" className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
+                {(section !== 'solutions' ) 
+                && <Button variant="primary"className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
               </div>
             ))}
           </div>
-          <Button variant="success" onClick={handleSave}>Salvar</Button>
+          <Button variant="success" className="d-flex justify-content-end mt-auto ms-auto save-btn" onClick={handleSave}>Salvar</Button>
         </Card.Body>
       </Card>
     </Container>

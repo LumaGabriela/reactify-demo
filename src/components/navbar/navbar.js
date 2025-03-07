@@ -82,9 +82,12 @@ const NavBar = ({ projectKey, userData }) => {
               {project && (
                 <>
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/visao-geral`)}>Visão Geral</Nav.Link>
-                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/product-canvas`)}>Product Canvas</Nav.Link>
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/personas`)}>Personas</Nav.Link>
-                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link>
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
+
+
+                  {/* <Nav.Link onClick={() => handleNavigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link> */}
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/journeys`)}>Journeys</Nav.Link>
                 </>
               )}

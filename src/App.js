@@ -31,18 +31,19 @@ const App = () => {
       key: 'user-key',
       projects: [
         {
-          name: "Aplicativo de streaming de música",
+          name: "Spotify Clone",
           visaoGeral: "Aplicação capaz de realizar streaming de músicas, com a possibilidade de criar playlists e compartilhar com amigos.",
           key: "project-key",
           productCanvas:{
+            name: "Spotify Clone",  
             issues: [
-              'Problema1', 'problema2'
+              'Acesso difícil o u limitado a músicas em domínio público..', 'Valores excessivos praticados pelas plataformas de streaming'
             ],
-            solutions: [],
-            personas: [],
-            restrictions: [],
-            is: [],
-            isNot: []
+            solutions: ['Criar uma plataforma.......'],
+            personas: ['Logn - Administrador da plataforma', 'Thiago - Usuário'],
+            restrictions: ['A plataforma deve bla bla bla..'],
+            is: ['É uma plataforma web', 'É uma plataforma de streaming de música', 'Possui funcionalidades de criação de playlists', 'Possui funcionalidades de compartilhamento de playlists'],
+            isNot: ['Não é um aplicativo móvel']
 
           },
           stories: [

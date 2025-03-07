@@ -113,7 +113,8 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
               </Form.Select>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            {/* Posteriormente substituir por menu exclusivo de permissoes  */}
+            {/* <Form.Group className="mb-3">
               <Form.Label>Permissões</Form.Label>
               {user?.permissions && Object.entries(user.permissions).map(([key, value]) => (
                 <div key={key} className="mb-2">
@@ -140,7 +141,7 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
                   )}
                 </div>
               ))}
-            </Form.Group>
+            </Form.Group> */}
             <div className='btn-container'>
               <SaveButton update={updateUser} />
               <RemoveButton

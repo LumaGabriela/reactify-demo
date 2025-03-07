@@ -69,10 +69,10 @@ const cleanDescription = () => setDescription('')
               onClick={() => navigate(`/${projectId}/goal-sketches`)}>
               Goal Sketchs
             </Button>
-            <Button variant="primary" className="visao-geral-button bg-purple"
+            {/* <Button variant="primary" className="visao-geral-button bg-purple"
               onClick={() => navigate(`/${projectId}/user-stories`)}>
               User Stories
-            </Button>
+            </Button> */}
             <Button variant="primary" className="visao-geral-button bg-purple"
               onClick={() => navigate(`/${projectId}/journeys`)}>
               Journeys
