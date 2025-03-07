@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/reactify-demo/static/css/main.1531a241.css",
-    "main.js": "/reactify-demo/static/js/main.83b25a5a.js",
+    "main.css": "/reactify-demo/static/css/main.5b6eb884.css",
+    "main.js": "/reactify-demo/static/js/main.3b314714.js",
     "static/js/488.90640024.chunk.js": "/reactify-demo/static/js/488.90640024.chunk.js",
     "index.html": "/reactify-demo/index.html",
-    "main.1531a241.css.map": "/reactify-demo/static/css/main.1531a241.css.map",
-    "main.83b25a5a.js.map": "/reactify-demo/static/js/main.83b25a5a.js.map",
+    "static/media/back-svgrepo-com.svg": "/reactify-demo/static/media/back-svgrepo-com.d174d3122c56cee5847dc6df6dd5daf5.svg",
+    "main.5b6eb884.css.map": "/reactify-demo/static/css/main.5b6eb884.css.map",
+    "main.3b314714.js.map": "/reactify-demo/static/js/main.3b314714.js.map",
     "488.90640024.chunk.js.map": "/reactify-demo/static/js/488.90640024.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1531a241.css",
-    "static/js/main.83b25a5a.js"
+    "static/css/main.5b6eb884.css",
+    "static/js/main.3b314714.js"
   ]
 }
