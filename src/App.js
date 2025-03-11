@@ -91,7 +91,22 @@ const App = () => {
             { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
             { step: 20, description: "Lançar a versão final para o público" }
           ],
-          persona: [],
+          personas: [{
+            name: "Thiago - Administrador do sistema",
+            profile: [],
+            expectations: [],
+            restrictions: [],
+            goals: []
+            
+          },
+          {
+            name: "João - Usuário do sistema",
+            profile: [],
+            expectations: [],
+            restrictions: [],
+            goals: []
+          }
+        ],
           journey: [
             {
               name: "Usuário cria uma conta",
@@ -274,9 +289,10 @@ const App = () => {
 
           <Route path="/:projectId/personas" element={
             <Personas
-              userKey={userKey}
-              users={users}
-              setUsers={setUsers}
+            projectKey={projectKey}
+            userKey={userKey}
+            users={users}
+            setUsers={setUsers}
             />
           }/>
 
