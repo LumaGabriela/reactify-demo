@@ -101,10 +101,10 @@ const App = () => {
           },
           {
             name: "João - Usuário do sistema",
-            profile: [],
+            profile: ['', ''],
             expectations: [],
             restrictions: [],
-            goals: []
+            goals: ['', '']
           }
         ],
           journey: [

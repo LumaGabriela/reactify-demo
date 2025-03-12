@@ -29,7 +29,6 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
       newPersonas[personaIndex][prop] = [...newPersonas[personaIndex][prop], '']
       console.log(personaIndex, prop)
       return newPersonas;
-      
     });
   };
 
@@ -58,6 +57,11 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
       newPersonas[personaIndex].name = value;
       return newPersonas;
     });
+  };
+
+  // Remove a persona
+  const handleRemovePersona = (personaIndex) => {
+    setCurrentPersonas(prevState => prevState.filter((_, i) => i !== personaIndex));
   };
 
   // Salva o novo product canvas dentro de users[index].projects.productCanvas
@@ -96,10 +100,12 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
             <Card.Header as="h5" className="bg-purple text-white">
               Nome:
               <Form.Control
+              className='input-name'
                 type="text"
                 value={persona.name}
                 onChange={(e) => handleNameChange(personaIndex, e.target.value)}
               />
+              <Button variant="danger" className="d-flex justify-content-end mt-auto ms-auto " onClick={() => handleRemovePersona(personaIndex)}>Remover Persona</Button>
             </Card.Header>
             <Card.Body>
               <div className="product-canvas-container">
@@ -120,7 +126,6 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
                   </div>
                 ))}
               </div>
-              
             </Card.Body>
           </Card>
         </Container>

@@ -1,20 +1,21 @@
 .product-canvas-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, min-content);
-  gap: 3px;
+ 
+  grid-gap: 3px;
   height: fit-content;
   margin: 0 0 1rem 0 ;
   background: #000;
-  border: 3px solid black
+  padding: 0;
+  border: 3px solid black 
 }
 
 .product-canvas-item {  
   padding: 10px;
-  padding-bottom: auto;
   position: relative;
   height: 100%;
   background: #fff;
+
 }
 
 
@@ -29,4 +30,7 @@
 
 .product-canvas-item .btn {
   margin-right: 5px;
+}
+.input-name{
+  width: 70%;
 }

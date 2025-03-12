@@ -96,10 +96,12 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
                 && <Button variant="primary"className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
               </div>
             ))}
+            
           </div>
-          <Button variant="success" className="d-flex justify-content-end mt-auto ms-auto save-btn" onClick={handleSave}>Salvar</Button>
+         
         </Card.Body>
       </Card>
+      <Button variant="success" className="d-flex justify-content-end mt-auto ms-auto save-btn" onClick={handleSave}>Salvar</Button>
     </Container>
   );
 };
