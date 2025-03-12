@@ -282,9 +282,15 @@ const App = () => {
 
           <Route path="/:projectId/goal-sketches" element={
             <GoalSketch
-              userKey={userKey}
-              users={users}
-              setUsers={setUsers} />
+            userData={userData}
+            projectKey={projectKey}
+            handleRemove={handleRemove}
+            setUserData={setUserData}
+            modal={modal}
+            userKey={userKey}
+            users={users}
+            setUsers={setUsers}
+              />
           } />
 
           <Route path="/:projectId/personas" element={
