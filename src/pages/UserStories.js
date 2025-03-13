@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddButton } from '../components/button/Buttons';
 import { AddUserStories } from '../components/modal/Modals';
 import './UserStories.css';
 
 const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
-  const projeto = userData.projects?.find(project => project.key === projectKey);
+  const [projeto, setProjeto] = useState(null);
   const [storyData, setStoryData] = useState('');
+
+  useEffect(() => {
+    const user = users.find(user => user.key === userKey);
+    setProjeto(user?.projects.find(project => project.key === projectKey) || {});
+  }, [users, userKey, projectKey])
 
   const handleClick = (e) => {
     const storyElement = e.target.closest('.story-block');
@@ -16,6 +21,7 @@ const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, h
     }
   };
 
+  if (!projeto) return null;
   return (
     <div>
       <h2 className="title">User Stories</h2>

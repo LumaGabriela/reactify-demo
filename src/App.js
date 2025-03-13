@@ -69,27 +69,10 @@ const App = () => {
             }
           ],
           goalSketch: [
-            { step: 0, description: "Definir os requisitos do aplicativo" },
-            { step: 1, description: "Reunir requisitos funcionais e não funcionais" },
-            { step: 2, description: "Identificar as partes interessadas" },
-            { step: 3, description: "Criar um documento de especificação de requisitos" },
-            { step: 4, description: "Desenhar a interface do usuário" },
-            { step: 5, description: "Criar wireframes para as principais telas" },
-            { step: 6, description: "Desenvolver protótipos de alta fidelidade" },
-            { step: 7, description: "Realizar testes de usabilidade" },
-            { step: 8, description: "Implementar a funcionalidade de streaming" },
-            { step: 9, description: "Configurar o servidor de streaming" },
-            { step: 10, description: "Desenvolver o player de música" },
-            { step: 11, description: "Integrar o player com o servidor de streaming" },
-            { step: 12, description: "Adicionar funcionalidades de playlist" },
-            { step: 13, description: "Permitir a criação de playlists" },
-            { step: 14, description: "Implementar a funcionalidade de adicionar/remover músicas" },
-            { step: 15, description: "Desenvolver a funcionalidade de compartilhamento de playlists" },
-            { step: 16, description: "Testar e lançar o aplicativo" },
-            { step: 17, description: "Realizar testes de integração" },
-            { step: 18, description: "Corrigir bugs encontrados" },
-            { step: 19, description: "Lançar a versão beta para um grupo seleto de usuários" },
-            { step: 20, description: "Lançar a versão final para o público" }
+            { type: 'BG', title: "Definir os requisitos do aplicativo", priority: 'HIGH' },
+            { type: 'CG', title: "Reunir requisitos funcionais e não funcionais", priority: 'MED' },
+            { type:'BG', title: "Guaxinim", priority: 'LOW' }
+          //bg: business goal, cg:constraint goal
           ],
           personas: [{
             name: "Thiago - Administrador do sistema",
@@ -185,7 +168,7 @@ const App = () => {
   const handleRemove = (type) => {
     switch (type) {
       case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
-      case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: false })
+      case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
       case 'userRemove': return modal.userRemove ? setModal({ ...modal, userRemove: false }) : setModal({ ...modal, userRemove: true })    
       default: console.log('Operação não encontrada: ' + type)
@@ -196,8 +179,8 @@ const App = () => {
     setUserData(users.find(user => user.key === userKey));
   }, [userKey, users])
   useEffect(() => {
-    console.log(users)
-  }, [users])
+    console.log(users, modal)
+  }, [users, modal])
 
   return (
     <Router basename='/reactify-demo'>
@@ -255,7 +238,7 @@ const App = () => {
               <VisaoGeral
               users={users}
               setUsers={setUsers}
-                userData={userData} />
+              userData={userData} />
             </PrivateRoute>
           } />
 

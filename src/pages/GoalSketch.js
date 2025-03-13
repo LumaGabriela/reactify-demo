@@ -8,7 +8,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
   const [storyData, setStoryData] = useState('');
 
   const handleClick = (e) => {
-    const storyElement = e.target.closest('.story-block');
+    const storyElement = e.target.closest('.goal-block');
     if (storyElement) {
       const story = storyElement.dataset.id
       setStoryData(story);
@@ -16,45 +16,58 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
     }
   };
 
+  if (!projeto) return null
   return (
     <div>
       <h2 className="title">Goal Sketch</h2>
-      <div className='stories-container'>
-        <div className="stories-grid">
-          {projeto.stories.map((story, index) => (
-            story.id.includes('US') && (
+      
+      <div className='goals-container'>
+        <div className="goals-grid">
+          {projeto.goalSketch.map((goal, index) => (
+            goal.type.includes('BG') && (
               <div
                 key={index}
-                className={`story-block ${story.type === 'user' ? 'user-story' : 'system-story'}`}
-                data-id={story.id}
+                className={`goal-block business-goal`}
+                data-id={goal.title}
                 onClick={(e) => handleClick(e)}
               >
                 <div className="story-content">
-                  <p className="story-title">{story.title}</p>
-                  <p className="story-id"><strong>{story.id}</strong></p>
+                  <p className="story-title">{goal.title}</p>
+                  <div className='goal-badges'>
+                    <p className="goal-type"><strong>{goal.type}</strong></p>
+                    <p className="goal-priority"><strong>{goal.priority}</strong></p>
+                  </div>
+
+                </div>
+              </div>
+            )
+          ))}
+        </div>
+        <div className="goals-grid">
+          {projeto.goalSketch.map((goal, index) => (
+            goal.type.includes('CG') && (
+              <div
+                key={index}
+                className={`goal-block constraint-goal`}
+                data-id={goal.title}
+                onClick={(e) => handleClick(e)}
+              >
+                <div className="story-content">
+                  <p className="story-title">{goal.title}</p>
+                  <div className='goal-badges'>
+                    <p className="goal-type"><strong>{goal.type}</strong></p>
+                    <p className="goal-priority"><strong>{goal.priority}</strong></p>
+                  </div>
+
                 </div>
               </div>
             )
           ))}
         </div>
 
-        <div className="stories-grid">
-          {projeto.stories.map((story, index) => (
-            story.id.includes('SS') && (
-              <div
-                key={index}
-                className={`story-block ${story.type === 'user' ? 'user-story' : 'system-story'}`}
-                data-id={story.id}
-                onClick={(e) => handleClick(e)}
-              >
-                <div className="story-content">
-                  <p className="story-title">{story.title}</p>
-                  <p className="story-id"><strong>{story.id}</strong></p>
-                </div>
-              </div>
-            )
-          ))}
-        </div>
+        
+
+
 
 
       </div>
