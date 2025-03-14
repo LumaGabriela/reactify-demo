@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { AddButton } from '../components/button/Buttons';
-import { AddUserStories } from '../components/modal/Modals';
+import { AddGoalSketch } from '../components/modal/Modals';
 import './UserStories.css';
 
 const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
   const projeto = userData.projects?.find(project => project.key === projectKey);
-  const [storyData, setStoryData] = useState('');
+  const [goalData, setGoalData] = useState('');
 
   const handleClick = (e) => {
-    const storyElement = e.target.closest('.goal-block');
-    if (storyElement) {
-      const story = storyElement.dataset.id
-      setStoryData(story);
-      handleRemove('userStory');
+    const goalElement = e.target.closest('.goal-block');
+    if (goalElement) {
+      const goal = goalElement.dataset.id
+      setGoalData(goal);
+      handleRemove('goalSketch');    console.log(goal)
     }
+    console.log()
   };
 
   if (!projeto) return null
@@ -28,7 +29,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
               <div
                 key={index}
                 className={`goal-block business-goal`}
-                data-id={goal.title}
+                data-id={goal.id}
                 onClick={(e) => handleClick(e)}
               >
                 <div className="story-content">
@@ -49,7 +50,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
               <div
                 key={index}
                 className={`goal-block constraint-goal`}
-                data-id={goal.title}
+                data-id={goal.id}
                 onClick={(e) => handleClick(e)}
               >
                 <div className="story-content">
@@ -73,9 +74,9 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
       </div>
       <AddButton
         handleRemove={handleRemove}
-        type={'userStory'}
+        type={'goalSketch'}
       />
-      <AddUserStories
+      <AddGoalSketch
         userData={userData}
         setUserData={setUserData}
         userKey={userKey}
@@ -84,8 +85,8 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
         modal={modal}
         handleRemove={handleRemove}
         projectKey={projectKey}
-        storyData={storyData}
-        setStoryData={setStoryData}
+        goalData={goalData}
+        setGoalData={setGoalData}
       />
     </div>
   );

@@ -12,6 +12,8 @@ const AddButton = ({ handleRemove, type }) => {
         break;
       case 'userStory':
         break;
+        case 'goalSketch':
+          break;
       case 'journey':
         break;
       case 'userRemove':
@@ -36,6 +38,7 @@ const AddButton = ({ handleRemove, type }) => {
           {type === 'description' && <>Adicionar Descrição</>}
           {type === 'journey' && <>Adicionar journey</>}
           {type === 'userStory' && <>Adicionar User Story</>}
+          {type === 'goalSketch' && <>Adicionar GoalSketch</>}
           {type === 'userAdd' && <>Adicionar Usuario</>}
         </div>
       </Button>
@@ -64,7 +67,13 @@ const RemoveButton = ({ handleRemove, type, update }) => {
       case 'clean':
         update()
         return
-
+        case 'goalSketch':
+          update('remove');
+          break;
+        case 'goalRemove': break;
+        case 'clean':
+          update()
+          return
       default:
         console.log('Tipo desconhecido:' + type)
     }
@@ -86,6 +95,8 @@ const RemoveButton = ({ handleRemove, type, update }) => {
           {type === 'remove-journey' && <>Remover journey</>}
           {type === 'userStory' && <>Remover User Story</>}
           {type === 'userRemove' && <>Remover</>}
+          {type === 'goalSketch' && <>Remover GoalSketch</>}
+          {type === 'goalRemove' && <>Remover</>}
           {type === 'clean' && <>Limpar</>}
         </div>
       </Button>

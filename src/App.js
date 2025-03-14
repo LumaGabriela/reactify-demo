@@ -69,9 +69,9 @@ const App = () => {
             }
           ],
           goalSketch: [
-            { type: 'BG', title: "Definir os requisitos do aplicativo", priority: 'HIGH' },
-            { type: 'CG', title: "Reunir requisitos funcionais e não funcionais", priority: 'MED' },
-            { type:'BG', title: "Guaxinim", priority: 'LOW' }
+            { type: 'BG', title: "Definir os requisitos do aplicativo", priority: 'HIGH', id: '123' },
+            { type: 'CG', title: "Reunir requisitos funcionais e não funcionais", priority: 'MED', id: '321'  },
+            { type:'BG', title: "Guaxinim", priority: 'LOW', id: '1233' }
           //bg: business goal, cg:constraint goal
           ],
           personas: [{
@@ -153,6 +153,7 @@ const App = () => {
   const [modal, setModal] = useState({
     project: false, 
     userStories:false,
+    goalSketch: false,
     journeys: false,
     userRemove: false,
     userAdd: false
@@ -170,6 +171,7 @@ const App = () => {
       case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
       case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
+      case 'goalSketch': return modal.goalSketch ? setModal({ ...modal, goalSketch: false }) : setModal({ ...modal, goalSketch: true })
       case 'userRemove': return modal.userRemove ? setModal({ ...modal, userRemove: false }) : setModal({ ...modal, userRemove: true })    
       default: console.log('Operação não encontrada: ' + type)
     }
@@ -179,8 +181,8 @@ const App = () => {
     setUserData(users.find(user => user.key === userKey));
   }, [userKey, users])
   useEffect(() => {
-    console.log(users, modal)
-  }, [users, modal])
+    console.log(users)
+  }, [users])
 
   return (
     <Router basename='/reactify-demo'>
