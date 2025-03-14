@@ -59,3 +59,13 @@
 .system-story, .constraint-goal {
     background-color: #e2c259; 
 }
+
+.goal-badges {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.goal-type, .goal-priority {
+  border: 2px solid black;
+  padding: 0 0.3rem ;
+}

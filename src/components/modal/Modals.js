@@ -4,14 +4,15 @@ import { nanoid } from 'nanoid'
 import { RemoveButton } from '../button/Buttons'
 import './Modals.css'
 
-const AddProjectModal = ({ modal, userData, setUserData, userKey, users, setUsers, handleRemove }) => {
+const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
   const [pName, setPName] = useState('')
 
   // Salva o nome do projeto no objeto principal
   const setProjectName = () => {
+    const user = users.find(user => user.key === userKey);
     const updatedUserData = {
-      ...userData,
-      projects: [...userData.projects, {
+      ...user,
+      projects: [...user.projects, {
         name: pName,
         goalSketches: [],
         journey: [],
@@ -19,7 +20,7 @@ const AddProjectModal = ({ modal, userData, setUserData, userKey, users, setUser
         key: nanoid()
       }]
     }
-    setUserData(updatedUserData);
+    setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -64,12 +65,17 @@ const AddProjectModal = ({ modal, userData, setUserData, userKey, users, setUser
   );
 }
 
-const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUsers, handleRemove, modal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
+const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
   const [removeType, setRemoveType] = useState('')
-  const project = userData.projects?.find(project => project.key === projectKey);
   const [bodyHeight, setBodyHeight] = useState('100%');
 
+  const [ project, setProject] = useState(null)
+  //Atualiza o projeto atual
+  useEffect(() => {
+    const user = users.find(user => user.key === userKey);
+    setProject(user?.projects.find(project => project.key === projectKey) || {});
+  }, [users, userKey, projectKey])
   // Torna a altura da sombra do modal variável
   useEffect(() => {
     const height = document.body.scrollHeight;
@@ -131,7 +137,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
   // Atualiza o array das journeys
   const updateJourney = (op) => {
     const operationType = (op ? op : operation)
-
+    const user = users.find(user => user.key === userKey);
     switch (operationType) {
       // Adiciona uma journey
       case 'name': {
@@ -140,9 +146,10 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
           steps: []
         };
 
+
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               return { ...proj, journey: [...proj.journey, newJourney] };
             }
@@ -150,21 +157,17 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
           })
         };
 
-        setUserData(updatedUserData);
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);;
+
       }
         break;
 
       // Atualiza a descrição de uma journey
       case 'description': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedJourneys = proj.journey.map((journey, jIndex) => {
                 if (jIndex === parseInt(journeyData.journeyindex)) {
@@ -183,21 +186,16 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
             return proj;
           })
         };
-        setUserData(updatedUserData);
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);
       }
         break;
 
       // Remove um passo de uma journey
       case 'remove-journey-step': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedJourneys = proj.journey.map((journey, jIndex) => {
                 if (jIndex === parseInt(journeyData.journeyindex)) {
@@ -213,7 +211,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
             return proj;
           })
         };
-        setUserData(updatedUserData);
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -226,8 +224,8 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
       // Remove a journey por inteiro
       case 'remove-journey': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedJourneys = proj.journey.filter((journey, jIndex) => {
                 return jIndex !== parseInt(journeyData.journeyindex)
@@ -237,13 +235,10 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
             return proj;
           })
         };
-        setUserData(updatedUserData);
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
   // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);
+
       }
         break;
 
@@ -251,8 +246,8 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
       case 'add-step': {
         const newStep = { step: journeyData.stepindex, description: jValue };
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const journeyIndex = parseInt(journeyData.journeyindex);
               const updatedJourneys = [...proj.journey];
@@ -263,13 +258,9 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
             return proj;
           })
         };
-        setUserData(updatedUserData);
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);;
+
       }
         break;
 
@@ -277,7 +268,7 @@ const JourneyDescriptionModal = ({ userData, setUserData, userKey, users, setUse
     }
     setJourneyData({})
     handleRemove('journey')
-    console.log(operationType, userData)
+
   }
 
   return (
@@ -323,12 +314,18 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
   const [sValue, setSValue] = useState('')
   const [sType, setSType] = useState('user')
   const [operation, setOperation] = useState('')
+  const [user, setUser] = useState(null)
 
+  //Atualiza o usuario atual
+  useEffect(() => {
+    setUser(users.find(user => user.key === userKey))
+  }, [users, userKey, projectKey])
   // Adiciona efeitos caso as variáveis mudem
   useEffect(() => {
     // Define sValue para ser o título da story clicada
     let foundStory = null;
-    userData.projects.forEach(proj => {
+    const user = users.find(user => user.key === userKey);
+    user.projects.forEach(proj => {
       if (proj.key === projectKey) {
         proj.stories.forEach(story => {
           if (story.id === storyData) {
@@ -393,8 +390,8 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
       // Adiciona uma nova STORY
       case 'name': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const newStory = {
                 id: sType === 'user' ?
@@ -417,21 +414,15 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             return proj;
           })
         };
-        setUserData(updatedUserData);
-
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);;
+        setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
       }
         break;
 
       // Altera a descrição da story
       case 'description': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedStories = proj.stories.map((story) => {
                 if (story.id === storyData) {
@@ -457,8 +448,8 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
       // Remove a story
       case 'remove': {
         const updatedUserData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedStories = proj.stories.filter(story => {
                 return story.id !== storyData
@@ -531,16 +522,25 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
   );
 }
 
-const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalData, setGoalData, handleRemove, modal, projectKey }) => {
-  const [gTitle, setGTitle] = useState('')
-  const [gType, setGType] = useState('BG')
+const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handleRemove, modal, projectKey }) => {
+
+  const [goalField, setGoalField] = useState({
+    title:'', type: 'BG', priority: 'LOW'
+  })
   const [operation, setOperation] = useState('')
+  const [user, setUser] = useState(null)
+
+  //Atualiza o usuario atual
+  useEffect(() => {
+    setUser(users.find(user => user.key === userKey))
+  }, [users, userKey, projectKey])
 
   // Adiciona efeitos caso as variáveis mudem
   useEffect(() => {
-    // Define gTitle para ser o título da goal clicada
-    let foundGoal = null;
-    userData.projects.forEach(proj => {
+    // Define goalField.title para ser o título da goal clicada
+    let foundGoal = null
+    let user = users.find(user => user.key === userKey)
+    user.projects.forEach(proj => {
       if (proj.key === projectKey) {
         proj.goalSketch.forEach(goal => {
           if (goal.id === goalData) {
@@ -549,18 +549,18 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
         });
       }
     })
-    setGTitle(foundGoal?.title)
+    setGoalField({...goalField, title: foundGoal?.title})
   }, [goalData, modal.goalSketch])
 
   // Define o tipo de operação
   useEffect(() => {
     if (goalData !== '') setOperation('description')
     else setOperation('name')
-  }, [goalData, operation, gTitle]);
+  }, [goalData, operation]);
 
-  // Deixa o campo gTitle e o goalData vazios após o modal se fechar
+  // Deixa o campo goalField.title e o goalData vazios após o modal se fechar
   useEffect(() => {
-    if ( modal.goalSketch === false) { setGTitle(''); setGoalData('') }
+    if ( modal.goalSketch === false) { setGoalField({...goalField, title: ''}); setGoalData('') }
   }, [ modal.goalSketch])
 
 
@@ -573,15 +573,14 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
       // Adiciona uma nova Goal
       case 'name': {
         const updateGoalData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const newGoal = {
-                id: gType === 'user' ?
-                  `US${(proj.goalSketch.length + 1).toString().padStart(2, '0')}`
-                  : `SS${(proj.goalSketch.length + 1).toString().padStart(2, '0')}`,
-                title: gTitle,
-                type: gType
+                type: goalField.type, 
+                title: goalField.title,
+                priority: goalField.priority,
+                id: nanoid()
               };
 
               const updatedGoals = [
@@ -597,25 +596,19 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
             return proj;
           })
         };
-        setUserData(updateGoalData);
-
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updateGoalData.projects } : user
-  );
-  setUsers(updatedUsers);;
+        setUsers(users.map(user => user.key === userKey ? updateGoalData : user));
       }
         break;
 
       // Altera a descrição da goal
       case 'description': {
         const updateGoalData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedGoals = proj.goalSketch.map((goal) => {
                 if (goal.id === goalData) {
-                  return { ...goal, title: gTitle, type: gType }
+                  return { ...goal, title: goalField.title, type: goalField.type, priority: goalField.priority}
                 }
                 return goal
               })
@@ -624,21 +617,16 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
             return proj
           })
         };
-        setUserData(updateGoalData);
+        setUsers(users.map(user => user.key === userKey ? updateGoalData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updateGoalData.projects } : user
-  );
-  setUsers(updatedUsers);
       }
         break;
 
       // Remove a goal
       case 'remove': {
         const updateGoalData = {
-          ...userData,
-          projects: userData.projects.map(proj => {
+          ...user,
+          projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const updatedGoals = proj.goalSketch.filter(goal => {
                 return goal.id !== goalData
@@ -648,13 +636,7 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
             return proj
           })
         };
-        setUserData(updateGoalData);
-
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updateGoalData.projects } : user
-  );
-  setUsers(updatedUsers);
+        setUsers(users.map(user => user.key === userKey ? updateGoalData : user));
       }
         break;
 
@@ -662,7 +644,7 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
         break;
     }
     setGoalData('')
-    setGTitle('')
+    setGoalField({...goalField, title: ''})
     handleRemove('goalSketch')
   }
 
@@ -680,21 +662,32 @@ const AddGoalSketch = ({ userData, setUserData, userKey, users, setUsers, goalDa
           <>Título da Goal</>
           <Form.Control
             type="text"
-            value={gTitle}
-            onChange={(e) => setGTitle(e.target.value)}
+            value={goalField.title}
+            onChange={(e) =>setGoalField({...goalField, title: e.target.value})}
             onKeyUp={(e) => { if (e.key === 'Enter') updateGoalSketch() }}
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
           <>Tipo de goal</>
           <select
-            value={gType}
-            onChange={(e) => setGType(e.target.value)}
+            value={goalField.type}
+            onChange={(e) => setGoalField({...goalField, type: e.target.value})}
             className="form-select"
             aria-label="Default select example"
           >
             <option value="BG">Business Goal</option>
             <option value="CG">Constraint Goal</option>
+          </select>
+          <>Prioridade da Goal</>
+          <select
+            value={goalField.priority}
+            onChange={(e) => setGoalField({...goalField, priority: e.target.value})}
+            className="form-select"
+            aria-label="Default select example"
+          >
+            <option value="LOW">Baixa</option>
+            <option value="MED">Média</option>
+            <option value="HIGH">Alta</option>
           </select>
         </Modal.Body>
 

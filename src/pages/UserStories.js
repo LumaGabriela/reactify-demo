@@ -7,6 +7,7 @@ const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, h
   const [projeto, setProjeto] = useState(null);
   const [storyData, setStoryData] = useState('');
 
+  //Atualiza o projeto atual
   useEffect(() => {
     const user = users.find(user => user.key === userKey);
     setProjeto(user?.projects.find(project => project.key === projectKey) || {});

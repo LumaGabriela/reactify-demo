@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AddButton } from '../components/button/Buttons';
 import { AddGoalSketch } from '../components/modal/Modals';
 import './UserStories.css';
 
 const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
-  const projeto = userData.projects?.find(project => project.key === projectKey);
+
   const [goalData, setGoalData] = useState('');
+  const [projeto, setProjeto] = useState(null)
+  //Atualiza o projeto atual
+  useEffect(() => {
+    const user = users.find(user => user.key === userKey);
+    setProjeto(user?.projects.find(project => project.key === projectKey) || {});
+  }, [users, userKey, projectKey])
 
   const handleClick = (e) => {
     const goalElement = e.target.closest('.goal-block');
     if (goalElement) {
       const goal = goalElement.dataset.id
       setGoalData(goal);
-      handleRemove('goalSketch');    console.log(goal)
+      handleRemove('goalSketch');
     }
     console.log()
   };
@@ -21,7 +27,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
   return (
     <div>
       <h2 className="title">Goal Sketch</h2>
-      
+
       <div className='goals-container'>
         <div className="goals-grid">
           {projeto.goalSketch.map((goal, index) => (
@@ -66,7 +72,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
           ))}
         </div>
 
-        
+
 
 
 
