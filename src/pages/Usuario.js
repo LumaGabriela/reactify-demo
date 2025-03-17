@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { Modal, Card, Container, Form, Button } from 'react-bootstrap'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { RemoveButton, SaveButton } from '../components/button/Buttons'
 import { ReactComponent as BackArrow } from '../components/imgs/back-svgrepo-com.svg'
 //////////////////////////////////////////////
@@ -22,21 +22,23 @@ const UserModal = ({ modal, handleRemove, removeUser }) => {
     </div>
   );
 }
-const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserKey, userKey }) => {
+const Usuario = ({ users, setUsers, modal, handleRemove, setUserKey, userKey }) => {
   const { userId } = useParams()
   const navigate = useNavigate()
-  const [currentUser, setCurrentUser] = useState({ ...user })
+  const [currentUser, setCurrentUser] = useState(users.find( user => user.key === userKey))
+  //
+
 
   //caso nao haja usuario, navega em direcao a pagina principal
   useEffect(() => {
     if (!userKey) {
       navigate('/admin/usuarios/')
     }
-  }, [user, navigate]);
+  }, [currentUser, navigate]);
   //redefine o valor do usuario atual sempre que o objeto users se alterar
   useEffect(() => {
-    setCurrentUser({ ...user })
-  }, [user])
+    setCurrentUser(users.find( user => user.key === userKey))
+  }, [users])
   // define a chave como sendo o userId da URL
   useEffect(() => {
     setUserKey(userId)
@@ -95,17 +97,17 @@ const Usuario = ({ users, setUsers, user, setUser, modal, handleRemove, setUserK
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Nome do Usuário</Form.Label>
-              <Form.Control type="text" defaultValue={user?.name} onChange={(e) => updateCurrentUser('name', e.target.value)} />
+              <Form.Control type="text" defaultValue={currentUser?.name} onChange={(e) => updateCurrentUser('name', e.target.value)} />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>ID do Usuário</Form.Label>
-              <Form.Control type="text" defaultValue={user?.key} onChange={(e) => updateCurrentUser('key', e.target.value)} />
+              <Form.Control type="text" defaultValue={currentUser?.key} onChange={(e) => updateCurrentUser('key', e.target.value)} />
             </Form.Group>
 
             <Form.Group className="mb-3">
               <Form.Label>Papel</Form.Label>
-              <Form.Select defaultValue={user?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
+              <Form.Select defaultValue={currentUser?.role} onChange={(e) => updateCurrentUser('role', e.target.value)}>
                 <option value="admin">Administrador</option>
                 <option value="customer">Cliente</option>
                 <option value="project-manager">Gerente de Projeto</option>

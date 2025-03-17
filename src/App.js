@@ -148,7 +148,6 @@ const App = () => {
       }
     }
   ])
-  const [userData, setUserData] = useState({})// Usuario da sessao
   //Seletores de modais  ( define se está aberto ou fechado)
   const [modal, setModal] = useState({
     project: false, 
@@ -176,10 +175,6 @@ const App = () => {
       default: console.log('Operação não encontrada: ' + type)
     }
   }
-  // Sempre que se atualizar a userKey, se atualiza o userData
-  useEffect(() => {
-    setUserData(users.find(user => user.key === userKey));
-  }, [userKey, users])
   useEffect(() => {
     console.log(users)
   }, [users])
@@ -189,7 +184,8 @@ const App = () => {
       <div className="App">
         <NavBar
           projectKey={projectKey}
-          userData={userData}
+          users={users}
+          userKey={userKey}
         />
         <Routes>
           <Route path='/admin/usuarios'
@@ -212,8 +208,6 @@ const App = () => {
                 <Usuario
                   users={users}
                   setUsers={setUsers}
-                  user={userData}
-                  setUser={setUserData}
                   handleRemove={handleRemove}
                   modal={modal}
                   userKey={userKey}
@@ -225,8 +219,6 @@ const App = () => {
             <Home
               modal={modal}
               setModal={setModal}
-              userData={userData}
-              setUserData={setUserData}
               handleRemove={handleRemove}
               userKey={userKey}
               users={users}
@@ -240,7 +232,8 @@ const App = () => {
               <VisaoGeral
               users={users}
               setUsers={setUsers}
-              userData={userData} />
+              userKey={userKey}
+               />
             </PrivateRoute>
           } />
 
@@ -254,10 +247,8 @@ const App = () => {
           } />
           <Route path="/:projectId/user-stories" element={
             <UserStories
-              userData={userData}
               projectKey={projectKey}
               handleRemove={handleRemove}
-              setUserData={setUserData}
               modal={modal}
               userKey={userKey}
               users={users}
@@ -267,15 +258,13 @@ const App = () => {
 
           <Route path="/:projectId/goal-sketches" element={
             <GoalSketch
-            userData={userData}
             projectKey={projectKey}
             handleRemove={handleRemove}
-            setUserData={setUserData}
             modal={modal}
             userKey={userKey}
             users={users}
             setUsers={setUsers}
-              />
+            />
           } />
 
           <Route path="/:projectId/personas" element={
@@ -292,8 +281,6 @@ const App = () => {
               modal={modal}
               projectKey={projectKey}
               handleRemove={handleRemove}
-              setUserData={setUserData}
-              userData={userData}
               userKey={userKey}
               users={users}
               setUsers={setUsers}

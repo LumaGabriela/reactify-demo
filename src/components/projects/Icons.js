@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router"
 
-const ProjectIcon = ({ userData, setProjectKey }) => {
+const ProjectIcon = ({ users, userKey, setProjectKey }) => {
+  const user = users.find(user => user.key === userKey)
   const navigate = useNavigate()
+
   return (
     <div className="project-container mt-5">
-      {userData.projects?.map((project) => (
+      {user.projects?.map((project) => (
         <div
           key={project.key}
           className={`project-item text-center ${project.key}`}

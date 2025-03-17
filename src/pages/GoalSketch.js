@@ -3,34 +3,36 @@ import { AddButton } from '../components/button/Buttons';
 import { AddGoalSketch } from '../components/modal/Modals';
 import './UserStories.css';
 
-const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
+const GoalSketch = ({ userKey, users, setUsers, modal, handleRemove, projectKey }) => {
 
   const [goalData, setGoalData] = useState('');
   const [projeto, setProjeto] = useState(null)
-  //Atualiza o projeto atual
+
   useEffect(() => {
     const user = users.find(user => user.key === userKey);
-    setProjeto(user?.projects.find(project => project.key === projectKey) || {});
-  }, [users, userKey, projectKey])
+    setProjeto(user?.projects.find(project => project.key === projectKey) || {})
+
+  }, [ projectKey, users])
+
 
   const handleClick = (e) => {
     const goalElement = e.target.closest('.goal-block');
     if (goalElement) {
       const goal = goalElement.dataset.id
       setGoalData(goal);
-      handleRemove('goalSketch');
+      handleRemove('goalSketch')
     }
-    console.log()
-  };
+  }
 
   if (!projeto) return null
+
   return (
     <div>
       <h2 className="title">Goal Sketch</h2>
 
       <div className='goals-container'>
         <div className="goals-grid">
-          {projeto.goalSketch.map((goal, index) => (
+          {projeto?.goalSketch.map((goal, index) => (
             goal.type.includes('BG') && (
               <div
                 key={index}
@@ -51,7 +53,7 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
           ))}
         </div>
         <div className="goals-grid">
-          {projeto.goalSketch.map((goal, index) => (
+          {projeto?.goalSketch.map((goal, index) => (
             goal.type.includes('CG') && (
               <div
                 key={index}
@@ -72,19 +74,12 @@ const GoalSketch = ({ userData, setUserData, userKey, users, setUsers, modal, ha
           ))}
         </div>
 
-
-
-
-
-
       </div>
       <AddButton
         handleRemove={handleRemove}
         type={'goalSketch'}
       />
       <AddGoalSketch
-        userData={userData}
-        setUserData={setUserData}
         userKey={userKey}
         users={users}
         setUsers={setUsers}

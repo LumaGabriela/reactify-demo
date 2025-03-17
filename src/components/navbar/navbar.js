@@ -6,9 +6,16 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useNavigate } from 'react-router'
 import './NavBar.css'
 
-const NavBar = ({ projectKey, userData }) => {
+const NavBar = ({ projectKey, users, userKey }) => {
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(false);
+  const [user, setUser] = useState(null)
+
+  //Atualiza o usuario atual
+  useEffect(() => {
+
+  }, [users, userKey, projectKey])
+
   const navigate = useNavigate()
   //Fecha todos os menus laterais ao clicar em um link
   const handleNavigate = (path) => {
@@ -19,12 +26,13 @@ const NavBar = ({ projectKey, userData }) => {
   const [project, setProject] = useState({})
 
   useEffect(() => {
-    if (userData?.projects) {
-      const foundProject = userData.projects.find(proj => proj.key === projectKey);
+    setUser(users.find(user => user.key === userKey))
+    if (user?.projects) {
+      const foundProject = user.projects.find(proj => proj.key === projectKey);
       setProject(foundProject || {})
     } else setProject({})
     
-  }, [projectKey, userData])
+  }, [projectKey, user, userKey])
 
 
 

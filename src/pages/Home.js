@@ -4,11 +4,9 @@ import { ProjectIcon } from '../components/projects/Icons'
 
 const Home = ({
   modal,
-  userData,
-  setUserData,
-  handleRemove,
   users,
-  setUsers, 
+  handleRemove,
+  setUsers,
   userKey,
   setProjectKey
 }) => {
@@ -16,8 +14,6 @@ const Home = ({
     <div>
       <AddProjectModal
         modal={modal}
-        userData={userData}
-        setUserData={setUserData}
         handleRemove={handleRemove}
         userKey={userKey}
         users={users}
@@ -29,7 +25,8 @@ const Home = ({
         handleRemove={handleRemove}
       />
       <ProjectIcon
-        userData={userData}
+        userKey={userKey}
+        users={users}
         setProjectKey={setProjectKey}
         handleRemove={handleRemove}
       />

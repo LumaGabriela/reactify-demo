@@ -8,27 +8,28 @@ import { FormControl } from 'react-bootstrap';
 import { RemoveButton, SaveButton } from '../components/button/Buttons';
 import { useState } from 'react';
 
-const VisaoGeral = ({ userData, users, setUsers }) => {
+const VisaoGeral = ({ users, setUsers, userKey }) => {
   const { projectId } = useParams()
   const [description, setDescription] = useState('')
-  const [project, setProject] = useState(userData.projects?.find(project => project.key === projectId))
+  const user = users.find(user => user.key === userKey)
+  const [project, setProject] = useState(user.projects?.find(project => project.key === projectId))
   const navigate = useNavigate()
   //
   useEffect(()=> {
-    setProject(userData.projects?.find(project => project.key === projectId))
+    setProject(user.projects?.find(project => project.key === projectId))
     setDescription(project?.visaoGeral)
   }
   ,[users])
 //salva a descricao atual no usuario atual e dentro de users
   const handleSave = () => {
-    const updatedProjects = userData.projects.map(proj =>
+    const updatedProjects = user.projects.map(proj =>
       proj.key === projectId ? { ...proj, visaoGeral: description } : proj
     )
 
-    const updatedUserData = { ...userData, projects: updatedProjects };
+    const updatedUserData = { ...user, projects: updatedProjects };
 
     const updatedUsers = users.map(user =>
-      user.key === userData.key ? updatedUserData : user
+      user.key === user.key ? updatedUserData : user
     )
 
     setUsers(updatedUsers);

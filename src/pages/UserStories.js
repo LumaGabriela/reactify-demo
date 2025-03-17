@@ -3,7 +3,7 @@ import { AddButton } from '../components/button/Buttons';
 import { AddUserStories } from '../components/modal/Modals';
 import './UserStories.css';
 
-const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, handleRemove, projectKey }) => {
+const UserStories = ({ userKey, users, setUsers, modal, handleRemove, projectKey }) => {
   const [projeto, setProjeto] = useState(null);
   const [storyData, setStoryData] = useState('');
 
@@ -70,8 +70,6 @@ const UserStories = ({ userData, setUserData, userKey, users, setUsers, modal, h
         type={'userStory'}
       />
       <AddUserStories
-        userData={userData}
-        setUserData={setUserData}
         userKey={userKey}
         users={users}
         setUsers={setUsers}
