@@ -6,7 +6,7 @@ const ProjectIcon = ({ users, userKey, setProjectKey }) => {
 
   return (
     <div className="project-container mt-5">
-      {user.projects?.map((project) => (
+      {user?.projects?.map((project) => (
         <div
           key={project.key}
           className={`project-item text-center ${project.key}`}
