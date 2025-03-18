@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 //Importa componentes
-import NavBar from './components/navbar/NavBar.js'
+import NavBar from './components/navbar/navbar'
 
 // Importa as paginas 
 import Home from './pages/Home'
