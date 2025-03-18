@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Offcanvas from 'react-bootstrap/Offcanvas'
 import { useNavigate } from 'react-router'
 import './NavBar.css'
+import { Badge } from 'react-bootstrap'
 
 const NavBar = ({ projectKey, users, userKey }) => {
   const [showLeft, setShowLeft] = useState(false);
@@ -58,7 +59,10 @@ const NavBar = ({ projectKey, users, userKey }) => {
           <Offcanvas.Body>
             <Nav className="flex-column">
             <hr className="nav-divider" />
-              <Nav.Link  onClick={() => handleNavigate("/admin/usuarios")}>Usuários</Nav.Link>
+              <Nav.Link  onClick={() => handleNavigate("/admin/usuarios")}>
+                <>Usuários</>
+                <Badge bg='secondary'>{users.length.toString()}</Badge>
+              </Nav.Link>
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>

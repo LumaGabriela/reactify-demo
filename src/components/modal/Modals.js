@@ -655,10 +655,15 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('goalSketch')}>
-          <Modal.Title>Adicionar Goal Sketch</Modal.Title>
+          <Modal.Title>
+          {goalData === '' && <>Adicionar Goal Sketch</>}
+          {goalData !== '' && <>Editar Goal</>}
+
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
+          
           <>Título da Goal</>
           <Form.Control
             type="text"
