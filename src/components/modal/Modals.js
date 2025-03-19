@@ -5,7 +5,7 @@ import { RemoveButton } from '../button/Buttons'
 import './Modals.css'
 
 const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
-  const [pName, setPName] = useState('')
+  const [projectField, setProjectField] = useState({})
 
   // Salva o nome do projeto no objeto principal
   const setProjectName = () => {
@@ -13,11 +13,14 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
     const updatedUserData = {
       ...user,
       projects: [...user.projects, {
-        name: pName,
         goalSketches: [],
-        journey: [],
-        productView: 'Visão do produto',
-        key: nanoid()
+        journeys: [],
+        key: nanoid(),
+        name: projectField.name,
+        personas: [],
+        productCanvas: {},
+        visaoGeral: projectField.description,
+        
       }]
     }
     setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
@@ -28,7 +31,7 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
   );
   setUsers(updatedUsers);
 
-    setPName('')
+    setProjectField({...projectField, name: ''})
     handleRemove('project')
   }
 
@@ -49,10 +52,19 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
           <p>Nome do projeto: </p>
           <Form.Control
             type="text"
-            value={pName}
+            value={projectField.name}
             onKeyUp={(e) => { if (e.key === 'Enter') setProjectName() }}
-            onChange={(e) => setPName(e.target.value)}
+            onChange={(e) => setProjectField({...projectField, name: e.target.value})}
             placeholder="Nome do projeto"
+            style={{ cursor: 'text' }}
+          />
+          <p>Descrição: </p>
+          <Form.Control
+            type="text"
+            value={projectField.description}
+            onKeyUp={(e) => { if (e.key === 'Enter') setProjectName() }}
+            onChange={(e) => setProjectField({...projectField, description: e.target.value})}
+            placeholder="Descrição do projeto"
             style={{ cursor: 'text' }}
           />
         </Modal.Body>
@@ -126,7 +138,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
     if (operation === 'add-step') {
       return 'Adicionar novo passo';
     } else if (operation === 'description' && Object.keys(journeyData).length > 0) {
-      return `Editar passo: ${project.journey[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description}`
+      return `Editar passo: ${project.journeys[journeyData.journeyindex]?.steps[journeyData.stepindex]?.description}`
     } else if (operation === 'name') {
       return 'Nome da jornada';
     } else if (operation === 'remove-journey') {
@@ -151,7 +163,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              return { ...proj, journey: [...proj.journey, newJourney] };
+              return { ...proj, journeys: [...proj.journeys, newJourney] };
             }
             return proj;
           })
@@ -169,7 +181,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              const updatedJourneys = proj.journey.map((journey, jIndex) => {
+              const updatedJourneys = proj.journeys.map((journey, jIndex) => {
                 if (jIndex === parseInt(journeyData.journeyindex)) {
                   const updatedSteps = journey.steps.map((step, sIndex) => {
                     if (sIndex === parseInt(journeyData.stepindex)) {
@@ -181,7 +193,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
                 }
                 return journey;
               });
-              return { ...proj, journey: updatedJourneys };
+              return { ...proj, journeys: updatedJourneys };
             }
             return proj;
           })
@@ -197,7 +209,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              const updatedJourneys = proj.journey.map((journey, jIndex) => {
+              const updatedJourneys = proj.journeys.map((journey, jIndex) => {
                 if (jIndex === parseInt(journeyData.journeyindex)) {
                   const updatedSteps = journey.steps.filter((step, sIndex) => {
                     return sIndex !== parseInt(journeyData.stepindex);
@@ -206,7 +218,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
                 }
                 return journey;
               });
-              return { ...proj, journey: updatedJourneys };
+              return { ...proj, journeys: updatedJourneys };
             }
             return proj;
           })
@@ -227,10 +239,10 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              const updatedJourneys = proj.journey.filter((journey, jIndex) => {
+              const updatedJourneys = proj.journeys.filter((journey, jIndex) => {
                 return jIndex !== parseInt(journeyData.journeyindex)
               });
-              return { ...proj, journey: updatedJourneys };
+              return { ...proj, journeys: updatedJourneys };
             }
             return proj;
           })
@@ -250,10 +262,10 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const journeyIndex = parseInt(journeyData.journeyindex);
-              const updatedJourneys = [...proj.journey];
+              const updatedJourneys = [...proj.journeys];
               updatedJourneys[journeyIndex].steps.push(newStep);
 
-              return { ...proj, journey: updatedJourneys };
+              return { ...proj, journeys: updatedJourneys };
             }
             return proj;
           })

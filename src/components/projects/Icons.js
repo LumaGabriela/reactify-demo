@@ -16,8 +16,8 @@ const ProjectIcon = ({ users, userKey, setProjectKey }) => {
           }}
 
         >
-          <h5>{project.name}</h5>
-
+          <h4>{project.name}</h4>
+          {project.visaoGeral}
         </div>
       ))}
     </div>

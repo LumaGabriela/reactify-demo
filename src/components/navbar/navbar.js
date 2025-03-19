@@ -70,8 +70,6 @@ const NavBar = ({ projectKey, users, userKey }) => {
         <Nav className="flex-row" style={{justifyContent: 'space-between'}}>
           <Nav.Link onClick={() => handleNavigate("/sign-up")}>Sign Up</Nav.Link>
           <Nav.Link onClick={() => handleNavigate("/log-in")}>Log In</Nav.Link>
-          <Nav.Link> Projeto: {project ?  project?.name : 'Sem projetos'}</Nav.Link>
-          <Nav.Link> Key: {projectKey ?  projectKey : 'Sem Chave'}</Nav.Link>
         </Nav>
         {/* Right Menu Toggle & Offcanvas */}
         <Navbar.Toggle 

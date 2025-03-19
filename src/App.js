@@ -91,7 +91,7 @@ const App = () => {
             goals: ['', '']
           }
         ],
-          journey: [
+          journeys: [
             {
               name: "Usuário cria uma conta",
               steps: [

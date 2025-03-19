@@ -60,7 +60,7 @@ const Journeys = ({ userKey, users, setUsers, handleRemove, modal, projectKey })
     <div>
       <div className="journeys-grid">
         <h1 className='title'>Journeys</h1>
-        {project?.journey.map((journey, journeyIndex) => (
+        {project?.journeys.map((journey, journeyIndex) => (
           <div
             key={`${project.key}-${journeyIndex}`}
             data-key={project.key}

@@ -3,8 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
-
+    padding: 1rem 0 0 0 ;
   }
   
   .visao-geral-title {
@@ -24,7 +23,16 @@
   .visao-geral-button {
     margin: 5px;
   }
-  .card {
+  .visaogeral.card {
     cursor: pointer;
-    min-width: 10rem;
+    border-radius: 5px;
+    width: 14rem !important;
+    height: 9rem !important;
+    background:  var(--lightblue);
   }
+  .visaogeral.card .card-body {
+    padding: .3rem;
+
+  }
+  .card-footer {background: #00000033;}
+  .card-footer:hover {background: #00000044;}

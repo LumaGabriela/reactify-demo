@@ -20,14 +20,15 @@ const Home = ({
         setUsers={setUsers}
       />
 
-      <AddButton
-        type={'project'}
-        handleRemove={handleRemove}
-      />
+
       <ProjectIcon
         userKey={userKey}
         users={users}
         setProjectKey={setProjectKey}
+        handleRemove={handleRemove}
+      />      
+      <AddButton
+        type={'project'}
         handleRemove={handleRemove}
       />
     </div>

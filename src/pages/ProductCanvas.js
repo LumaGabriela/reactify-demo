@@ -10,9 +10,6 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
     setCurrentProductCanvas(user?.projects.find(project => project.key === projectKey)?.productCanvas || {})
     }, [users, userKey, projectKey])
 
-  useEffect(() => {
-    console.log(currentProductCanvas)
-  }, [currentProductCanvas])
   //Adiciona um campo extra no array selecionado
   const handleAdd = (prop) => {
     setCurrentProductCanvas(prevState => ({

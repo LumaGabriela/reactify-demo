@@ -3,6 +3,7 @@
   --black-primary: #1a1a1a;
   --red-primary: #dc3545;
   --blue-primary: #5f84ff;
+  --lightblue: #b6d4f2;
   --green-primary: #108663;
   --white-primary: #ffffff;
   --grey-primary: #707478;
@@ -46,7 +47,7 @@ td{
   align-items: center;
   justify-content: flex-end;
 }
-.btn {margin: 0 1rem 0 0}
+
 
 .back-arrow{
   width: 2.5rem;

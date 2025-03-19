@@ -1,4 +1,5 @@
 import Button from 'react-bootstrap/Button'
+import './Buttons.css'
 import { useNavigate } from 'react-router'
 
 const AddButton = ({ handleRemove, type }) => {
@@ -25,22 +26,24 @@ const AddButton = ({ handleRemove, type }) => {
     }
     handleRemove(type)
   }
+  const handleClass = () => {
+    return  'addButton '+ type
+  }
 
   return (
     <>
       <Button
-        id='addProject'
-        className="bottom-0 end-0 m-3 "
+        className={handleClass()}
         variant="primary"
         onClick={() => handleClick()}>
-        <div>
+        <>
           {type === 'project' && <>Adicionar Projeto</>}
           {type === 'description' && <>Adicionar Descrição</>}
           {type === 'journey' && <>Adicionar journey</>}
           {type === 'userStory' && <>Adicionar User Story</>}
           {type === 'goalSketch' && <>Adicionar GoalSketch</>}
           {type === 'userAdd' && <>Adicionar Usuario</>}
-        </div>
+        </>
       </Button>
     </>
   )
@@ -84,7 +87,7 @@ const RemoveButton = ({ handleRemove, type, update }) => {
   return (
     <>
       <Button
-        className="btn w-30 mt-auto"
+        className= 'bottom-0 end-0 m-3'
         variant="danger"
         onClick={handleClick}
       >
