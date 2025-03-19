@@ -13,11 +13,12 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
     const updatedUserData = {
       ...user,
       projects: [...user.projects, {
-        goalSketches: [],
+        goalSketch: [],
         journeys: [],
         key: nanoid(),
         name: projectField.name,
         personas: [],
+        stories:[],
         productCanvas: {},
         visaoGeral: projectField.description,
         
