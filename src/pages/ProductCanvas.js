@@ -51,7 +51,7 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
     })
     setUsers(updatedUsers)
   }
-
+  //Define o titulo do bloco automaticamente
   const handleTitle = type => {
     switch (type) {
       case 'issues': return 'Problemas'
@@ -67,7 +67,7 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
   if (!currentProductCanvas) return null;
 
   return (
-    <Container fluid className="p-4">
+    <Container fluid className="p-4 product-canvas">
       <Card>
         <Card.Header as="h5" className="bg-purple text-white">
           Nome do Produto: {currentProductCanvas.name}
