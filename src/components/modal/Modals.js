@@ -448,7 +448,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             return proj
           })
         };
-        setUserData(updatedUserData);
+        //setUserData(updatedUserData);
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -472,7 +472,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             return proj
           })
         };
-        setUserData(updatedUserData);
+        // setUserData(updatedUserData);
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -722,4 +722,105 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
   );
 }
 
-export { AddProjectModal, JourneyDescriptionModal, AddUserStories, AddGoalSketch }
+const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, handleRemove }) => {
+  const [interviewText, setInterviewText] = useState(''); // Estado para armazenar a entrevista
+  const [generatedStories, setGeneratedStories] = useState([]); // Armazena as stories geradas
+  const [user, setUser] = useState(null);
+
+  // Atualiza o usuário atual quando os dados mudam
+  useEffect(() => {
+    setUser(users.find(user => user.key === userKey));
+  }, [users, userKey, projectKey]);
+
+  // Função para enviar a entrevista e receber as stories do backend
+  const generateStories = async () => {
+    if (!interviewText.trim()) return alert("Digite a entrevista!");
+    const baseUrl = 'http://localhost:5000'
+    try {
+      const response = await fetch(`${baseUrl}/generate-stories`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interview: interviewText }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setGeneratedStories(data.stories); // Assume que o backend retorna um array de histórias
+        console.log('Stories geradas:', data.stories);
+      } else {
+        alert('Erro ao gerar stories.');
+      }
+    } catch (error) {
+      console.error('Erro ao conectar com /teste:', error);
+    }
+  };
+
+  // Adiciona as stories geradas ao usuário atual
+  const saveGeneratedStories = () => {
+    if (!user || !projectKey || generatedStories.length === 0) return;
+
+    const updatedUserData = {
+      ...user,
+      projects: user.projects.map(proj => {
+        if (proj.key === projectKey) {
+          return {
+            ...proj,
+            stories: [...proj.stories, ...generatedStories],
+          };
+        }
+        return proj;
+      }),
+    };
+
+    setUsers(users.map(user => (user.key === userKey ? updatedUserData : user)));
+    setGeneratedStories([]); // Limpa as stories geradas
+    setInterviewText(''); // Limpa a entrevista
+    handleRemove('generateUserStories'); // Fecha o modal
+  };
+
+  return (
+    <div
+      className={"modal show "}
+      style={{ display: modal.generateUserStories ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+    >
+      <Modal.Dialog style={{ marginTop: '6rem' }}>
+        <Modal.Header closeButton onClick={() => handleRemove('generateUserStories')}>
+          <Modal.Title>Gerar Stories</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <>Digite a entrevista:</>
+          <Form.Control
+            as="textarea"
+            rows={4}
+            value={interviewText}
+            onChange={(e) => setInterviewText(e.target.value)}
+            placeholder="Cole aqui a entrevista..."
+          />
+          <Button variant="secondary" onClick={generateStories} className="mt-3">
+            Gerar Stories com GPT
+          </Button>
+
+          {generatedStories.length > 0 && (
+            <>
+              <h5 className="mt-3">Stories Geradas:</h5>
+              <ul>
+                {generatedStories.map((story, index) => (
+                  <li key={index}><strong>{story.id}</strong>: {story.title}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="primary" onClick={saveGeneratedStories} disabled={generatedStories.length === 0}>
+            Salvar Stories
+          </Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+    </div>
+  );
+};
+
+export { AddProjectModal, JourneyDescriptionModal, AddUserStories, AddGoalSketch, GenerateUserStories }

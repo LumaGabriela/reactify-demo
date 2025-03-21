@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AddButton } from '../components/button/Buttons';
 import { AddUserStories } from '../components/modal/Modals';
+import { GenerateUserStories } from '../components/modal/Modals';
 import './UserStories.css';
 
 const UserStories = ({ userKey, users, setUsers, modal, handleRemove, projectKey }) => {
@@ -69,7 +70,21 @@ const UserStories = ({ userKey, users, setUsers, modal, handleRemove, projectKey
         handleRemove={handleRemove}
         type={'userStory'}
       />
+      <AddButton
+        handleRemove={handleRemove}
+        type={'generateUserStories'}
+      />
       <AddUserStories
+        userKey={userKey}
+        users={users}
+        setUsers={setUsers}
+        modal={modal}
+        handleRemove={handleRemove}
+        projectKey={projectKey}
+        storyData={storyData}
+        setStoryData={setStoryData}
+      />
+      <GenerateUserStories
         userKey={userKey}
         users={users}
         setUsers={setUsers}

@@ -11,6 +11,8 @@ const AddButton = ({ handleRemove, type }) => {
         break;
       case 'description':
         break;
+      case 'generateUserStories':
+        break;
       case 'userStory':
         break;
         case 'goalSketch':
@@ -41,6 +43,7 @@ const AddButton = ({ handleRemove, type }) => {
           {type === 'description' && <>Adicionar Descrição</>}
           {type === 'journey' && <>Adicionar journey</>}
           {type === 'userStory' && <>Adicionar User Story</>}
+          {type === 'generateUserStories' && <>Gerar Stories</>}
           {type === 'goalSketch' && <>Adicionar GoalSketch</>}
           {type === 'userAdd' && <>Adicionar Usuario</>}
         </>
@@ -66,6 +69,9 @@ const RemoveButton = ({ handleRemove, type, update }) => {
       case 'userStory':
         update('remove');
         break;
+      case 'generateUserStories':
+        update('remove');
+      break;
       case 'userRemove': break;
       case 'clean':
         update()
@@ -73,7 +79,8 @@ const RemoveButton = ({ handleRemove, type, update }) => {
         case 'goalSketch':
           update('remove');
           break;
-        case 'goalRemove': break;
+        case 'goalRemove': 
+          break;
         case 'clean':
           update()
           return

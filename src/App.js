@@ -157,6 +157,7 @@ const App = () => {
     project: false,
     userStories: false,
     goalSketches: false,
+    generateUserStories: false,
     journeys: false,
     userRemove: false,
     userAdd: false
@@ -209,6 +210,7 @@ const App = () => {
       case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
       case 'goalSketch': return modal.goalSketches ? setModal({ ...modal, goalSketches: false }) : setModal({ ...modal, goalSketches: true })
+      case 'generateUserStories': return modal.generateUserStories ? setModal({ ...modal, generateUserStories: false }) : setModal({ ...modal, generateUserStories: true })
       case 'userRemove': return modal.userRemove ? setModal({ ...modal, userRemove: false }) : setModal({ ...modal, userRemove: true })
       default: console.log('Operação não encontrada: ' + type)
     }
