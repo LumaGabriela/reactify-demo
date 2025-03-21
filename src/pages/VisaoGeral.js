@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container'
 import './VisaoGeral.css';
 import { useNavigate } from 'react-router';
 import { FormControl, Card } from 'react-bootstrap';
+import ProgressIcon from '../components/progressIcon/ProgressIcon';
 
-import { useState } from 'react';
+
 
 const VisaoGeral = ({ users, setUsers, userKey }) => {
   const { projectId } = useParams()
@@ -32,48 +32,26 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
               <Card.Footer onClick={() => navigate(`/${projectId}/product-canvas`)}>Visualizar</Card.Footer>
             </Card>
 
-            <Card className='visaogeral'  >
+              <ProgressIcon
+              value={project?.personas.length}
+              label={'Personas'}
+              link={`/${projectId}/personas`}
+              colorName={'orange'}
+              />
 
-              <Card.Body>
-                <Card.Title>Personas</Card.Title>
-                <Card.Text>
-                  {project?.personas?.length} Personas
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer onClick={() => navigate(`/${projectId}/personas`)}>Visualizar</Card.Footer>
-            </Card>
-
-            <Card className='visaogeral'  >
-
-              <Card.Body>
-                <Card.Title>Goal Sketches</Card.Title>
-                <Card.Text>
-                  {project?.goalSketch?.length} Goal Sketches
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer onClick={() => navigate(`/${projectId}/goal-sketches`)}>Visualizar</Card.Footer>
-            </Card>
-
-            <Card className='visaogeral'>
-
-              <Card.Body>
-                <Card.Title>Journeys</Card.Title>
-                <Card.Text>
-                 {project?.journeys?.length} Journeys
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer onClick={() => navigate(`/${projectId}/journeys`)}>Visualizar</Card.Footer>
-            </Card>
-            <Card className='visaogeral'  >
-
-              <Card.Body>
-                <Card.Title>User Stories</Card.Title>
-                <Card.Text>
-                 {project?.stories?.length} Stories
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer onClick={() => navigate(`/${projectId}/user-stories`)}>Visualizar todas</Card.Footer>
-            </Card>
+            <ProgressIcon
+              value={project?.goalSketches.length}
+              label={'Goal Sketches'}
+              link={`/${projectId}/goal-sketches`}
+              colorName={'blue'}
+              />      
+              <ProgressIcon
+              value={project?.stories.length}
+              label={'User Stories'}
+              link={`/${projectId}/user-stories`}
+              colorName={'green'}
+              />      
+     
           </>
         )}
 

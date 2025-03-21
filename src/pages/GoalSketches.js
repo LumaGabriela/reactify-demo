@@ -32,7 +32,7 @@ const GoalSketch = ({ userKey, users, setUsers, modal, handleRemove, projectKey 
 
       <div className='goals-container'>
         <div className="goals-grid">
-          {projeto?.goalSketch.map((goal, index) => (
+          {projeto?.goalSketches.map((goal, index) => (
             goal.type.includes('BG') && (
               <div
                 key={index}
@@ -53,7 +53,7 @@ const GoalSketch = ({ userKey, users, setUsers, modal, handleRemove, projectKey 
           ))}
         </div>
         <div className="goals-grid">
-          {projeto?.goalSketch.map((goal, index) => (
+          {projeto?.goalSketches.map((goal, index) => (
             goal.type.includes('CG') && (
               <div
                 key={index}

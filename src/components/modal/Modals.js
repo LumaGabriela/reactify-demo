@@ -13,7 +13,7 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
     const updatedUserData = {
       ...user,
       projects: [...user.projects, {
-        goalSketch: [],
+        goalSketches: [],
         journeys: [],
         key: nanoid(),
         name: projectField.name,
@@ -555,7 +555,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
     let user = users.find(user => user.key === userKey)
     user.projects.forEach(proj => {
       if (proj.key === projectKey) {
-        proj.goalSketch.forEach(goal => {
+        proj.goalSketches.forEach(goal => {
           if (goal.id === goalData) {
             foundGoal = goal;
           }
@@ -563,7 +563,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
       }
     })
     setGoalField({...goalField, title: foundGoal?.title})
-  }, [goalData, modal.goalSketch])
+  }, [goalData, modal.goalSketches])
 
   // Define o tipo de operação
   useEffect(() => {
@@ -573,8 +573,8 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
 
   // Deixa o campo goalField.title e o goalData vazios após o modal se fechar
   useEffect(() => {
-    if ( modal.goalSketch === false) { setGoalField({...goalField, title: ''}); setGoalData('') }
-  }, [ modal.goalSketch])
+    if ( modal.goalSketches === false) { setGoalField({...goalField, title: ''}); setGoalData('') }
+  }, [ modal.goalSketches])
 
 
 
@@ -597,13 +597,13 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
               };
 
               const updatedGoals = [
-                ...proj.goalSketch,
+                ...proj.goalSketches,
                 newGoal
               ]
 
               return {
                 ...proj,
-                goalSketch: updatedGoals
+                goalSketches: updatedGoals
               };
             }
             return proj;
@@ -619,13 +619,13 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              const updatedGoals = proj.goalSketch.map((goal) => {
+              const updatedGoals = proj.goalSketches.map((goal) => {
                 if (goal.id === goalData) {
                   return { ...goal, title: goalField.title, type: goalField.type, priority: goalField.priority}
                 }
                 return goal
               })
-              return { ...proj, goalSketch: updatedGoals }
+              return { ...proj, goalSketches: updatedGoals }
             }
             return proj
           })
@@ -641,10 +641,10 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
           ...user,
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
-              const updatedGoals = proj.goalSketch.filter(goal => {
+              const updatedGoals = proj.goalSketches.filter(goal => {
                 return goal.id !== goalData
               })
-              return { ...proj, goalSketch: updatedGoals }
+              return { ...proj, goalSketches: updatedGoals }
             }
             return proj
           })
@@ -664,7 +664,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
   return (
     <div
       className={"modal show "}
-      style={{ display:  modal.goalSketch ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display:  modal.goalSketches ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('goalSketch')}>

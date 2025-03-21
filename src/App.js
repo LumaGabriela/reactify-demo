@@ -12,7 +12,7 @@ import NavBar from './components/navbar/navbar'
 // Importa as paginas 
 import Home from './pages/Home'
 import VisaoGeral from './pages/VisaoGeral'
-import GoalSketch from './pages/GoalSketch'
+import GoalSketch from './pages/GoalSketches.js'
 import Personas from './pages/Personas'
 import Journeys from './pages/Journeys'
 import UserStories from './pages/UserStories'
@@ -69,7 +69,7 @@ const App = () => {
               type: "system"
             }
           ],
-          goalSketch: [
+          goalSketches: [
             { type: 'BG', title: "Definir os requisitos do aplicativo", priority: 'HIGH', id: '123' },
             { type: 'CG', title: "Reunir requisitos funcionais e não funcionais", priority: 'MED', id: '321'  },
             { type:'BG', title: "Guaxinim", priority: 'LOW', id: '1233' }
@@ -156,7 +156,7 @@ const App = () => {
   const [modal, setModal] = useState({
     project: false,
     userStories: false,
-    goalSketch: false,
+    goalSketches: false,
     journeys: false,
     userRemove: false,
     userAdd: false
@@ -208,7 +208,7 @@ const App = () => {
       case 'project': return modal.project ? setModal({ ...modal, project: false }) : setModal({ ...modal, project: true })
       case 'journey': return modal.journeys ? setModal({ ...modal, journeys: false }) : setModal({ ...modal, journeys: true })
       case 'userStory': return modal.userStories ? setModal({ ...modal, userStories: false }) : setModal({ ...modal, userStories: true })
-      case 'goalSketch': return modal.goalSketch ? setModal({ ...modal, goalSketch: false }) : setModal({ ...modal, goalSketch: true })
+      case 'goalSketch': return modal.goalSketches ? setModal({ ...modal, goalSketches: false }) : setModal({ ...modal, goalSketches: true })
       case 'userRemove': return modal.userRemove ? setModal({ ...modal, userRemove: false }) : setModal({ ...modal, userRemove: true })
       default: console.log('Operação não encontrada: ' + type)
     }

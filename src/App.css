@@ -7,9 +7,12 @@
   --green-primary: #108663;
   --white-primary: #ffffff;
   --grey-primary: #707478;
+  --orange: #f84c1c;
 }
 .App {
   box-sizing: border-box;
+  height: 100vh;
+  background: #ddd;
 }
 
 .bg-purple {

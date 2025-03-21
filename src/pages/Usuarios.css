@@ -8,10 +8,9 @@
 span.badge, tr {cursor: pointer;}
 
 td, th{
-
   text-align: center;
 }
 
-span.badge {
+.bg-admin, .bg-customer {
   background: var(--blue-primary);
 }
