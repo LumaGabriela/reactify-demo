@@ -2,13 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+require("dotenv").config();
+const openai = require("openai");
+const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware para analisar o corpo das requisições
-app.use(bodyParser.json());
+// Initialize OpenAI client
+const client = new openai.OpenAI(process.env.OPENAI_API_KEY);
 
+// Middleware para analisar o corpo das requisições
+//app.use(bodyParser.json());
+app.use(express.json());
+
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // Dados dos usuários (simulação de banco de dados)
 let users = [
@@ -137,6 +146,100 @@ let users = [
 // Rota para obter os usuários
 app.get('/api', (req, res) => {
   res.json(users);
+});
+
+async function generateStories(interview) {
+  const prompt = `
+  Com base na seguinte entrevista, gere user stories e system stories no formato:
+
+  - User Story: "Como [persona], eu quero [ação] para que [benefício]."
+  - System Story: "O sistema deve [ação]."
+
+  Retorne as stories no seguinte formato:
+  ### User Stories ###
+  Como [persona], eu quero [ação] para que [benefício].
+  Como [persona], eu quero [ação] para que [benefício].
+
+  ### System Stories ###
+  O sistema deve [ação].
+  O sistema deve [ação].
+
+  Entrevista:
+  ${interview}
+  `;
+
+  try {
+      const response = await client.chat.completions.create({
+          model: 'gpt-4o-mini',
+          messages: [
+              { role: 'system', content: "Você é um assistente que gera user stories e system stories" },
+              { role: 'user', content: prompt },
+          ],
+          temperature: 0.0,
+      });
+
+      if (!response || !response.choices || !response.choices[0].message) {
+          throw new Error("Resposta inesperada da API.");
+      }
+
+      const storiesText = response.choices[0].message.content.trim();
+
+      const userStories = [];
+      const systemStories = [];
+      let currentSection = null;
+
+      storiesText.split("\n").forEach(line => {
+          line = line.trim();
+          if (line.startsWith("### User Stories ###")) {
+              currentSection = "user";
+          } else if (line.startsWith("### System Stories ###")) {
+              currentSection = "system";
+          } else if (line && currentSection === "user") {
+              userStories.push(line);
+          } else if (line && currentSection === "system") {
+              systemStories.push(line);
+          }
+      });
+
+      const formattedStories = [];
+
+      userStories.forEach((story, i) => {
+          formattedStories.push({
+              id: `US${i + 1}`,
+              type: "user",
+              title: story//.split(",")[0].replace("Como ", ""),
+              //description: story,
+              //persona: story.split(" ")[1]
+          });
+      });
+
+      systemStories.forEach((story, i) => {
+          formattedStories.push({
+              id: `SS${i + 1}`,
+              type: "system",
+              title: story//.replace("O sistema deve ", ""),
+              //description: story
+          });
+      });
+
+      return formattedStories;
+  } catch (error) {
+      console.error("Erro ao gerar histórias:", error);
+      throw error;
+  }
+}
+
+app.post("/generate-stories", async (req, res) => {
+  try {
+      const { interview } = req.body;
+      if (!interview) {
+          return res.status(400).json({ error: "Entrevista é obrigatória." });
+      }
+      const stories = await generateStories(interview);
+      res.json({ stories });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
 });
 
 // Rota para atualizar os usuários
