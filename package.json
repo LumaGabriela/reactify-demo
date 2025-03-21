@@ -10,6 +10,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nanoid": "^5.0.9",
+    "nodemon": "^3.1.9",
     "openai": "^4.87.3",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.7",
