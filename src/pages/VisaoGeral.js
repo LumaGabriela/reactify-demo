@@ -16,49 +16,95 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
 
   return (
     <Container className="visao-geral-container">
-      <h2>{project?.name}</h2>
-      <h5>{project?.visaoGeral} </h5>
-      <div className="visao-geral-cards">
+      <div className="visao-geral-progress">
         {project && (
           <>
-            <Card className='visaogeral'  >
 
-              <Card.Body>
-                <Card.Title>Product Canvas</Card.Title>
-                <Card.Text>
-                  Infomações essenciais sobre o projeto
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer onClick={() => navigate(`/${projectId}/product-canvas`)}>Visualizar</Card.Footer>
-            </Card>
 
-              <ProgressIcon
+
+
+            <ProgressIcon
               value={project?.personas.length}
               label={'Personas'}
               link={`/${projectId}/personas`}
               colorName={'orange'}
-              />
+            />
 
             <ProgressIcon
               value={project?.goalSketches.length}
               label={'Goal Sketches'}
               link={`/${projectId}/goal-sketches`}
               colorName={'blue'}
-              />      
-              <ProgressIcon
+            />
+            <ProgressIcon
               value={project?.stories.length}
               label={'User Stories'}
               link={`/${projectId}/user-stories`}
               colorName={'green'}
-              />      
-     
+            />
+            <ProgressIcon
+              value={project?.stories.length}
+              label={'Journeys'}
+              link={`/${projectId}/journeys`}
+              colorName={'red'}
+            />
+
           </>
+
         )}
 
       </div>
-      
 
+      <div className='visaogeral-cards'>
+        <Card className='visaogeral'  >
+
+          <Card.Body>
+            <Card.Title>{project?.name}</Card.Title>
+            <Card.Text>
+              {project?.visaoGeral}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+
+        <Card className='visaogeral'  >
+          <Card.Body>
+            <Card.Title>Solução para a demanda</Card.Title>
+            <Card.Text>
+              {project?.productCanvas?.solutions}
+            </Card.Text>
+          </Card.Body>
+    
+        </Card>
+
+        <Card className='visaogeral'  onClick={()=> navigate(`/${project.key}/product-canvas`)}>
+          <Card.Body>
+            <Card.Title>
+            {project?.productCanvas?.issues?.length}
+              {project?.productCanvas?.issues?.length === 1 ? ' Problema no projeto' : 
+              ' Problemas no projeto'} 
+            </Card.Title>
+            <Card.Text>
+              ---
+            </Card.Text>
+          </Card.Body>
+        </Card>
+
+        <Card className='visaogeral' >
+          <Card.Body>
+            <Card.Title>
+              {project?.productCanvas?.restrictions?.length}
+              {project?.productCanvas?.restrictions?.length === 1 ? ' Restrição no projeto' : 
+              ' Restrições no projeto'} 
+            </Card.Title>
+            <Card.Text>
+              ---
+            </Card.Text>
+          </Card.Body>
+        </Card>
+
+      </div>
     </Container>
+
   )
 }
 

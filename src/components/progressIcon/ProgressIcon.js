@@ -23,9 +23,7 @@ const ProgressIcon = ({ value, label, link, colorName }) => {
     <div class="main row d-flex justify-content-center mt-100">
 
       <div class="col-md-6">
-        <div class="progress orange"
-        
-        >
+        <div class="progress ">
           <span class="progress-left">
             <span class="progress-bar" style={{borderColor: setColor(colorName)}}></span>
           </span>
@@ -35,6 +33,7 @@ const ProgressIcon = ({ value, label, link, colorName }) => {
           <div class="progress-value">{value}</div>
 
         </div>
+        <span className='triangle' content='' style={{background: setColor(colorName)}}></span>
         <span className='badge progress-label' 
         style={{borderTop: `solid 7px ${setColor(colorName)}`}}
         onClick={()=>navigate(link)}>
