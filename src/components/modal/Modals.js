@@ -756,6 +756,7 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
   const [interviewText, setInterviewText] = useState(''); // Estado para armazenar a entrevista
   const [generatedStories, setGeneratedStories] = useState([]); // Armazena as stories geradas
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o spinner
 
   // Atualiza o usuário atual quando os dados mudam
   useEffect(() => {
@@ -765,6 +766,7 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
   // Função para enviar a entrevista e receber as stories do backend
   const generateStories = async () => {
     if (!interviewText.trim()) return alert("Digite a entrevista!");
+    setIsLoading(true); // Ativa o spinner
     const baseUrl = 'http://localhost:5000'
     try {
       const response = await fetch(`${baseUrl}/generate-stories`, {
@@ -781,7 +783,10 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
         alert('Erro ao gerar stories.');
       }
     } catch (error) {
-      console.error('Erro ao conectar com /teste:', error);
+      console.error('Erro ao conectar com a rota:', error);
+      alert('Erro ao gerar stories.');
+    } finally {
+      setIsLoading(false); // Desativa o spinner
     }
   };
 
@@ -808,6 +813,11 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
     handleRemove('generateUserStories'); // Fecha o modal
   };
 
+  // Função para descartar as stories geradas
+  const discardStories = () => {
+    setGeneratedStories([]);
+  };
+
   return (
     <div
       className={"modal show "}
@@ -827,13 +837,41 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
             onChange={(e) => setInterviewText(e.target.value)}
             placeholder="Cole aqui a entrevista..."
           />
-          <Button variant="secondary" onClick={generateStories} className="mt-3">
-            Gerar Stories com GPT
+          <Button 
+            variant="secondary" 
+            onClick={generateStories} 
+            className="mt-3"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span className="ms-2">Gerando...</span>
+              </>
+            ) : 'Gerar Stories com GPT'}
           </Button>
+
+          {isLoading && (
+            <div className="text-center mt-3">
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Carregando...</span>
+              </div>
+              <p>Gerando stories, por favor aguarde...</p>
+            </div>
+          )}
 
           {generatedStories.length > 0 && (
             <>
-              <h5 className="mt-3">Stories Geradas:</h5>
+              <div className="d-flex justify-content-between align-items-center mt-3">
+                <h5>Stories Geradas:</h5>
+                <Button 
+                  variant="outline-danger" 
+                  size="sm" 
+                  onClick={discardStories}
+                >
+                  Descartar Stories
+                </Button>
+              </div>
               <ul>
                 {generatedStories.map((story, index) => (
                   <li key={index}><strong>{story.id}</strong>: {story.title}</li>
