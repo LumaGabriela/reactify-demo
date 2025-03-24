@@ -87,3 +87,10 @@
   background-color: #f0f0f0;
   font-size: 16px;
 }
+.touchpoint {
+  background: var(--red-primary);
+  height: 25px;
+  width: 25px !important;
+  border-radius: 50px;
+  transform: translateX(-50px);
+}

@@ -85,6 +85,7 @@ const Journeys = ({ userKey, users, setUsers, handleRemove, modal, projectKey })
                       onClick={(e) => handleClick(e)}
                     >
                       <div className="step-content">
+                        {step.touchpoint && (<span className='touchpoint' content=''></span>)}
                         <p className="step-description">{step.description}</p>
                       </div>
                     </div>

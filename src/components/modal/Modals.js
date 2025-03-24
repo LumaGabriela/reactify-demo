@@ -18,21 +18,21 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
         key: nanoid(),
         name: projectField.name,
         personas: [],
-        stories:[],
+        stories: [],
         productCanvas: {},
         visaoGeral: projectField.description,
-        
+
       }]
     }
     setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);
+    // Update user in users array
+    const updatedUsers = users.map(user =>
+      user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+    );
+    setUsers(updatedUsers);
 
-    setProjectField({...projectField, name: ''})
+    setProjectField({ ...projectField, name: '' })
     handleRemove('project')
   }
 
@@ -55,7 +55,7 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
             type="text"
             value={projectField.name}
             onKeyUp={(e) => { if (e.key === 'Enter') setProjectName() }}
-            onChange={(e) => setProjectField({...projectField, name: e.target.value})}
+            onChange={(e) => setProjectField({ ...projectField, name: e.target.value })}
             placeholder="Nome do projeto"
             style={{ cursor: 'text' }}
           />
@@ -64,7 +64,7 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
             type="text"
             value={projectField.description}
             onKeyUp={(e) => { if (e.key === 'Enter') setProjectName() }}
-            onChange={(e) => setProjectField({...projectField, description: e.target.value})}
+            onChange={(e) => setProjectField({ ...projectField, description: e.target.value })}
             placeholder="Descrição do projeto"
             style={{ cursor: 'text' }}
           />
@@ -78,12 +78,13 @@ const AddProjectModal = ({ modal, userKey, users, setUsers, handleRemove }) => {
   );
 }
 
-const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
+const JourneyDescriptionModal = ({ userKey, users, setUsers, handleRemove, modal, projectKey, journeyData, setJourneyData, operation, setOperation }) => {
   const [jValue, setJValue] = useState('')
+  const [touchPoint, setTouchPoint] = useState(false)
   const [removeType, setRemoveType] = useState('')
   const [bodyHeight, setBodyHeight] = useState('100%');
 
-  const [ project, setProject] = useState(null)
+  const [project, setProject] = useState(null)
   //Atualiza o projeto atual
   useEffect(() => {
     const user = users.find(user => user.key === userKey);
@@ -92,7 +93,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
   // Torna a altura da sombra do modal variável
   useEffect(() => {
     const height = document.body.scrollHeight;
-    setBodyHeight(`${height*1.2}px`)
+    setBodyHeight(`${height * 1.2}px`)
     // Se o modal está fechado, redefine os valores da journey
     if (!modal.journeys) {
       setJourneyData({})
@@ -120,6 +121,26 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
     // Do contrário, a operação será de adicionar uma nova journey
     else setOperation('name')
   }, [journeyData])
+  //
+  useEffect(() => {
+    // Define sValue para ser o título da story clicada
+    let foundStep = null;
+    const user = users.find(user => user.key === userKey);
+    user.projects.forEach(proj => {
+      if (proj.key === projectKey) {
+        proj.journeys.forEach((journey, index) => {
+          if (index === journeyData.journeyindex) {
+            journey.steps.forEach((step, i)=> {
+              if(i === journeyData.stepindex) 
+                foundStep = step
+            })
+          }
+        });
+      }
+    })
+    setJValue(foundStep?.description)
+    setTouchPoint(foundStep?.touchpoint)
+  }, [journeyData, modal.journeys])
 
   // Seletor de valores para o placeholder
   const getPlaceholder = () => {
@@ -186,7 +207,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
                 if (jIndex === parseInt(journeyData.journeyindex)) {
                   const updatedSteps = journey.steps.map((step, sIndex) => {
                     if (sIndex === parseInt(journeyData.stepindex)) {
-                      return { ...step, description: jValue };
+                      return { ...step, description: jValue, touchpoint: touchPoint };
                     }
                     return step;
                   });
@@ -226,11 +247,6 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
         };
         setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);;
       }
         break;
 
@@ -250,7 +266,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
         };
         setUsers(users.map(user => user.key === userKey ? updatedUserData : user));
 
-  // Update user in users array
+
 
       }
         break;
@@ -280,6 +296,7 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
       default: console.log('Operação desconhecida')
     }
     setJourneyData({})
+    // setTouchPoint(false)
     handleRemove('journey')
 
   }
@@ -299,23 +316,36 @@ const JourneyDescriptionModal = ({userKey, users, setUsers, handleRemove, modal,
 
         <Modal.Body>
           {(operation !== 'remove-journey') &&
-            <Form.Control
-              value={jValue}
-              type="text"
-              onChange={(e) => setJValue(e.target.value)}
-              onKeyUp={(e) => { if (e.key === 'Enter') updateJourney() }}
-              placeholder={getPlaceholder()}
-              style={{ cursor: 'text' }}
-            />}
+            <>
+              <Form.Control
+                value={jValue}
+                type="text"
+                onChange={(e) => setJValue(e.target.value)}
+                onKeyUp={(e) => { if (e.key === 'Enter') updateJourney() }}
+                placeholder={getPlaceholder()}
+                style={{ cursor: 'text' }}
+              />
+              <div className="form-check form-switch">
+                <input 
+                className="form-check-input" 
+                type="checkbox" 
+                id="touchpoint" 
+                checked={touchPoint}
+                onChange={(e) => setTouchPoint(e.target.checked)}/>
+                <label className="form-check-label" >Touchpoint</label>
+              </div>
+            </>
+          }
+
         </Modal.Body>
 
         <Modal.Footer>
-          {(removeType ) && 
-          <RemoveButton
-            handleRemove={handleRemove}
-            type={removeType}
-            update={updateJourney}
-          />}
+          {(removeType) &&
+            <RemoveButton
+              handleRemove={handleRemove}
+              type={removeType}
+              update={updateJourney}
+            />}
           <Button variant="primary" onClick={() => updateJourney()}>Salvar</Button>
         </Modal.Footer>
       </Modal.Dialog>
@@ -358,8 +388,8 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
 
   // Deixa o campo sValue e o storyData vazios após o modal se fechar
   useEffect(() => {
-    if ( modal.userStories === false) { setSValue(''); setStoryData('') }
-  }, [ modal.userStories])
+    if (modal.userStories === false) { setSValue(''); setStoryData('') }
+  }, [modal.userStories])
 
   // Renumerar os ids das userstories
   const renumberStories = (stories) => {
@@ -450,11 +480,11 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
         };
 
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);
+        // Update user in users array
+        const updatedUsers = users.map(user =>
+          user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+        );
+        setUsers(updatedUsers);
       }
         break;
 
@@ -474,11 +504,11 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
         };
 
 
-  // Update user in users array
-  const updatedUsers = users.map(user => 
-    user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
-  );
-  setUsers(updatedUsers);
+        // Update user in users array
+        const updatedUsers = users.map(user =>
+          user.key === userKey ? { ...user, projects: updatedUserData.projects } : user
+        );
+        setUsers(updatedUsers);
       }
         break;
 
@@ -493,7 +523,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
   return (
     <div
       className={"modal show "}
-      style={{ display:  modal.userStories ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display: modal.userStories ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('userStory')}>
@@ -538,7 +568,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
 const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handleRemove, modal, projectKey }) => {
 
   const [goalField, setGoalField] = useState({
-    title:'', type: 'BG', priority: 'LOW'
+    title: '', type: 'BG', priority: 'LOW'
   })
   const [operation, setOperation] = useState('')
   const [user, setUser] = useState(null)
@@ -562,7 +592,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
         });
       }
     })
-    setGoalField({...goalField, title: foundGoal?.title})
+    setGoalField({ ...goalField, title: foundGoal?.title })
   }, [goalData, modal.goalSketches])
 
   // Define o tipo de operação
@@ -573,8 +603,8 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
 
   // Deixa o campo goalField.title e o goalData vazios após o modal se fechar
   useEffect(() => {
-    if ( modal.goalSketches === false) { setGoalField({...goalField, title: ''}); setGoalData('') }
-  }, [ modal.goalSketches])
+    if (modal.goalSketches === false) { setGoalField({ ...goalField, title: '' }); setGoalData('') }
+  }, [modal.goalSketches])
 
 
 
@@ -590,7 +620,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
           projects: user.projects.map(proj => {
             if (proj.key === projectKey) {
               const newGoal = {
-                type: goalField.type, 
+                type: goalField.type,
                 title: goalField.title,
                 priority: goalField.priority,
                 id: nanoid()
@@ -621,7 +651,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
             if (proj.key === projectKey) {
               const updatedGoals = proj.goalSketches.map((goal) => {
                 if (goal.id === goalData) {
-                  return { ...goal, title: goalField.title, type: goalField.type, priority: goalField.priority}
+                  return { ...goal, title: goalField.title, type: goalField.type, priority: goalField.priority }
                 }
                 return goal
               })
@@ -657,31 +687,31 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
         break;
     }
     setGoalData('')
-    setGoalField({...goalField, title: ''})
+    setGoalField({ ...goalField, title: '' })
     handleRemove('goalSketch')
   }
 
   return (
     <div
       className={"modal show "}
-      style={{ display:  modal.goalSketches ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
+      style={{ display: modal.goalSketches ? 'block' : 'none', position: 'absolute', background: '#00000080' }}
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('goalSketch')}>
           <Modal.Title>
-          {goalData === '' && <>Adicionar Goal Sketch</>}
-          {goalData !== '' && <>Editar Goal</>}
+            {goalData === '' && <>Adicionar Goal Sketch</>}
+            {goalData !== '' && <>Editar Goal</>}
 
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          
+
           <>Título da Goal</>
           <Form.Control
             type="text"
             value={goalField.title}
-            onChange={(e) =>setGoalField({...goalField, title: e.target.value})}
+            onChange={(e) => setGoalField({ ...goalField, title: e.target.value })}
             onKeyUp={(e) => { if (e.key === 'Enter') updateGoalSketch() }}
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
@@ -689,7 +719,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
           <>Tipo de goal</>
           <select
             value={goalField.type}
-            onChange={(e) => setGoalField({...goalField, type: e.target.value})}
+            onChange={(e) => setGoalField({ ...goalField, type: e.target.value })}
             className="form-select"
             aria-label="Default select example"
           >
@@ -699,7 +729,7 @@ const AddGoalSketch = ({ userKey, users, setUsers, goalData, setGoalData, handle
           <>Prioridade da Goal</>
           <select
             value={goalField.priority}
-            onChange={(e) => setGoalField({...goalField, priority: e.target.value})}
+            onChange={(e) => setGoalField({ ...goalField, priority: e.target.value })}
             className="form-select"
             aria-label="Default select example"
           >
