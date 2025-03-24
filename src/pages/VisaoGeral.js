@@ -39,12 +39,12 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
             />
             <ProgressIcon
               value={project?.stories.length}
-              label={'User Stories'}
+              label={'Estórias'}
               link={`/${projectId}/stories`}
               colorName={'green'}
             />
             <ProgressIcon
-              value={project?.stories.length}
+              value={project?.journeys.length}
               label={'Journeys'}
               link={`/${projectId}/journeys`}
               colorName={'red'}
