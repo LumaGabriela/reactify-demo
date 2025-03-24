@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/reactify-demo/static/css/main.60160ecb.css",
-    "main.js": "/reactify-demo/static/js/main.086e18c0.js",
+    "main.css": "/reactify-demo/static/css/main.7bb1b4da.css",
+    "main.js": "/reactify-demo/static/js/main.a93b4956.js",
     "static/js/488.90640024.chunk.js": "/reactify-demo/static/js/488.90640024.chunk.js",
     "index.html": "/reactify-demo/index.html",
-    "static/media/back-svgrepo-com.svg": "/reactify-demo/static/media/back-svgrepo-com.d174d3122c56cee5847dc6df6dd5daf5.svg",
-    "main.60160ecb.css.map": "/reactify-demo/static/css/main.60160ecb.css.map",
-    "main.086e18c0.js.map": "/reactify-demo/static/js/main.086e18c0.js.map",
+    "static/media/back-svgrepo-com.svg": "/reactify-demo/static/media/back-svgrepo-com.df7aff846e6035299fb3e56c0868a95c.svg",
+    "main.7bb1b4da.css.map": "/reactify-demo/static/css/main.7bb1b4da.css.map",
+    "main.a93b4956.js.map": "/reactify-demo/static/js/main.a93b4956.js.map",
     "488.90640024.chunk.js.map": "/reactify-demo/static/js/488.90640024.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.60160ecb.css",
-    "static/js/main.086e18c0.js"
+    "static/css/main.7bb1b4da.css",
+    "static/js/main.a93b4956.js"
   ]
 }
