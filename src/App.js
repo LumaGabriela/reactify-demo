@@ -288,7 +288,7 @@ const App = () => {
                   setUsers={setUsers}
                 />
               } />
-              <Route path="/:projectId/user-stories" element={
+              <Route path="/:projectId/stories" element={
                 <UserStories
                   projectKey={projectKey}
                   handleRemove={handleRemove}

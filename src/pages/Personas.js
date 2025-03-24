@@ -4,7 +4,8 @@ import './ProductCanvas.css';
 
 const Personas = ({ users, setUsers, userKey, projectKey }) => {
   const [currentPersonas, setCurrentPersonas] = useState([]);
-
+  //Alterna entre o modo de visualizacao e edicao
+  const [viewMode, setViewMode] = useState(true)
   useEffect(() => {
     const user = users.find(user => user.key === userKey);
     setCurrentPersonas(user?.projects.find(project => project.key === projectKey).personas || []);
@@ -95,43 +96,78 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
   return (
     <Container>
       {currentPersonas.map((persona, personaIndex) => (
-        <Container fluid className="p-4" key={personaIndex}>
-          <Card>
-            <Card.Header as="h5" className="bg-purple text-white">
-              Nome:
-              <Form.Control
+        <Container fluid className="p-4" key={personaIndex}
+          style={{ display: viewMode ? 'none' : 'block' }}>
+
+          <div className="input-title-container">
+            <h5 className='text-white'>Nome:</h5>
+            <Form.Control
               className='input-name'
-                type="text"
-                value={persona.name}
-                onChange={(e) => handleNameChange(personaIndex, e.target.value)}
-              />
-              <Button variant="danger" className="d-flex justify-content-end mt-auto ms-auto " onClick={() => handleRemovePersona(personaIndex)}>Remover Persona</Button>
-            </Card.Header>
-            <Card.Body>
-              <div className="product-canvas-container">
-                {['profile', 'expectations', 'restrictions', 'goals'].map((section, idx) => (
-                  <div key={idx} className={"product-canvas-item " + section}>
-                    <h5>{handleTitle(section)}:</h5>
-                    {persona[section]?.map((item, i) => (
-                      <div key={i} className='btn-container'>
-                        <Form.Control
-                          type="text"
-                          value={item}
-                          onChange={(e) => handleChange(personaIndex, section, i, e.target.value)}
-                        />
-                        <Button variant="danger" onClick={() => handleRemove(personaIndex, section, i)}>-</Button>
-                      </div>
-                    ))}
-                    <Button variant="primary" className='d-flex justify-content-end mt-auto ms-auto' onClick={(e) => {handleAdd(personaIndex, section); console.log()}}>+</Button>
+              type="text"
+              value={persona.name}
+              onChange={(e) => handleNameChange(personaIndex, e.target.value)}
+            />
+            <Button variant="danger" className="btn-remove-persona" onClick={() => handleRemovePersona(personaIndex)}>Remover Persona</Button>
+          </div>
+
+          <div className="product-canvas-card">
+            {['profile', 'expectations', 'restrictions', 'goals'].map((section, idx) => (
+              <div key={idx} className={"product-canvas-item " + section}>
+                <h5>{handleTitle(section)}:</h5>
+                {persona[section]?.map((item, i) => (
+                  <div key={i} className='btn-container'>
+                    <Form.Control
+                      type="text"
+                      value={item}
+                      onChange={(e) => handleChange(personaIndex, section, i, e.target.value)}
+                    />
+                    <Button variant="danger" onClick={() => handleRemove(personaIndex, section, i)}>-</Button>
                   </div>
                 ))}
+                <Button variant="primary" className='d-flex justify-content-end mt-auto ms-auto' onClick={(e) => { handleAdd(personaIndex, section); console.log() }}>+</Button>
               </div>
-            </Card.Body>
-          </Card>
+            ))}
+          </div>
+
         </Container>
+
+
       ))}
-      <Button variant="primary" className="d-flex justify-content-end mt-auto ms-auto " onClick={handleAddPersona}>Adicionar Persona</Button>
-      <Button variant="success" className="d-flex justify-content-end mt-auto ms-auto save-btn" onClick={handleSave}>Salvar</Button>
+      {/* modo de visualizacao  */}
+      {currentPersonas.map((persona, personaIndex) => (
+        <Container fluid className="p-4" key={personaIndex}
+          style={{ display: !viewMode ? 'none' : 'block' }}>
+
+          <div className="input-title-container">
+            <h5 className='text-white'>{persona.name}</h5>
+
+          </div>
+
+          <div className="product-canvas-card">
+            {['profile', 'expectations', 'restrictions', 'goals'].map((section, idx) => (
+              <div key={idx} className={"product-canvas-item " + section}>
+                <h5>{handleTitle(section)}:</h5>
+                {persona[section]?.map((item, i) => (
+                  <li key={i} >{item}</li>
+                ))}
+
+              </div>
+            ))}
+          </div>
+
+        </Container>
+
+
+      ))}
+      {/* gerenciamento de botoes */}
+      <div className='btn-container'>
+        <Button className='modo-visualizacao'
+          onClick={() =>
+            viewMode ? setViewMode(false) : setViewMode(true)}>{viewMode ? 'Modo de edição' : 'Modo de visualização'}</Button>
+        <Button variant="primary" className="add-persona" onClick={handleAddPersona}>Adicionar Persona</Button>
+        <Button variant="success" className="save-btn" onClick={handleSave}>Salvar</Button>
+      </div>
+
     </Container>
   );
 };

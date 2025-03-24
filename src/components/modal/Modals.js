@@ -448,7 +448,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             return proj
           })
         };
-        //setUserData(updatedUserData);
+
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -472,7 +472,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             return proj
           })
         };
-        // setUserData(updatedUserData);
+
 
   // Update user in users array
   const updatedUsers = users.map(user => 
@@ -497,11 +497,11 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
     >
       <Modal.Dialog style={{ marginTop: '6rem' }}>
         <Modal.Header closeButton onClick={() => handleRemove('userStory')}>
-          <Modal.Title>Adicionar User Story</Modal.Title>
+          <Modal.Title>Adicionar Estória</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <>Título da story</>
+          <>Título da estória</>
           <Form.Control
             type="text"
             value={sValue}
@@ -510,7 +510,7 @@ const AddUserStories = ({ userData, setUserData, userKey, users, setUsers, story
             placeholder="Eu como..."
             style={{ cursor: 'text' }}
           />
-          <>Tipo de story</>
+          <>Tipo de estória</>
           <select
             value={sType}
             onChange={(e) => setSType(e.target.value)}

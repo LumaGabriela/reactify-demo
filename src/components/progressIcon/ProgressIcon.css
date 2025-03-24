@@ -109,7 +109,10 @@
     transform: rotate(135deg);
   }
 }
-
+@keyframes aumentar {
+  0% {transform: scale(1.0);}
+  100% {transform: scale(1.04);}
+}
 .badge.progress-label {
   position: relative;
   font-size: 1.3rem;
@@ -125,13 +128,17 @@
   height: 3rem;
   border-radius: 3px;
   box-shadow: 1px 1px 5px 0px grey;
+  /* animation: .4s ease-out transform; */
 }
+
 span.triangle {
   display: block;
   width: 10px !important;
   height: 10px !important;
   position: relative;
-  top: 92px;
-  transform: translateX(50px) rotateZ(45deg);
-  z-index: 5;
+  top: -15px;
+  transform: translateX(120px) rotateZ(45deg);
+}
+.badge.progress-label:hover { 
+  animation: .4s ease-out aumentar forwards;
 }

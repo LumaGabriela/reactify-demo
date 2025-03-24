@@ -26,7 +26,7 @@ const UserStories = ({ userKey, users, setUsers, modal, handleRemove, projectKey
   if (!projeto) return null;
   return (
     <div>
-      <h2 className="title">User Stories</h2>
+      <h2 className="title">Estórias</h2>
       <div className='stories-container'>
         <div className="stories-grid">
           {projeto.stories.map((story, index) => (

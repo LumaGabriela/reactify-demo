@@ -39,7 +39,16 @@
   .visaogeral.card .card-body {
     padding: 1rem;
   }
-  .card-footer {background: #00000033;}
-  .card-footer:hover {background: #00000044;}
 
+  .visaogeral.card:hover {animation: aumentar .4s ease-in forwards;}
+
+  @keyframes aumentar {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.04);
+    }
+    
+  }
   /* ///////////////////// */

@@ -8,7 +8,7 @@ const Usuarios = ({ users, handleRemove }) => {
   return (
     <Container fluid className="p-4">
       <Card>
-        <Card.Header as="h5" className="bg-purple text-white">
+        <Card.Header as="h5" className="bg-blue text-white">
           Gerenciamento de Usuários
           <AddButton
             handleRemove={handleRemove}

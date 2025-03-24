@@ -7,7 +7,7 @@
 .offcanvas {  width: 15rem !important;}
 
 .offcanvas-body, .offcanvas-header{
-  background: var(--purple-primary);
+  background: var(--nightblue);
   color: var(--white-primary);
 
 }

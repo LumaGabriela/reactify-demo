@@ -4,14 +4,17 @@ import './ProductCanvas.css';
 
 const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
   const [currentProductCanvas, setCurrentProductCanvas] = useState(null)
+  //Alterna entre o modo de visualizacao e edicao
+  const [viewMode, setViewMode] = useState(true)
 
   useEffect(() => {
     const user = users.find(user => user.key === userKey);
     setCurrentProductCanvas(user?.projects.find(project => project.key === projectKey)?.productCanvas || {})
     }, [users, userKey, projectKey])
 
+
   //Adiciona um campo extra no array selecionado
-  const handleAdd = (prop) => {
+  const handleAdd = prop => {
     setCurrentProductCanvas(prevState => ({
       ...prevState,
       [prop]: [...prevState[prop], '']
@@ -68,12 +71,13 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
 
   return (
     <Container fluid className="p-4 product-canvas">
-      <Card>
-        <Card.Header as="h5" className="bg-purple text-white">
+        <h4 className="">
           Nome do Produto: {currentProductCanvas.name}
-        </Card.Header>
-        <Card.Body>
-          <div className="product-canvas-container">
+        </h4>
+        {/* Container do modo de edicao  */}
+        <div  className="product-canvas-card"
+        style={{display: viewMode ? 'none' : 'grid'}}>
+     
             {['issues', 'solutions', 'personas', 'restrictions', 'is', 'isNot'].map((section, idx) => (
               <div key={idx} className={"product-canvas-item " + section}>
                 <h5>{handleTitle(section)}:</h5>
@@ -84,7 +88,7 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
                       value={item}
                       onChange={(e) => handleChange(section, index, e.target.value)}
                     />
-                    <Button variant="danger" onClick={() => handleRemove(section, index)}>-</Button>
+                    <Button variant="danger" onClick={() => handleRemove(section, index)}>X</Button>
                   </div>
                 ))}
                 {(section === 'solutions' && currentProductCanvas.solutions.length === 0) 
@@ -93,12 +97,34 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
                 && <Button variant="primary"className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
               </div>
             ))}
-            
-          </div>
-         
-        </Card.Body>
-      </Card>
-      <Button variant="success" className="d-flex justify-content-end mt-auto ms-auto save-btn" onClick={handleSave}>Salvar</Button>
+
+        </div>
+      {/* Container do modo de visualização */}
+      <div  className="product-canvas-card"
+        style={{display: !viewMode ? 'none' : 'grid'}}>
+     
+            {['issues', 'solutions', 'personas', 'restrictions', 'is', 'isNot'].map((section, idx) => (
+              <div key={idx} className={"product-canvas-item " + section}>
+                <h5>{handleTitle(section)}:</h5>
+                {currentProductCanvas[section]?.map((item, index) => (
+                  <li key={index} >{item}</li>
+                ))}
+              
+              </div>
+            ))}
+
+        </div>
+
+
+  <div className='btn-container'>
+      <Button className='modo-visualizacao'
+      onClick={()=> 
+        viewMode ? setViewMode(false) : setViewMode(true)}>{viewMode ? 'Modo de edição' : 'Modo de visualização'}</Button>
+
+      <Button variant="success" className=" save-btn" onClick={handleSave}>Salvar</Button>
+
+  </div>
+      
     </Container>
   );
 };

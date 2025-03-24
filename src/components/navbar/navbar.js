@@ -38,7 +38,7 @@ const NavBar = ({ projectKey, users, userKey }) => {
 
 
   return (
-    <Navbar bg="purple" data-bs-theme="dark" expand={false}>
+    <Navbar bg="blue" data-bs-theme="dark" expand={false}>
       <Container fluid>
         {/* Left Menu Toggle & Offcanvas */}
         <Navbar.Toggle 
@@ -95,9 +95,7 @@ const NavBar = ({ projectKey, users, userKey }) => {
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/product-canvas`)}>Product Canvas</Nav.Link>
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/personas`)}>Personas</Nav.Link>
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/goal-sketches`)}>Goal Sketch</Nav.Link>
-
-
-                  {/* <Nav.Link onClick={() => handleNavigate(`${projectKey}/user-stories`)}>User Stories</Nav.Link> */}
+                  <Nav.Link onClick={() => handleNavigate(`${projectKey}/stories`)}>Estórias</Nav.Link>
                   <Nav.Link onClick={() => handleNavigate(`${projectKey}/journeys`)}>Journeys</Nav.Link>
                 </>
               )}

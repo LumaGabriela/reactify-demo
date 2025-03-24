@@ -16,6 +16,7 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
 
   return (
     <Container className="visao-geral-container">
+      <h3>{project?.name}</h3>
       <div className="visao-geral-progress">
         {project && (
           <>
@@ -39,7 +40,7 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
             <ProgressIcon
               value={project?.stories.length}
               label={'User Stories'}
-              link={`/${projectId}/user-stories`}
+              link={`/${projectId}/stories`}
               colorName={'green'}
             />
             <ProgressIcon
@@ -56,52 +57,62 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
       </div>
 
       <div className='visaogeral-cards'>
-        <Card className='visaogeral'  >
+        <Card className='visaogeral'  
+        onClick={() => navigate(`/${projectId}/product-canvas`)}>
 
           <Card.Body>
             <Card.Title>{project?.name}</Card.Title>
             <Card.Text>
               {project?.visaoGeral}
             </Card.Text>
+            
           </Card.Body>
+      
         </Card>
 
-        <Card className='visaogeral'  >
+        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)} >
           <Card.Body>
             <Card.Title>Solução para a demanda</Card.Title>
             <Card.Text>
               {project?.productCanvas?.solutions}
             </Card.Text>
           </Card.Body>
-    
+
         </Card>
 
-        <Card className='visaogeral'  onClick={()=> navigate(`/${project.key}/product-canvas`)}>
+        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)}>
           <Card.Body>
             <Card.Title>
-            {project?.productCanvas?.issues?.length}
-              {project?.productCanvas?.issues?.length === 1 ? ' Problema no projeto' : 
-              ' Problemas no projeto'} 
+              É :
+
             </Card.Title>
             <Card.Text>
-              ---
+            {project?.productCanvas?.is && (
+                project?.productCanvas?.is?.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))
+              )
+              }
             </Card.Text>
           </Card.Body>
         </Card>
 
-        <Card className='visaogeral' >
+        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)}>
           <Card.Body>
             <Card.Title>
-              {project?.productCanvas?.restrictions?.length}
-              {project?.productCanvas?.restrictions?.length === 1 ? ' Restrição no projeto' : 
-              ' Restrições no projeto'} 
+              Não é :
+
             </Card.Title>
             <Card.Text>
-              ---
+            {project?.productCanvas?.is && (
+                project?.productCanvas?.isNot?.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))
+              )
+              }
             </Card.Text>
           </Card.Body>
         </Card>
-
       </div>
     </Container>
 
