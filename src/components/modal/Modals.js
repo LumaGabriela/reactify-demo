@@ -848,7 +848,7 @@ const GenerateUserStories = ({ userKey, users, setUsers, modal, projectKey, hand
                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 <span className="ms-2">Gerando...</span>
               </>
-            ) : 'Gerar Stories com GPT'}
+            ) : 'Gerar Stories'}
           </Button>
 
           {isLoading && (

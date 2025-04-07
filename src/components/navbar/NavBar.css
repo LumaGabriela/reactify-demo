@@ -7,13 +7,45 @@
 .offcanvas {  width: 15rem !important;}
 
 .offcanvas-body, .offcanvas-header{
-  background: var(--nightblue);
+  background: var(--new-primary);
   color: var(--white-primary);
 
 }
-.offcanvas-body .nav-link {padding: 0.7rem 0;}
+.offcanvas-body .nav-link {padding: 0.7rem 0.7rem; color: var(--new-gray);}
 .nav-link{
   padding: 0 0.5rem;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  /* background-color: red; */
+  border-radius: 10px;
+  gap: 0.7rem; /* Espaço entre ícone e texto (se usar flexbox) */
+}
+
+.nav-link:hover {
+  background-color: var(--new-secondary);
+}
+
+.custom-navbar-bg {
+  background-color: #1f1d2c;
+}
+
+.badge.custom-badge-bg {
+  background-color: var(--new-green);
+  margin-left: auto; /* Empurra o badge para a direita */
+}
+
+.custom-navlink-pd {
+  padding-left: 5px
+}
+
+.project-item {
+  background: linear-gradient(to right, #232433, #262837);
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px #7458fe3b;
+  }
+  /* Efeito ao clicar */
+  &:active {
+    transform: scale(0.98);
+  }
 }

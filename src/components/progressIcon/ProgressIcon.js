@@ -13,6 +13,8 @@ const ProgressIcon = ({ value, label, link, colorName }) => {
         return '#28a745'
       case 'red':
         return '#dc3545'
+      case 'lilac':
+        return '#b689fb'
       default:
         return '#f84c1c'
     }

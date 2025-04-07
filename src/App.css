@@ -10,11 +10,23 @@
   --white-primary: #ffffff;
   --grey-primary: #707478;
   --orange: #f84c1c;
+
+  /* Nova paleta escura */
+  --new-green: #4ab178;
+  --new-background: #1f1d2c;
+  --new-primary: #262837;
+  --new-secondary: #2f2f4b;
+  --new-grey: #d1d1d1;
+  --new-blue-primary: #03a9f4;
+  --new-red-primary: #ff5252;
+  --new-yellow-primary: #ffa000;
 }
 .App {
   box-sizing: border-box;
   height: 100vh;
-  background: #fff;
+  /* background: #fff;*/
+  background: var(--new-background);
+  color: white;
 }
 
 .bg-purple {

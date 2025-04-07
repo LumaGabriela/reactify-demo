@@ -46,10 +46,11 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     cursor: pointer;
-    padding: 0 3px;
-    border: 1px solid #333;
+    padding: 0 5px;
+    border: none;
+    background-color: var(--new-secondary);
 }
 
 .step-content {
@@ -59,8 +60,9 @@
 }
 
 .step.first-step {
-    background-color: #333;
+    background-color: var(--new-primary);
     color: #fff;
+    border: none
 }
 
 .step-description {
@@ -69,7 +71,7 @@
 
 .arrow {
     font-size: 2rem;
-    color: #333;
+    color: #ffffff;
     display: block;
 
 }
@@ -80,15 +82,15 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
-  padding: 0 3px;
+  padding: 0 5px;
   border: 1px solid #333;
   background-color: #f0f0f0;
   font-size: 16px;
 }
 .touchpoint {
-  background: var(--red-primary);
+  background: var(--new-red-primary);
   height: 25px;
   width: 25px !important;
   border-radius: 50px;

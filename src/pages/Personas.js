@@ -95,6 +95,7 @@ const Personas = ({ users, setUsers, userKey, projectKey }) => {
 
   return (
     <Container>
+      <h1 className='title'>Personas</h1>
       {currentPersonas.map((persona, personaIndex) => (
         <Container fluid className="p-4" key={personaIndex}
           style={{ display: viewMode ? 'none' : 'block' }}>

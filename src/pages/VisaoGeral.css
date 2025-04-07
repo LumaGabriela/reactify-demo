@@ -27,20 +27,47 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: .7rem;
-   
+    
   }
   .visaogeral.card {
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 1.5rem;
     width: 512px !important;
     height: 15rem !important;
-    box-shadow: 1px 1px 5px 0px grey;
+    /* box-shadow: 1px 1px 5px 0px grey; */
+    border: none;
+    background-color: #7358fe;
+    transition: all 0.3s ease;
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    /* Efeito ao clicar */
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+  .card-gradient {
+    background: linear-gradient(to right, #7358fe, #9456f9);
+    /* Direção: to right, to bottom, 45deg, etc. */
   }
   .visaogeral.card .card-body {
     padding: 1rem;
   }
 
-  .visaogeral.card:hover {animation: aumentar .4s ease-in forwards;}
+  .custom-card-title {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  .custom-card-text {
+    color: var(--new-grey);
+    line-height: 1.6;
+  }
+
+  .visaogeral.card:hover {
+    /* animation: aumentar .4s ease-in forwards; */
+  }
 
   @keyframes aumentar {
     from {

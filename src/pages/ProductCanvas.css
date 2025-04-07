@@ -14,8 +14,9 @@
   padding: 10px;
   position: relative;
   height: 100%;
+  width: 512px !important;
   /* background: var(--grey-primary); */
-  border-radius: 5px;
+  border-radius: 1.5rem;
   box-shadow: 1px 1px 5px 0px grey;
 }
 

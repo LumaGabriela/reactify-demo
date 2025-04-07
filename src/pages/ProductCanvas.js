@@ -70,49 +70,72 @@ const ProductCanvas = ({ users, setUsers, userKey, projectKey }) => {
   if (!currentProductCanvas) return null;
 
   return (
-    <Container fluid className="p-4 product-canvas">
-        <h4 className="">
-          Nome do Produto: {currentProductCanvas.name}
-        </h4>
+    <Container 
+      fluid 
+      className="p-4 product-canvas d-flex flex-column align-items-center justify-content-center"
+      style={{ minHeight: '80vh' }} /* Ajuste a altura conforme necessário */
+    >
+        <h1 className='title'>Product Canvas</h1>
         {/* Container do modo de edicao  */}
-        <div  className="product-canvas-card"
-        style={{display: viewMode ? 'none' : 'grid'}}>
-     
+        <div 
+            className="product-canvas-card project-container gap-3"
+            style={{ display: viewMode ? 'none' : 'grid' }}
+          >
             {['issues', 'solutions', 'personas', 'restrictions', 'is', 'isNot'].map((section, idx) => (
-              <div key={idx} className={"product-canvas-item " + section}>
-                <h5>{handleTitle(section)}:</h5>
-                {currentProductCanvas[section]?.map((item, index) => (
-                  <div key={index} className='btn-container'>
-                    <Form.Control
-                      type="text"
-                      value={item}
-                      onChange={(e) => handleChange(section, index, e.target.value)}
-                    />
-                    <Button variant="danger" onClick={() => handleRemove(section, index)}>X</Button>
+              <div key={idx} className={`product-canvas-item card ${section}`}>
+                <div className="card-body d-flex flex-column h-100"> {/* Container flexível */}
+                  <h5 className="card-title mb-3">{handleTitle(section)}</h5> {/* Título estilizado */}
+                  
+                  <div className="mb-3"> {/* Container dos inputs */}
+                    {currentProductCanvas[section]?.map((item, index) => (
+                      <div key={index} className="input-group mb-2"> {/* Grupo input + botão */}
+                        <Form.Control
+                          type="text"
+                          value={item}
+                          onChange={(e) => handleChange(section, index, e.target.value)}
+                          className="form-control-sm"
+                        />
+                        <Button 
+                          variant="outline-danger" 
+                          size="sm"
+                          onClick={() => handleRemove(section, index)}
+                        >
+                          X
+                        </Button>
+                      </div>
+                    ))}
                   </div>
-                ))}
-                {(section === 'solutions' && currentProductCanvas.solutions.length === 0) 
-                && <Button variant="primary" className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
-                {(section !== 'solutions' ) 
-                && <Button variant="primary"className='d-flex justify-content-end mt-auto ms-auto ' onClick={() => handleAdd(section)}>+</Button>}
+
+                  {/* Botão de adicionar */}
+                  <Button 
+                    variant="outline-primary" 
+                    size="sm"
+                    className="mt-auto align-self-end" 
+                    onClick={() => handleAdd(section)}
+                  >
+                    <i className="bi bi-plus"></i> Adicionar
+                  </Button>
+                </div>
               </div>
             ))}
-
-        </div>
+          </div>
       {/* Container do modo de visualização */}
-      <div  className="product-canvas-card"
+      <div className="product-canvas-card project-container
+      gap-3"
         style={{display: !viewMode ? 'none' : 'grid'}}>
      
             {['issues', 'solutions', 'personas', 'restrictions', 'is', 'isNot'].map((section, idx) => (
-              <div key={idx} className={"product-canvas-item " + section}>
-                <h5>{handleTitle(section)}:</h5>
-                {currentProductCanvas[section]?.map((item, index) => (
-                  <li key={index} >{item}</li>
-                ))}
-              
+              <div key={idx} className={`product-canvas-item card ${section}`}>
+                <div className="card-body"> {/* Adicione esta div */}
+                  <h5 className="card-title">{handleTitle(section)}</h5>
+                  <ul className="list-unstyled">
+                    {currentProductCanvas[section]?.map((item, index) => (
+                      <li key={index} className="mb-2">{item}</li>
+                  ))}
+                  </ul>
+                </div>
               </div>
             ))}
-
         </div>
 
 

@@ -20,34 +20,30 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
       <div className="visao-geral-progress">
         {project && (
           <>
-
-
-
-
             <ProgressIcon
               value={project?.personas.length}
               label={'Personas'}
               link={`/${projectId}/personas`}
-              colorName={'orange'}
+              colorName={'lilac'}
             />
 
             <ProgressIcon
               value={project?.goalSketches.length}
               label={'Goal Sketches'}
               link={`/${projectId}/goal-sketches`}
-              colorName={'blue'}
+              colorName={'lilac'}
             />
             <ProgressIcon
               value={project?.stories.length}
               label={'Estórias'}
               link={`/${projectId}/stories`}
-              colorName={'green'}
+              colorName={'lilac'}
             />
             <ProgressIcon
               value={project?.journeys.length}
               label={'Journeys'}
               link={`/${projectId}/journeys`}
-              colorName={'red'}
+              colorName={'lilac'}
             />
 
           </>
@@ -56,37 +52,43 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
 
       </div>
 
-      <div className='visaogeral-cards'>
-        <Card className='visaogeral'  
+      <div className='visaogeral-cards 
+      project-container
+      gap-3'
+      >
+        <Card className='visaogeral card-body card-gradient'
         onClick={() => navigate(`/${projectId}/product-canvas`)}>
 
           <Card.Body>
-            <Card.Title>{project?.name}</Card.Title>
-            <Card.Text>
+            <h4 className="custom-card-title card-title mb-3">{project.name}</h4>
+            {/* <Card.Title className="custom-card-title ">{project?.name}</Card.Title> */}
+            <Card.Text className="custom-card-text">
               {project?.visaoGeral}
             </Card.Text>
-            
+
           </Card.Body>
-      
+
         </Card>
 
-        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)} >
+        <Card className='visaogeral card-body card-gradient' onClick={() => navigate(`/${projectId}/product-canvas`)} >
           <Card.Body>
-            <Card.Title>Solução para a demanda</Card.Title>
-            <Card.Text>
+            <h4 className="custom-card-title card-title mb-3">Solução para a demanda</h4>
+            {/* <Card.Title className="custom-card-title">Solução para a demanda</Card.Title> */}
+            <Card.Text className="custom-card-text">
               {project?.productCanvas?.solutions}
             </Card.Text>
           </Card.Body>
 
         </Card>
 
-        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)}>
+        <Card className='visaogeral card-body card-gradient' onClick={() => navigate(`/${projectId}/product-canvas`)}>
           <Card.Body>
-            <Card.Title>
+            <h4 className="custom-card-title card-title mb-3">É</h4>
+            {/* <Card.Title className="custom-card-title">
               É :
 
-            </Card.Title>
-            <Card.Text>
+            </Card.Title > */}
+            <Card.Text className="custom-card-text">
             {project?.productCanvas?.is && (
                 project?.productCanvas?.is?.map((item, index) => (
                   <li key={index}>{item}</li>
@@ -97,13 +99,14 @@ const VisaoGeral = ({ users, setUsers, userKey }) => {
           </Card.Body>
         </Card>
 
-        <Card className='visaogeral' onClick={() => navigate(`/${projectId}/product-canvas`)}>
+        <Card className='visaogeral card-body card-gradient' onClick={() => navigate(`/${projectId}/product-canvas`)}>
           <Card.Body>
-            <Card.Title>
+            <h4 className="custom-card-title card-title mb-3">Não é</h4>
+            {/* <Card.Title className="custom-card-title">
               Não é :
 
-            </Card.Title>
-            <Card.Text>
+            </Card.Title> */}
+            <Card.Text className="custom-card-text">
             {project?.productCanvas?.is && (
                 project?.productCanvas?.isNot?.map((item, index) => (
                   <li key={index}>{item}</li>

@@ -70,7 +70,7 @@
   border-radius: 50%;
   background: #fff;
   font-size: 24px;
-  color: #000;
+  color: var(--new-secondary);
   line-height: 60px;
   text-align: center;
   position: relative;
@@ -118,7 +118,7 @@
   font-size: 1.3rem;
   font-weight: 400;
   background: #fff;
-  color: #000;
+  color: var(--new-secondary);
   margin: 0;
   padding: 3px 0 0 0 ;
   text-align: center;
